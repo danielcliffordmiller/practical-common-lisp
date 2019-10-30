@@ -5,6 +5,10 @@ body {
   font-family: serif;
 }
 
+p:target {
+  background-color: #E0E0E0;
+}
+
 p { line-height: 1.5; }
 sup { font-size: 9pt;  }
 blockquote {  line-height: 1.5; font-size: 90%;  }
