@@ -57,12 +57,12 @@ lists rather than as dotted pairs. </P><PRE>(cons 1 nil)                   ==&gt
 (cons 1 (cons 2 nil))          ==&gt; (1 2)
 (cons 1 (cons 2 (cons 3 nil))) ==&gt; (1 2 3)</PRE><P>When talking about structures built out of cons cells, a few diagrams
 can be a big help. Box-and-arrow diagrams represent cons cells as a
-pair of boxes like this:</P><P><IMG CLASS="figure" SRC="figures/one-cons-cell.png"/></P><P>The box on the left represents the <CODE><B>CAR</B></CODE>, and the box on the right
+pair of boxes like this:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/one-cons-cell.png"/></P><P>The box on the left represents the <CODE><B>CAR</B></CODE>, and the box on the right
 is the <CODE><B>CDR</B></CODE>. The values stored in a particular cons cell are
 either drawn in the appropriate box or represented by an arrow from
 the box to a representation of the referenced value.<SUP>4</SUP> For instance, the
 list <CODE>(1 2 3)</CODE>, which consists of three cons cells linked
-together by their <CODE><B>CDR</B></CODE>s, would be diagrammed like this:</P><P><IMG CLASS="figure" SRC="figures/list-1-2-3.png"/></P><P>However, most of the time you work with lists you won't have to deal
+together by their <CODE><B>CDR</B></CODE>s, would be diagrammed like this:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/list-1-2-3.png"/></P><P>However, most of the time you work with lists you won't have to deal
 with individual cons cells--the functions that create and manipulate
 lists take care of that for you. For example, the <CODE><B>LIST</B></CODE> function
 builds a cons cells under the covers for you and links them together;
@@ -76,7 +76,7 @@ when you're dealing with cons cells as lists. </P><PRE>(defparameter *list* (lis
 (first *list*)        ==&gt; 1
 (rest *list*)         ==&gt; (2 3 4)
 (first (rest *list*)) ==&gt; 2</PRE><P>Because cons cells can hold any kind of values, so can lists. And a
-single list can hold objects of different types.</P><PRE>(list &quot;foo&quot; (list 1 2) 10) ==&gt; (&quot;foo&quot; (1 2) 10)</PRE><P>The structure of that list would look like this:</P><P><IMG CLASS="figure" SRC="figures/mixed-list.png"/></P><P>Because lists can have other lists as elements, you can also use them
+single list can hold objects of different types.</P><PRE>(list &quot;foo&quot; (list 1 2) 10) ==&gt; (&quot;foo&quot; (1 2) 10)</PRE><P>The structure of that list would look like this:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/mixed-list.png"/></P><P>Because lists can have other lists as elements, you can also use them
 to represent trees of arbitrary depth and complexity. As such, they
 make excellent representations for any heterogeneous, hierarchical
 data. Lisp-based XML processors, for instance, usually represent XML
@@ -137,7 +137,7 @@ the list <CODE>(3 4)</CODE>. It then returns the cons cell containing the
 <CODE>1</CODE>. None of the original cons cells has been modified, and the
 result is indeed the list <CODE>(1 2 3 4)</CODE>. The only wrinkle is that
 the list returned by <CODE><B>APPEND</B></CODE> shares some cons cells with the list
-<CODE>(3 4)</CODE>. The resulting structure looks like this:</P><P><IMG CLASS="figure" SRC="figures/after-append.png"/></P><P>In general, <CODE><B>APPEND</B></CODE> must copy all but its last argument, but it
+<CODE>(3 4)</CODE>. The resulting structure looks like this:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/after-append.png"/></P><P>In general, <CODE><B>APPEND</B></CODE> must copy all but its last argument, but it
 can always return a result that <I>shares structure</I> with the last
 argument.</P><P>Other functions take similar advantage of lists' ability to share
 structure. Some, like <CODE><B>APPEND</B></CODE>, are specified to always return

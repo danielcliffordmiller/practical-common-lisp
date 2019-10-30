@@ -30,7 +30,7 @@ instance, a simple HTML document looks like this:</P><PRE>&lt;html&gt;
   &lt;p&gt;This is a picture: &lt;img src=&quot;some-image.gif&quot;&gt;&lt;/p&gt;
   &lt;p&gt;This is a &lt;a href=&quot;another-page.html&quot;&gt;link&lt;/a&gt; to another page.&lt;/p&gt;
   &lt;/body&gt;
-&lt;/html&gt;</PRE><P>Figure 26-1 shows how the browser renders this page.</P><P><IMG CLASS="figure" SRC="screenshots/new-sample.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-1. Sample Web page</DIV></P><P>The browser and server communicate using a protocol called the
+&lt;/html&gt;</PRE><P>Figure 26-1 shows how the browser renders this page.</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/new-sample.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-1. Sample Web page</DIV></P><P>The browser and server communicate using a protocol called the
 Hypertext Transfer Protocol (HTTP). While you don't need to worry
 about the details of the protocol, it's worth understanding that it
 consists entirely of a sequence of requests initiated by the browser
@@ -160,7 +160,7 @@ requested by the browser, while the <CODE>:file</CODE> argument is the name
 of the file in the file system. After evaluating the
 <CODE>publish-file</CODE> expression, you can point your browser to
 <CODE>http://localhost:2001/hello.html</CODE>, and it should display a page
-something like Figure 26-2.</P><P><IMG CLASS="figure" SRC="screenshots/hello-world.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-2. <CODE>http://localhost:2001/hello.html</CODE></DIV></P><P>You could also publish a whole directory tree of files using the
+something like Figure 26-2.</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/hello-world.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-2. <CODE>http://localhost:2001/hello.html</CODE></DIV></P><P>You could also publish a whole directory tree of files using the
 <CODE>publish-directory</CODE> function. First let's clear out the already
 published entity with the following call to <CODE>publish-file</CODE>:</P><PRE>WEB&gt; (publish-file :path &quot;/hello.html&quot; :remove t)
 NIL</PRE><P>Now you can publish the whole <CODE>/tmp/html/</CODE> directory (and all
@@ -222,7 +222,7 @@ function, as shown here, allows you to redefine the function later
 without republishing and have AllegroServe use the new function
 definition. After evaluating the call to <CODE>publish</CODE>, you can
 point your browser at <CODE>http:// localhost:2001/random-number</CODE> to
-get a page with a random number on it, as shown in Figure 26-3.</P><P><IMG CLASS="figure" SRC="screenshots/random-number.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-3. <CODE>http://localhost:2001/random-number</CODE></DIV></P><A NAME="generating-html"><H2>Generating HTML</H2></A><P>Although using <CODE><B>FORMAT</B></CODE> to emit HTML works fine for the simple
+get a page with a random number on it, as shown in Figure 26-3.</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/random-number.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-3. <CODE>http://localhost:2001/random-number</CODE></DIV></P><A NAME="generating-html"><H2>Generating HTML</H2></A><P>Although using <CODE><B>FORMAT</B></CODE> to emit HTML works fine for the simple
 pages I've discussed so far, as you start building more elaborate
 pages it'd be nice to have a more concise way to generate HTML.
 Several libraries are available for generating HTML from an
@@ -367,7 +367,7 @@ all the query parameters it receives:</P><PRE>(defun show-query-params (request 
              (html (:p &quot;No query parameters.&quot;)))))))))
 
 (publish :path &quot;/show-query-params&quot; :function 'show-query-params)</PRE><P>If you give your browser a URL with a query string in it like the
-following:</P><PRE>http://localhost:2001/show-query-params?foo=bar&amp;baz=10</PRE><P>you should get back a page similar to the one shown in Figure 26-4.</P><P><IMG CLASS="figure" SRC="screenshots/show-query-params-1a.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-4. <CODE>http://localhost:2001/show-query-params?foo=bar&amp;baz=10</CODE></DIV></P><P>To generate some post data, you need an HTML form. The following
+following:</P><PRE>http://localhost:2001/show-query-params?foo=bar&amp;baz=10</PRE><P>you should get back a page similar to the one shown in Figure 26-4.</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/show-query-params-1a.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-4. <CODE>http://localhost:2001/show-query-params?foo=bar&amp;baz=10</CODE></DIV></P><P>To generate some post data, you need an HTML form. The following
 function generates a simple form, which submits its data to
 <CODE>show-query-params</CODE>:</P><PRE>(defun simple-form (request entity)
   (with-http-response (request entity :content-type &quot;text/html&quot;)
@@ -388,7 +388,7 @@ function generates a simple form, which submits its data to
 
 (publish :path &quot;/simple-form&quot; :function 'simple-form)</PRE><P>Point your browser to <CODE>http://localhost:2001/simple-form</CODE>, and
 you should see a page like the one in Figure 26-5.</P><P>If you fill in the form with the &quot;abc&quot; and &quot;def&quot; values, clicking the
-Okay button should take you to a page like the one in Figure 26-6.</P><P><IMG CLASS="figure" SRC="screenshots/simple-form.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-5. <CODE>http://localhost:2001/simple-form</CODE></DIV></P><P><IMG CLASS="figure" SRC="screenshots/show-query-params-2.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-6. Result of submitting the simple form</DIV></P><P>However, most of the time you won't need to iterate over all the query
+Okay button should take you to a page like the one in Figure 26-6.</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/simple-form.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-5. <CODE>http://localhost:2001/simple-form</CODE></DIV></P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/show-query-params-2.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-6. Result of submitting the simple form</DIV></P><P>However, most of the time you won't need to iterate over all the query
 parameters; you'll want to pick out individual parameters. For
 instance, you might want to modify <CODE>random-number</CODE> so the limit
 value you pass to <CODE><B>RANDOM</B></CODE> can be supplied via a query parameter.
@@ -452,7 +452,7 @@ sent by the browser:</P><PRE>(defun show-cookies (request entity)
 
 (publish :path &quot;/show-cookies&quot; :function 'show-cookies)</PRE><P>The first time you load the page
 <CODE>http://localhost:2001/show-cookies</CODE> it should say &quot;No cookies&quot;
-as shown in Figure 26-7 since you haven't set any yet.</P><P><IMG CLASS="figure" SRC="screenshots/show-cookies-no-cookies.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-7. <CODE>http://localhost:2001/show-cookies</CODE> with no cookies</DIV></P><P>To set a cookie, you need another function, such as the following:</P><PRE>(defun set-cookie (request entity)
+as shown in Figure 26-7 since you haven't set any yet.</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/show-cookies-no-cookies.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-7. <CODE>http://localhost:2001/show-cookies</CODE> with no cookies</DIV></P><P>To set a cookie, you need another function, such as the following:</P><PRE>(defun set-cookie (request entity)
   (with-http-response (request entity :content-type &quot;text/html&quot;)
     (set-cookie-header request :name &quot;MyCookie&quot; :value &quot;A cookie value&quot;)
     (with-http-body (request entity)
@@ -471,7 +471,7 @@ link <I>Look at cookie jar</I>, you'll be taken to the
 <CODE>/show-cookies</CODE> page where you'll see the new cookie, as shown
 in Figure 26-9. Because you didn't specify an <CODE>:expires</CODE>
 argument, the browser will continue to send the cookie with each
-request until you quit the browser.</P><P><IMG CLASS="figure" SRC="screenshots/set-cookie.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-8. <CODE>http://localhost:2001/set-cookie</CODE></DIV></P><P><IMG CLASS="figure" SRC="screenshots/show-cookies-one-cookie.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-9. <CODE>http://localhost:2001/show-cookies</CODE> after setting a cookie</DIV></P><A NAME="a-small-application-framework"><H2>A Small Application Framework</H2></A><P>Although AllegroServe provides fairly straightforward access to all
+request until you quit the browser.</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/set-cookie.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-8. <CODE>http://localhost:2001/set-cookie</CODE></DIV></P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/screenshots/show-cookies-one-cookie.jpg"/></P><P><DIV CLASS="figure-caption">Figure 26-9. <CODE>http://localhost:2001/show-cookies</CODE> after setting a cookie</DIV></P><A NAME="a-small-application-framework"><H2>A Small Application Framework</H2></A><P>Although AllegroServe provides fairly straightforward access to all
 the basic facilities you need to write server-side Web code (access
 to query parameters from both the URL's query string and the post
 data; the ability to set cookies and retrieve their values; and, of

@@ -268,7 +268,7 @@ entries returned. An extremely simple version might look like this:</P><PRE>(def
 extracting whatever information you care about from each log entry and
 stashing it away somewhere.</P><P>Thus, the path from the top-level function, <CODE>log-analyzer</CODE>, to
 <CODE>parse-log-entry</CODE>, which actually signals an error, is as
-follows:</P><P><IMG CLASS="figure" SRC="figures/restart-call-stack.png"/></P><P>Assuming you always want to skip malformed log entries, you could
+follows:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/restart-call-stack.png"/></P><P>Assuming you always want to skip malformed log entries, you could
 change this function to establish a condition handler that invokes
 the <CODE>skip-log-entry</CODE> restart for you. However, you can't use
 <CODE><B>HANDLER-CASE</B></CODE> to establish the condition handler because then the

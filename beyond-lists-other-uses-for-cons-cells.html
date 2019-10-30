@@ -26,7 +26,7 @@ atomic--non-cons-cell-values referenced by either the <CODE><B>CAR</B></CODE>s o
 the <CODE><B>CDR</B></CODE>s of the cons cells in the tree structure.</P><P>For instance, the following box-and-arrow diagram shows the cons
 cells that make up the list of lists: <CODE>((1 2) (3 4) (5 6))</CODE>. The
 list structure includes only the three cons cells inside the dashed
-box while the tree structure includes all the cons cells. </P><P><IMG CLASS="figure" SRC="figures/list-or-tree.png"/></P><P>To see the difference between a list function and a tree function,
+box while the tree structure includes all the cons cells. </P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/list-or-tree.png"/></P><P>To see the difference between a list function and a tree function,
 you can consider how the functions <CODE><B>COPY-LIST</B></CODE> and <CODE><B>COPY-TREE</B></CODE>
 will copy this bunch of cons cells. <CODE><B>COPY-LIST</B></CODE>, as a list
 function, copies the cons cells that make up the list structure. That
@@ -35,9 +35,9 @@ inside the dashed box. The <CODE><B>CAR</B></CODE>s of each of these new cons ce
 reference the same object as the <CODE><B>CAR</B></CODE>s of the original cons cells
 in the list structure. Thus, <CODE><B>COPY-LIST</B></CODE> doesn't copy the sublists
 <CODE>(1 2)</CODE>, <CODE>(3 4)</CODE>, or <CODE>(5 6)</CODE>, as shown in this
-diagram:</P><P><IMG CLASS="figure" SRC="figures/copy-list-list-or-tree.png"/></P><P><CODE><B>COPY-TREE</B></CODE>, on the other hand, makes a new cons cell for each of
+diagram:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/copy-list-list-or-tree.png"/></P><P><CODE><B>COPY-TREE</B></CODE>, on the other hand, makes a new cons cell for each of
 the cons cells in the diagram and links them together in the same
-structure, as shown in this diagram:</P><P><IMG CLASS="figure" SRC="figures/copy-tree-list-or-tree.png"/></P><P>Where a cons cell in the original referenced an atomic value, the
+structure, as shown in this diagram:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/copy-tree-list-or-tree.png"/></P><P>Where a cons cell in the original referenced an atomic value, the
 corresponding cons cell in the copy will reference the same value.
 Thus, the only objects referenced in common by the original tree and
 the copy produced by <CODE><B>COPY-TREE</B></CODE> are the numbers 1-6, and the
@@ -144,7 +144,7 @@ themselves cons cells. Each element can be thought of as a key/value
 pair with the key in the cons cell's <CODE><B>CAR</B></CODE> and the value in the
 <CODE><B>CDR</B></CODE>. For instance, the following is a box-and-arrow diagram of
 an alist mapping the symbol <CODE>A</CODE> to the number 1, <CODE>B</CODE> to 2,
-and <CODE>C</CODE> to 3:</P><P><IMG CLASS="figure" SRC="figures/alist-abc-123.png"/></P><P>Unless the value in the <CODE><B>CDR</B></CODE> is a list, cons cells representing
+and <CODE>C</CODE> to 3:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/alist-abc-123.png"/></P><P>Unless the value in the <CODE><B>CDR</B></CODE> is a list, cons cells representing
 the key/value pairs will be <I>dotted pairs</I> in s-expression
 notation. The alist diagramed in the previous figure, for instance,
 is printed like this: </P><PRE>((A . 1) (B . 2) (C . 3))</PRE><P>The main lookup function for alists is <CODE><B>ASSOC</B></CODE>, which takes a key
@@ -200,7 +200,7 @@ you used to represent the rows in the database in Chapter 3.
 Structurally a plist is just a regular list with the keys and values
 as alternating values. For instance, a plist mapping <CODE>A</CODE>,
 <CODE>B</CODE>, and <CODE>C</CODE>, to 1, 2, and 3 is simply the list <CODE>(A 1
-B 2 C 3)</CODE>. In boxes-and-arrows form, it looks like this: </P><P><IMG CLASS="figure" SRC="figures/plist-abc-123.png"/></P><P>However, plists are less flexible than alists. In fact, plists
+B 2 C 3)</CODE>. In boxes-and-arrows form, it looks like this: </P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/plist-abc-123.png"/></P><P>However, plists are less flexible than alists. In fact, plists
 support only one fundamental lookup operation, the function
 <CODE><B>GETF</B></CODE>, which takes a plist and a key and returns the associated
 value or <CODE><B>NIL</B></CODE> if the key isn't found. <CODE><B>GETF</B></CODE> also takes an
