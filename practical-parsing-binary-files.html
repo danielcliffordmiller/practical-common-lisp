@@ -13,11 +13,11 @@ the sense that they just contain a bunch of numbers encoded in binary
 form. However, it's customary to distinguish between <I>text files</I>,
 where all the numbers can be interpreted as characters representing
 human-readable text, and <I>binary files</I>, which contain data that,
-if interpreted as characters, yields nonprintable characters.<SUP>1</SUP></P><P>Binary file formats are usually designed to be both compact and
+if interpreted as characters, yields nonprintable characters.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><P>Binary file formats are usually designed to be both compact and
 efficient to parse--that's their main advantage over text-based
 formats. To meet both those criteria, they're usually composed of
 on-disk structures that are easily mapped to data structures that a
-program might use to represent the same data in memory.<SUP>2</SUP></P><P>The library will give you an easy way to define the mapping between
+program might use to represent the same data in memory.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP></P><P>The library will give you an easy way to define the mapping between
 the on-disk structures defined by a binary file format and in-memory
 Lisp objects. Using the library, it should be easy to write a program
 that can read a binary file, translating it into Lisp objects that
@@ -42,13 +42,13 @@ read such an integer, you need to read the two bytes and then combine
 them into a single number by multiplying one byte by 256, a.k.a. 2^8,
 and adding it to the other byte. For instance, assuming the binary
 format specifies that such 16-bit quantities are stored in
-<I>big-endian</I><SUP>3</SUP> form,
+<I>big-endian</I><SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> form,
 with the most significant byte first, you can read such a number with
 this function:</P><PRE>(defun read-u2 (in)
   (+ (* (read-byte in) 256) (read-byte in)))</PRE><P>However, Common Lisp provides a more convenient way to perform this
 kind of bit twiddling. The function <CODE><B>LDB</B></CODE>, whose name stands for
 load byte, can be used to extract and set (with <CODE><B>SETF</B></CODE>) any number
-of contiguous bits from an integer.<SUP>4</SUP> The number of bits and their position within the
+of contiguous bits from an integer.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> The number of bits and their position within the
 integer is specified with a <I>byte specifier</I> created with the
 <CODE><B>BYTE</B></CODE> function. <CODE><B>BYTE</B></CODE> takes two arguments, the number of bits
 to extract (or set) and the position of the rightmost bit where the
@@ -66,7 +66,7 @@ CL-USER&gt; *num*
 CL-USER&gt; (setf (ldb (byte 8 8) *num*) 255)
 255
 CL-USER&gt; *num*
-65408</PRE><P>Thus, you can also write <CODE>read-u2</CODE> like this:<SUP>5</SUP></P><PRE>(defun read-u2 (in)
+65408</PRE><P>Thus, you can also write <CODE>read-u2</CODE> like this:<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><PRE>(defun read-u2 (in)
   (let ((u2 0))
     (setf (ldb (byte 8 8) u2) (read-byte in))
     (setf (ldb (byte 8 0) u2) (read-byte in))
@@ -102,7 +102,7 @@ different numeric values, making them more complex but allowing them
 to be more compact in many cases. For instance, UTF-8, an encoding
 designed for use with the Unicode character code, uses a single octet
 to encode the values 0-127 while using up to four octets to encode
-values up to 1,114,111.<SUP>6</SUP></P><P>Since the code points from 0-127 map to the same characters in
+values up to 1,114,111.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P>Since the code points from 0-127 map to the same characters in
 Unicode as they do in ASCII, a UTF-8 encoding of text consisting only
 of characters also in ASCII is the same as the ASCII encoding. On the
 other hand, texts consisting mostly of characters requiring four
@@ -119,7 +119,7 @@ ASCII, ISO-8859-1, or Unicode as their native character code. Because
 Unicode is a superset ofISO-8859-1, which is in turn a superset of
 ASCII, if you're using a Unicode Lisp, <CODE><B>CODE-CHAR</B></CODE> and
 <CODE><B>CHAR-CODE</B></CODE> can be used directly for translating any of those
-three character codes.<SUP>7</SUP></P><P>In addition to specifying a character encoding, a string encoding
+three character codes.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>In addition to specifying a character encoding, a string encoding
 must also specify how to encode the length of the string. Three
 techniques are typically used in binary file formats.</P><P>The simplest is to not encode it but to let it be implicit in the
 position of the string in some larger structure: a particular element
@@ -334,7 +334,7 @@ create global definitions should generally use only names passed to
 them by their callers; macros that generate names under the covers can
 cause hard-to-predict--and hard-to-debug--name conflicts when the
 generated names happen to be the same as names used
-elsewhere.<SUP>8</SUP></P><P>You can avoid both these inconveniences by noticing that all the
+elsewhere.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP></P><P>You can avoid both these inconveniences by noticing that all the
 functions that read a particular type of value have the same
 fundamental purpose, to read a value of a specific type from a
 stream. Speaking colloquially, you might say they're all instances of
@@ -406,7 +406,7 @@ particular class, you're left with this skeleton:</P><PRE>(defmethod read-value 
 that fills in the skeleton with the appropriate names and code.
 You'll also want to replace the variables <CODE>type</CODE>, <CODE>stream</CODE>,
 and <CODE>object</CODE> with gensymed names to avoid potential conflicts
-with slot names,<SUP>9</SUP> which you can do with the
+with slot names,<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP> which you can do with the
 <CODE>with-gensyms</CODE> macro from Chapter 8.</P><P>Also, because a macro must expand into a single form, you need to wrap
 some form around the <CODE><B>DEFCLASS</B></CODE> and <CODE><B>DEFMETHOD</B></CODE>. <CODE><B>PROGN</B></CODE> is
 the customary form to use for macros that expand into multiple
@@ -755,7 +755,7 @@ containing the reader and writer definitions. You can then use
 <CODE><B>ASSOC</B></CODE> to extract the elements of <CODE>spec</CODE> using the tags
 <CODE>:reader</CODE> and <CODE>:writer</CODE> and then use
 <CODE><B>DESTRUCTURING-BIND</B></CODE> to take apart the <CODE><B>REST</B></CODE> of each
-element.<SUP>10</SUP></P><P>From there it's just a matter of interpolating the extracted values
+element.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP></P><P>From there it's just a matter of interpolating the extracted values
 into the backquoted templates of the <CODE>read-value</CODE> and
 <CODE>write-value</CODE> methods.</P><PRE>(defmacro define-binary-type (name (&amp;rest args) &amp;body spec)
   (with-gensyms (type)
@@ -869,17 +869,17 @@ of a particular type.</P><PRE>(defun current-binary-object () (first *in-progres
 within the dynamic extent of a <CODE>read-object</CODE> or
 <CODE>write-object</CODE> call. You'll see one example of how
 <CODE>current-binary-object</CODE> can be used in the next
-chapter.<SUP>11</SUP></P><P>Now you have all the tools you need to tackle an ID3 parsing library,
+chapter.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></P><P>Now you have all the tools you need to tackle an ID3 parsing library,
 so you're ready to move onto the next chapter where you'll do just
 that.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>In
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>In
 ASCII, the first 32 characters are nonprinting <I>control characters</I>
 originally used to control the behavior of a Teletype machine,
 causing it to do such things as sound the bell, back up one
 character, move to a new line, and move the carriage to the beginning
 of the line. Of these 32 control characters, only three, the newline,
 carriage return, and horizontal tab, are typically found in text
-files.</P><P><SUP>2</SUP>Some
+files.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Some
 binary file formats <I>are</I> in-memory data structures--on many
 operating systems it's possible to map a file into memory, and
 low-level languages such as C can then treat the region of memory
@@ -891,7 +891,7 @@ integers depends on the hardware on which the program is running.
 Thus, any file format that's intended to be portable must define a
 canonical representation for all the data types it uses that can be
 mapped to the actual in-memory data representation on a particular
-kind of machine or in a particular language.</P><P><SUP>3</SUP>The term <I>big-endian</I> and its opposite,
+kind of machine or in a particular language.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>The term <I>big-endian</I> and its opposite,
 <I>little-endian</I>, borrowed from Jonathan Swift's <I>Gulliver's
 Travels</I>, refer to the way a multibyte number is represented in an
 ordered sequence of bytes such as in memory or in a file. For
@@ -905,12 +905,12 @@ you ever wanted to know about it, and to see where the terms
 <I>big-endian</I> and <I>little-endian</I> were first applied in this
 fashion, read &quot;On Holy Wars and a Plea for Peace&quot; by Danny Cohen,
 available at
-<CODE>http://khavrinen.lcs.mit.edu/wollman/ien-137.txt</CODE>.</P><P><SUP>4</SUP><CODE><B>LDB</B></CODE> and <CODE><B>DPB</B></CODE>, a
+<CODE>http://khavrinen.lcs.mit.edu/wollman/ien-137.txt</CODE>.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP><CODE><B>LDB</B></CODE> and <CODE><B>DPB</B></CODE>, a
 related function, were named after the DEC PDP-10 assembly functions
 that did essentially the same thing. Both functions operate on
 integers as if they were represented using twos-complement format,
 regardless of the internal representation used by a particular Common
-Lisp implementation.</P><P><SUP>5</SUP>Common Lisp
+Lisp implementation.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Common Lisp
 also provides functions for shifting and masking the bits of integers
 in a way that may be more familiar to C and Java programmers. For
 instance, you could write <CODE>read-u2</CODE> yet a third way, using those
@@ -925,27 +925,27 @@ integers by logically <I>or</I>ing each bit. Another function,
 <CODE><B>LOGAND</B></CODE>, performs a bitwise <I>and</I>, which can be used to mask off
 certain bits. However, for the kinds of bit twiddling you'll need to
 do in this chapter and the next, <CODE><B>LDB</B></CODE> and <CODE><B>BYTE</B></CODE> will be both
-more convenient and more idiomatic Common Lisp style.</P><P><SUP>6</SUP>Originally, UTF-8 was designed to
+more convenient and more idiomatic Common Lisp style.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Originally, UTF-8 was designed to
 represent a 31-bit character code and used up to six bytes per code
 point. However, the maximum Unicode code point is <CODE>#x10ffff</CODE>, so
 a UTF-8 encoding of Unicode requires at most four bytes per code
-point.</P><P><SUP>7</SUP>If you need to parse a file format that
+point.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>If you need to parse a file format that
 uses other character codes, or if you need to parse files containing
 arbitrary Unicode strings using a non-Unicode-Common-Lisp
 implementation, you can always represent such strings in memory as
 vectors of integer code points. They won't be Lisp strings, so you
 won't be able to manipulate or compare them with the string
 functions, but you'll still be able to do anything with them that you
-can with arbitrary vectors.</P><P><SUP>8</SUP>Unfortunately, the language itself doesn't always
+can with arbitrary vectors.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>Unfortunately, the language itself doesn't always
 provide a good model in this respect: the macro <CODE><B>DEFSTRUCT</B></CODE>, which
 I don't discuss since it has largely been superseded by <CODE><B>DEFCLASS</B></CODE>,
 generates functions with names that it generates based on the name of
 the structure it's given. <CODE><B>DEFSTRUCT</B></CODE>'s bad example leads many new
-macro writers astray.</P><P><SUP>9</SUP>Technically there's no possibility of
+macro writers astray.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>Technically there's no possibility of
 <CODE>type</CODE> or <CODE>object</CODE> conflicting with slot names--at worst
 they'd be shadowed within the <CODE><B>WITH-SLOTS</B></CODE> form. But it doesn't
 hurt anything to simply <CODE><B>GENSYM</B></CODE> all local variable names used
-within a macro template.</P><P><SUP>10</SUP>Using <CODE><B>ASSOC</B></CODE> to extract the <CODE>:reader</CODE> and
+within a macro template.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>Using <CODE><B>ASSOC</B></CODE> to extract the <CODE>:reader</CODE> and
 <CODE>:writer</CODE> elements of <CODE>spec</CODE> allows users of
 <CODE>define-binary-type</CODE> to include the elements in either order; if
 you required the <CODE>:reader</CODE> element to be always be first, you
@@ -953,7 +953,7 @@ could then have used <CODE>(rest (first spec))</CODE> to extract the reader
 and <CODE>(rest (second spec))</CODE> to extract the writer. However, as
 long as you require the <CODE>:reader</CODE> and <CODE>:writer</CODE> keywords to
 improve the readability of <CODE>define-binary-type</CODE> forms, you might
-as well use them to extract the correct data.</P><P><SUP>11</SUP>The ID3 format doesn't require the
+as well use them to extract the correct data.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>The ID3 format doesn't require the
 <CODE>parent-of-type</CODE> function since it's a relatively flat
 structure. This function comes into its own when you need to parse a
 format made up of many deeply nested structures whose parsing depends

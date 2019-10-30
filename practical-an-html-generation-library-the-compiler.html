@@ -226,7 +226,7 @@ Lisp. Special operators provide ways to express things in the
 language that can't be expressed in the language supported by the
 basic evaluation rule. Or, another way to look at it is that special
 operators provide access to the primitive mechanisms used by the
-language evaluator.<SUP>1</SUP></P><P>To take a simple example, in the FOO compiler, the language evaluator
+language evaluator.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><P>To take a simple example, in the FOO compiler, the language evaluator
 uses the <CODE>embed-value</CODE> function to generate code that will embed
 the value of a variable in the output HTML. However, because only
 symbols are passed to <CODE>embed-value</CODE>, there's no way, in the
@@ -352,7 +352,7 @@ write a function like this:</P><PRE>(defun foo-value (something)
 characters in <CODE>*element-escapes*</CODE>. But if you're planning to use
 <CODE>foo-value</CODE> like this:</P><PRE>(html (:p :style (foo-value 42) &quot;Foo&quot;))</PRE><P>then you want it to generate code that uses
 <CODE>*attribute-escapes*</CODE>. So, instead, you can write it like
-this:<SUP>2</SUP></P><PRE>(defun foo-value (something)
+this:<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP></P><PRE>(defun foo-value (something)
   (html (:attribute (:print (frob something)))))</PRE><P>The definition of <CODE>:attribute</CODE> looks like this:</P><PRE>(define-html-special-operator :attribute (processor &amp;rest body)
   (let ((*escapes* *attribute-escapes*))
     (loop for exp in body do (process processor exp))))</PRE><P>The next two special operators, <CODE>:print</CODE> and <CODE>:format</CODE>, are
@@ -433,7 +433,7 @@ function that can parse the parameter list given to
 of the <CODE>&amp;attributes</CODE> parameter, or <CODE><B>NIL</B></CODE> if there was none,
 and a list containing all the elements of <CODE>args</CODE> after removing
 the <CODE>&amp;attributes</CODE> marker and the subsequent list
-element.<SUP>3</SUP></P><PRE>(defun parse-html-macro-lambda-list (args)
+element.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP></P><PRE>(defun parse-html-macro-lambda-list (args)
   (let ((attr-cons (member '&amp;attributes args)))
     (values 
      (cadr attr-cons)
@@ -508,7 +508,7 @@ other hand, <CODE>define-html-special-operator</CODE> isn't part of the
 public API because it requires too much knowledge of FOO's internals
 to define a new special operator. And there should be very little
 that can't be done using the existing language and special
-operators.<SUP>4</SUP></P><P>One last element of the public API, before I get to <CODE>html</CODE>, is
+operators.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><P>One last element of the public API, before I get to <CODE>html</CODE>, is
 another macro, <CODE>in-html-style</CODE>. This macro controls whether FOO
 generates XHTML or regular HTML by setting the <CODE>*xhtml*</CODE>
 variable. The reason this needs to be a macro is because you'll want
@@ -597,17 +597,17 @@ next chapter I'll wrap things up, discussing briefly some topics that
 I haven't touched on elsewhere in the book such as how to find
 libraries, how to optimize Common Lisp code, and how to deliver Lisp
 applications.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>The analogy between FOO's special operators,
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>The analogy between FOO's special operators,
 and macros, which I'll discuss in the next section, and Lisp's own is
 fairly sound. In fact, understanding how FOO's special operators and
 macros work may give you some insight into why Common Lisp is put
-together the way it is.</P><P><SUP>2</SUP>The <CODE>:noescape</CODE> and <CODE>:attribute</CODE> special
+together the way it is.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>The <CODE>:noescape</CODE> and <CODE>:attribute</CODE> special
 operators must be defined as special operators because FOO determines
 what escapes to use at compile time, not at runtime. This allows FOO
 to escape literal values at compile time, which is much more
-efficient than having to scan all output at runtime.</P><P><SUP>3</SUP>Note that <CODE>&amp;attributes</CODE> is just another symbol;
+efficient than having to scan all output at runtime.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Note that <CODE>&amp;attributes</CODE> is just another symbol;
 there's nothing intrinsically special about names that start with
-<CODE>&amp;</CODE>.</P><P><SUP>4</SUP>The one element of the underlying language-processing
+<CODE>&amp;</CODE>.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>The one element of the underlying language-processing
 infrastructure that's not currently exposed through special operators
 is the indentation. If you wanted to make FOO more flexible, albeit
 at the cost of making its API that much more complex, you could add

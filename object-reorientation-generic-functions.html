@@ -1,5 +1,5 @@
 <HTML><HEAD><TITLE>Object Reorientation: Generic Functions</TITLE><LINK REL="stylesheet" TYPE="text/css" HREF="style.css"/></HEAD><BODY><DIV CLASS="copyright">Copyright &copy; 2003-2005, Peter Seibel</DIV><H1>16. Object Reorientation: Generic Functions</H1><P>Because the invention of Lisp predated the rise of object-oriented
-programming by a couple decades,<SUP>1</SUP> new Lispers are sometimes surprised to
+programming by a couple decades,<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> new Lispers are sometimes surprised to
 discover what a thoroughly object-oriented language Common Lisp is.
 Common Lisp's immediate predecessors were developed at a time when
 object orientation was an exciting new idea and there were many
@@ -22,7 +22,7 @@ ideas. On the other hand, if your experience with object orientation
 has been largely with a single language, you may find Common Lisp's
 approach somewhat foreign; you should try to avoid assuming that
 there's only one way for a language to support object
-orientation.<SUP>2</SUP> If you have little object-oriented
+orientation.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> If you have little object-oriented
 programming experience, you should have no trouble understanding the
 explanations here, though it may help to ignore the occasional
 comparisons to the way other languages do things.</P><A NAME="generic-functions-and-classes"><H2>Generic Functions and Classes</H2></A><P>The fundamental idea of object orientation is that a powerful way to
@@ -45,7 +45,7 @@ object orientation goes by the fancy Greek name <I>polymorphism</I>,
 meaning &quot;many forms,&quot; because a single conceptual operation, such as
 drawing an object, can take many different concrete forms.</P><P>Common Lisp, like most object-oriented languages today, is
 class-based; all objects are <I>instances</I> of a particular
-class.<SUP>3</SUP> The class of an object determines its
+class.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> The class of an object determines its
 representation--built-in classes such as <CODE><B>NUMBER</B></CODE> and <CODE><B>STRING</B></CODE>
 have opaque representations accessible only via the standard
 functions for manipulating those types, while instances of
@@ -57,7 +57,7 @@ superclasses and instances of a class are also considered instances of
 the superclasses. In Common Lisp, the hierarchy of classes has a
 single root, the class <CODE><B>T</B></CODE>, which is a direct or indirect
 superclass of every other class. Thus, every datum in Common Lisp is
-an instance of <CODE><B>T</B></CODE>.<SUP>4</SUP>
+an instance of <CODE><B>T</B></CODE>.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP>
 Common Lisp also supports <I>multiple inheritance</I>--a single class can
 have multiple direct superclasses.</P><P>Outside the Lisp family, almost all object-oriented languages follow
 the basic pattern established by Simula of having behavior associated
@@ -94,7 +94,7 @@ you might define a generic function, <CODE>draw</CODE>, that will be used
 to draw different kinds of shapes on the screen:</P><PRE>(defgeneric draw (shape)
   (:documentation &quot;Draw the given shape on the screen.&quot;))</PRE><P>I'll discuss the syntax of <CODE><B>DEFGENERIC</B></CODE> in the next section; for
 now just note that this definition doesn't contain any actual code.</P><P>A generic function is generic in the sense that it can--at least in
-theory--accept any objects as arguments.<SUP>5</SUP> However, by itself a generic function can't actually do
+theory--accept any objects as arguments.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> However, by itself a generic function can't actually do
 anything; if you just define a generic function, no matter what
 arguments you call it with, it will signal an error. The actual
 implementation of a generic function is provided by <I>methods</I>. Each
@@ -173,13 +173,13 @@ both users and implementers what it's for. Thus, you might define
 <CODE>withdraw</CODE> like this: </P><PRE>(defgeneric withdraw (account amount)
   (:documentation &quot;Withdraw the specified amount from the account.
 Signal an error if the current balance is less than amount.&quot;))</PRE><A NAME="defmethod"><H2>DEFMETHOD</H2></A><P>Now you're ready to use <CODE><B>DEFMETHOD</B></CODE> to define methods that
-implement <CODE>withdraw</CODE>.<SUP>6</SUP></P><P>A method's parameter list must be <I>congruent</I> with its generic
+implement <CODE>withdraw</CODE>.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P>A method's parameter list must be <I>congruent</I> with its generic
 function's. In this case, that means all methods defined on
 <CODE>withdraw</CODE> must have exactly two required parameters. More
 generally, methods must have the same number of required and optional
 parameters and must be capable of accepting any arguments
 corresponding to any <CODE><B>&amp;rest</B></CODE> or <CODE><B>&amp;key</B></CODE> parameters specified by
-the generic function.<SUP>7</SUP></P><P>Since the basics of withdrawing are the same for all accounts, you
+the generic function.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>Since the basics of withdrawing are the same for all accounts, you
 can define a method that specializes the <CODE>account</CODE> parameter on
 the <CODE>bank-account</CODE> class. You can assume the function
 <CODE>balance</CODE> returns the current balance of the account and can be
@@ -223,7 +223,7 @@ Such a method might look like this: </P><PRE>(defmethod withdraw ((account check
   (call-next-method))</PRE><P>The function <CODE><B>CALL-NEXT-METHOD</B></CODE> is part of the generic function
 machinery used to combine applicable methods. It indicates that
 control should be passed from this method to the method specialized
-on <CODE>bank-account</CODE>.<SUP>8</SUP>
+on <CODE>bank-account</CODE>.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP>
 When it's called with no arguments, as it is here, the next method is
 invoked with whatever arguments were originally passed to the generic
 function. It can also be called with arguments, which will then be
@@ -271,7 +271,7 @@ actual arguments it was passed. Second, the list of applicable
 methods is sorted according to the <I>specificity</I> of their parameter
 specializers. Finally, methods are taken in order from the sorted
 list and their code combined to produce the effective
-method.<SUP>9</SUP></P><P>To find applicable methods, the generic function compares the actual
+method.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP></P><P>To find applicable methods, the generic function compares the actual
 arguments with the corresponding parameter specializers in each of
 its methods. A method is applicable if, and only if, all the
 specializers are compatible with the corresponding arguments.</P><P>When the specializer is the name of a class, it's compatible if it
@@ -286,7 +286,7 @@ that explicitly specialize more than one parameter are called
 machinery needs to sort them before it can combine them into an
 effective method. To order two applicable methods, the generic
 function compares their parameter specializers from left to
-right,<SUP>10</SUP> and the first specializer that's different between the two
+right,<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP> and the first specializer that's different between the two
 methods determines their ordering, with the method with the more
 specific specializer coming first.</P><P>Because only applicable methods are being sorted, you know all class
 specializers will name classes that the corresponding argument is
@@ -507,7 +507,7 @@ need thirty different methods to implement all the combinations, with
 or without multimethods. What multimethods do save you from is having
 to write a bunch of dispatching code by letting you use the same
 built-in polymorphic dispatching that's so useful when dealing with
-methods specialized on a single parameter.<SUP>11</SUP></P><P>Multimethods also save you from having to tightly couple one set of
+methods specialized on a single parameter.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></P><P>Multimethods also save you from having to tightly couple one set of
 classes with the other. In the drum/stick example, nothing requires
 the implementation of the drum classes to know about the various
 classes of drumstick, and nothing requires the drumstick classes to
@@ -517,7 +517,7 @@ behavior without requiring any cooperation from the classes
 themselves. </P><A NAME="to-be-continued---"><H2>To Be Continued . . .</H2></A><P>I've covered the basics--and a bit beyond--of generic functions, the
 verbs of Common Lisp's object system. In the next chapter I'll show
 you how to define your own classes.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>The language now generally
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>The language now generally
 considered the first object-oriented language, Simula, was invented in
 the early 1960s, only a few years after McCarthy's first Lisp.
 However, object orientation didn't really take off until the 1980s
@@ -534,7 +534,7 @@ from the Smalltalk tradition, however, consider many features of C++
 to be just that, features of C++, and not core to object orientation.
 Indeed, Alan Kay, the inventor of Smalltalk, is reported to have said,
 &quot;I invented the term <I>object oriented</I>, and I can tell you that C++
-wasn't what I had in mind.&quot;</P><P><SUP>2</SUP>There are those who reject the notion that Common
+wasn't what I had in mind.&quot;</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>There are those who reject the notion that Common
 Lisp is in fact object oriented at all. In particular, folks who
 consider strict data encapsulation a key characteristic of object
 orientation--usually advocates of relatively static languages such as
@@ -545,39 +545,39 @@ object oriented either. On the other hand, folks who consider message
 passing to be the key to object orientation will also not be happy
 with the claim that Common Lisp is object oriented since Common
 Lisp's generic function orientation provides degrees of freedom not
-offered by pure message passing.</P><P><SUP>3</SUP>Prototype-based languages are the other style of
+offered by pure message passing.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Prototype-based languages are the other style of
 object-oriented language. In these languages, JavaScript being
 perhaps the most famous example, objects are created by cloning a
 prototypical object. The clone can then be modified and used as a
-prototype for other objects.</P><P><SUP>4</SUP><CODE><B>T</B></CODE> the constant value and <CODE><B>T</B></CODE> the
+prototype for other objects.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP><CODE><B>T</B></CODE> the constant value and <CODE><B>T</B></CODE> the
 class have no particular relationship except they happen to have the
 same name. <CODE><B>T</B></CODE> the value is a direct instance of the class
-<CODE><B>SYMBOL</B></CODE> and only indirectly an instance of <CODE><B>T</B></CODE> the class.</P><P><SUP>5</SUP>Here, as elsewhere,
+<CODE><B>SYMBOL</B></CODE> and only indirectly an instance of <CODE><B>T</B></CODE> the class.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Here, as elsewhere,
 <I>object</I> means any Lisp datum--Common Lisp doesn't distinguish, as
 some languages do, between objects and &quot;primitive&quot; data types; all
 data in Common Lisp are objects, and every object is an instance of a
-class.</P><P><SUP>6</SUP>Technically you could skip the
+class.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Technically you could skip the
 <CODE><B>DEFGENERIC</B></CODE> altogether--if you define a method with
 <CODE><B>DEFMETHOD</B></CODE> and no such generic function has been defined, one is
 automatically created. But it's good form to define generic functions
 explicitly, if only because it gives you a good place to document the
-intended behavior.</P><P><SUP>7</SUP>A method can &quot;accept&quot; <CODE><B>&amp;key</B></CODE> and
+intended behavior.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>A method can &quot;accept&quot; <CODE><B>&amp;key</B></CODE> and
 <CODE><B>&amp;rest</B></CODE> arguments defined in its generic function by having a
 <CODE><B>&amp;rest</B></CODE> parameter, by having the same <CODE><B>&amp;key</B></CODE> parameters, or by
 specifying <CODE><B>&amp;allow-other-keys</B></CODE> along with <CODE><B>&amp;key</B></CODE>. A method can
 also specify <CODE><B>&amp;key</B></CODE> parameters not found in the generic function's
 parameter list--when the generic function is called, any <CODE><B>&amp;key</B></CODE>
 parameter specified by the generic function or any applicable method
-will be accepted.</P><P><SUP>8</SUP><CODE><B>CALL-NEXT-METHOD</B></CODE> is roughly
+will be accepted.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP><CODE><B>CALL-NEXT-METHOD</B></CODE> is roughly
 analogous to invoking a method on <CODE>super</CODE> in Java or using an
-explicitly class-qualified method or function name in Python or C++.</P><P><SUP>9</SUP>While building the effective method sounds
+explicitly class-qualified method or function name in Python or C++.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>While building the effective method sounds
 time-consuming, quite a bit of the effort in developing fast Common
 Lisp implementations has gone into making it efficient. One strategy
 is to cache the effective method so future calls with the same
-argument types will be able to proceed directly.</P><P><SUP>10</SUP>Actually, the order in which specializers are compared is
+argument types will be able to proceed directly.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>Actually, the order in which specializers are compared is
 customizable via the <CODE><B>DEFGENERIC</B></CODE> option
 <CODE>:argument-precedence-order</CODE>, though that option is rarely
-used.</P><P><SUP>11</SUP>In languages without
+used.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>In languages without
 multimethods, you must write dispatching code yourself to implement
 behavior that depends on the class of more than one object. The
 purpose of the popular Visitor design pattern is to structure a

@@ -17,14 +17,14 @@ mistake to focus too much on lists; while they're a crucial data
 structure for representing Lisp code as Lisp data, in many situations
 other data structures are more appropriate.</P><P>To keep lists from stealing the show, in this chapter I'll focus on
 Common Lisp's other collection types: vectors and hash
-tables.<SUP>1</SUP> However,
+tables.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> However,
 vectors and lists share enough characteristics that Common Lisp
 treats them both as subtypes of a more general abstraction, the
 sequence. Thus, you can use many of the functions I'll discuss in
 this chapter with both vectors and lists. </P><A NAME="vectors"><H2>Vectors</H2></A><P>Vectors are Common Lisp's basic integer-indexed collection, and they
 come in two flavors. Fixed-size vectors are a lot like arrays in a
 language such as Java: a thin veneer over a chunk of contiguous
-memory that holds the vector's elements.<SUP>2</SUP> Resizable vectors, on the other hand,
+memory that holds the vector's elements.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> Resizable vectors, on the other hand,
 are more like arrays in Perl or Ruby, lists in Python, or the
 ArrayList class in Java: they abstract the actual storage, allowing
 the vector to grow and shrink as elements are added and removed.</P><P>You can make fixed-size vectors containing specific values with the
@@ -45,7 +45,7 @@ one-dimensional array, this list will contain one number, the size of
 the vector. As a convenience, <CODE><B>MAKE-ARRAY</B></CODE> will also accept a
 plain number in the place of a one-item list. With no other
 arguments, <CODE><B>MAKE-ARRAY</B></CODE> will create a vector with uninitialized
-elements that must be set before they can be accessed.<SUP>3</SUP> To create a
+elements that must be set before they can be accessed.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> To create a
 vector with the elements all set to a particular value, you can pass
 an <CODE>:initial-element</CODE> argument. Thus, to make a five-element
 vector with its elements initialized to <CODE><B>NIL</B></CODE>, you can write the
@@ -85,7 +85,7 @@ be resized as needed. To add elements to an adjustable vector, you
 use <CODE><B>VECTOR-PUSH-EXTEND</B></CODE>, which works just like <CODE><B>VECTOR-PUSH</B></CODE>
 except it will automatically expand the array if you try to push an
 element onto a full vector--one whose fill pointer is equal to the
-size of the underlying storage.<SUP>4</SUP> </P><A NAME="subtypes-of-vector"><H2>Subtypes of Vector</H2></A><P>All the vectors you've dealt with so far have been <I>general</I>
+size of the underlying storage.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> </P><A NAME="subtypes-of-vector"><H2>Subtypes of Vector</H2></A><P>All the vectors you've dealt with so far have been <I>general</I>
 vectors that can hold any type of object. It's also possible to
 create <I>specialized</I> vectors that are restricted to holding certain
 types of elements. One reason to use specialized vectors is they may
@@ -161,7 +161,7 @@ as the item argument. You can change this in two ways: First, you can
 use the <CODE>:test</CODE> keyword to pass a function that accepts two
 arguments and returns a boolean. If provided, it will be used to
 compare <I>item</I> to each element instead of the default object
-equality test, <CODE><B>EQL</B></CODE>.<SUP>5</SUP> Second, with the <CODE>:key</CODE> keyword you can pass a one-argument
+equality test, <CODE><B>EQL</B></CODE>.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> Second, with the <CODE>:key</CODE> keyword you can pass a one-argument
 function to be called on each element of the sequence to extract a
 <I>key</I> value, which will then be compared to the item in the place of
 the element itself. Note, however, that functions such as <CODE><B>FIND</B></CODE>
@@ -171,7 +171,7 @@ element, not just the extracted key.</P><PRE>(count &quot;foo&quot; #(&quot;foo&
 of the sequence argument, you can provide bounding indices with
 <CODE>:start</CODE> and <CODE>:end</CODE> arguments. Passing <CODE><B>NIL</B></CODE> for
 <CODE>:end</CODE> or omitting it is the same as specifying the length of
-the sequence.<SUP>6</SUP></P><P>If a non-<CODE><B>NIL</B></CODE> <CODE>:from-end</CODE> argument is provided, then the
+the sequence.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P>If a non-<CODE><B>NIL</B></CODE> <CODE>:from-end</CODE> argument is provided, then the
 elements of the sequence will be examined in reverse order. By itself
 <CODE>:from-end</CODE> can affect the results of only <CODE><B>FIND</B></CODE> and
 <CODE><B>POSITION</B></CODE>. For instance:</P><PRE>(find 'a #((a 10) (b 20) (a 30) (b 40)) :key #'first)             ==&gt; (A 10)
@@ -221,10 +221,10 @@ likely the deprecation will be removed than the <CODE><B>-IF-NOT</B></CODE>
 functions. For one thing, the <CODE><B>REMOVE-IF-NOT</B></CODE> variant is probably
 used more often than <CODE><B>REMOVE-IF</B></CODE>. Despite its negative-sounding
 name, <CODE><B>REMOVE-IF-NOT</B></CODE> is actually the positive variant--it returns
-the elements that <I>do</I> satisfy the predicate. <SUP>7</SUP></P><P>The <CODE>-IF</CODE> and <CODE>-IF-NOT</CODE> variants accept all the same
+the elements that <I>do</I> satisfy the predicate. <SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>The <CODE>-IF</CODE> and <CODE>-IF-NOT</CODE> variants accept all the same
 keyword arguments as their vanilla counterparts except for
 <CODE>:test</CODE>, which isn't needed since the main argument is already a
-function.<SUP>8</SUP> With a <CODE>:key</CODE> argument, the value extracted by the <CODE>:key</CODE>
+function.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> With a <CODE>:key</CODE> argument, the value extracted by the <CODE>:key</CODE>
 function is passed to the function instead of the actual element.</P><PRE>(count-if #'evenp #((1 a) (2 b) (3 c) (4 d) (5 e)) :key #'first)     ==&gt; 2
 
 (count-if-not #'evenp #((1 a) (2 b) (3 c) (4 d) (5 e)) :key #'first) ==&gt; 3
@@ -251,7 +251,7 @@ explicitly what kind of sequence to produce in case the arguments are
 of different types. Its first argument is a type descriptor, like the
 <CODE>:element-type</CODE> argument to <CODE><B>MAKE-ARRAY</B></CODE>. In this case, the
 type descriptors you'll most likely use are the symbols <CODE><B>VECTOR</B></CODE>,
-<CODE><B>LIST</B></CODE>, or <CODE><B>STRING</B></CODE>.<SUP>9</SUP> For example: </P><PRE>(concatenate 'vector #(1 2 3) '(4 5 6))    ==&gt; #(1 2 3 4 5 6)
+<CODE><B>LIST</B></CODE>, or <CODE><B>STRING</B></CODE>.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP> For example: </P><PRE>(concatenate 'vector #(1 2 3) '(4 5 6))    ==&gt; #(1 2 3 4 5 6)
 (concatenate 'list #(1 2 3) '(4 5 6))      ==&gt; (1 2 3 4 5 6)
 (concatenate 'string &quot;abc&quot; '(#\d #\e #\f)) ==&gt; &quot;abcdef&quot;</PRE><A NAME="sorting-and-merging"><H2>Sorting and Merging</H2></A><P>The functions <CODE><B>SORT</B></CODE> and <CODE><B>STABLE-SORT</B></CODE> provide two ways of
 sorting a sequence. They both take a sequence and a two-argument
@@ -270,7 +270,7 @@ in the next chapter.</P><P>Typically you won't care about the unsorted version o
 after you've sorted it, so it makes sense to allow <CODE><B>SORT</B></CODE> and
 <CODE><B>STABLE-SORT</B></CODE> to destroy the sequence in the course of sorting it.
 But it does mean you need to remember to write the
-following:<SUP>10</SUP></P><PRE>(setf my-sequence (sort my-sequence #'string&lt;))</PRE><P>rather than just this:</P><PRE>(sort my-sequence #'string&lt;)</PRE><P>Both these functions also take a keyword argument, <CODE>:key</CODE>,
+following:<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP></P><PRE>(setf my-sequence (sort my-sequence #'string&lt;))</PRE><P>rather than just this:</P><PRE>(sort my-sequence #'string&lt;)</PRE><P>Both these functions also take a keyword argument, <CODE>:key</CODE>,
 which, like the <CODE>:key</CODE> argument in other sequence functions,
 should be a function and will be used to extract the values to be
 passed to the sorting predicate in the place of the actual elements.
@@ -403,7 +403,7 @@ that use the standard equivalence functions, most implementations
 provide some mechanism for defining custom hash tables.</P><P>The <CODE><B>GETHASH</B></CODE> function provides access to the elements of a hash
 table. It takes two arguments--a key and the hash table--and returns
 the value, if any, stored in the hash table under that key or
-<CODE><B>NIL</B></CODE>.<SUP>11</SUP> For example: </P><PRE>(defparameter *h* (make-hash-table))
+<CODE><B>NIL</B></CODE>.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP> For example: </P><PRE>(defparameter *h* (make-hash-table))
 
 (gethash 'foo *h*) ==&gt; NIL
 
@@ -452,7 +452,7 @@ with two exceptions: you can use <CODE><B>SETF</B></CODE> with <CODE><B>GETHASH<
 change the value of the current entry, and you can use <CODE><B>REMHASH</B></CODE>
 to remove the current entry. For instance, to remove all the entries
 whose value is less than ten, you could write this:</P><PRE>(maphash #'(lambda (k v) (when (&lt; v 10) (remhash k *h*))) *h*)</PRE><P>The other way to iterate over a hash table is with the extended
-<CODE><B>LOOP</B></CODE> macro, which I'll discuss in Chapter 22.<SUP>12</SUP> The <CODE><B>LOOP</B></CODE> equivalent of the first <CODE><B>MAPHASH</B></CODE>
+<CODE><B>LOOP</B></CODE> macro, which I'll discuss in Chapter 22.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP> The <CODE><B>LOOP</B></CODE> equivalent of the first <CODE><B>MAPHASH</B></CODE>
 expression would look like this:</P><PRE>(loop for k being the hash-keys in *h* using (hash-value v)
   do (format t &quot;~a =&gt; ~a~%&quot; k v))</PRE><P>I could say a lot more about the nonlist collections supported by
 Common Lisp. For instance, I haven't discussed multidimensional
@@ -460,16 +460,16 @@ arrays at all or the library of functions for manipulating bit
 arrays. However, what I've covered in this chapter should suffice for
 most of your general-purpose programming needs. Now it's finally time
 to look at Lisp's eponymous data structure: lists. 
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Once you're familiar with all the data types Common Lisp
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Once you're familiar with all the data types Common Lisp
 offers, you'll also see that lists can be useful for prototyping data
 structures that will later be replaced with something more efficient
-once it becomes clear how exactly the data is to be used.</P><P><SUP>2</SUP>Vectors are called
+once it becomes clear how exactly the data is to be used.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Vectors are called
 <I>vectors</I>, not <I>arrays</I> as their analogs in other languages are,
 because Common Lisp supports true multidimensional arrays. It's
 equally correct, though more cumbersome, to refer to them as
-<I>one-dimensional arrays</I>.</P><P><SUP>3</SUP>Array
+<I>one-dimensional arrays</I>.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Array
 elements &quot;must&quot; be set before they're accessed in the sense that the
-behavior is undefined; Lisp won't necessarily stop you.</P><P><SUP>4</SUP>While frequently used together,
+behavior is undefined; Lisp won't necessarily stop you.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>While frequently used together,
 the <CODE>:fill-pointer</CODE> and <CODE>:adjustable</CODE> arguments are
 independent--you can make an adjustable array without a fill
 pointer. However, you can use <CODE><B>VECTOR-PUSH</B></CODE> and <CODE><B>VECTOR-POP</B></CODE>
@@ -477,20 +477,20 @@ only with vectors that have a fill pointer and
 <CODE><B>VECTOR-PUSH-EXTEND</B></CODE> only with vectors that have a fill pointer
 and are adjustable. You can also use the function <CODE><B>ADJUST-ARRAY</B></CODE>
 to modify adjustable arrays in a variety of ways beyond just
-extending the length of a vector.</P><P><SUP>5</SUP>Another parameter, <CODE>:test-not</CODE>
+extending the length of a vector.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Another parameter, <CODE>:test-not</CODE>
 parameter, specifies a two-argument predicate to be used like a
 <CODE>:test</CODE> argument except with the boolean result logically
 reversed. This parameter is deprecated, however, in preference for
 using the <CODE><B>COMPLEMENT</B></CODE> function. <CODE><B>COMPLEMENT</B></CODE> takes a function
 argu-ment and returns a function that takes the same number of
 arguments as the original and returns the logical complement of the
-original function. Thus, you can, and should, write this:</P><PRE>(count x sequence :test (complement #'some-test))</PRE><P>rather than the following:</P><PRE>(count x sequence :test-not #'some-test)</PRE><P><SUP>6</SUP>Note, however, that the effect of <CODE>:start</CODE>
+original function. Thus, you can, and should, write this:</P><PRE>(count x sequence :test (complement #'some-test))</PRE><P>rather than the following:</P><PRE>(count x sequence :test-not #'some-test)</PRE><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Note, however, that the effect of <CODE>:start</CODE>
 and <CODE>:end</CODE> on <CODE><B>REMOVE</B></CODE> and <CODE><B>SUBSTITUTE</B></CODE> is only to limit
 the elements they consider for removal or substitution; elements
 before <CODE>:start</CODE> and after <CODE>:end</CODE> will be passed through
-untouched.</P><P><SUP>7</SUP>This same
+untouched.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>This same
 functionality goes by the name <CODE>grep</CODE> in Perl and <CODE>filter</CODE>
-in Python.</P><P><SUP>8</SUP>The difference between the predicates passed as
+in Python.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>The difference between the predicates passed as
 <CODE>:test</CODE> arguments and as the function arguments to the
 <CODE>-IF</CODE> and <CODE>-IF-NOT</CODE> functions is that the <CODE>:test</CODE>
 predicates are two-argument predicates used to compare the elements
@@ -500,18 +500,18 @@ the individual elements of the sequence. If the vanilla variants
 didn't exist, you could implement them in terms of the -IF versions
 by embedding a specific item in the test function.</P><PRE>(count char string) ===
   (count-if #'(lambda (c) (eql char c)) string)</PRE><PRE>(count char string :test #'CHAR-EQUAL) ===
-  (count-if #'(lambda (c) (char-equal char c)) string)</PRE><P><SUP>9</SUP>If you tell <CODE><B>CONCATENATE</B></CODE> to
+  (count-if #'(lambda (c) (char-equal char c)) string)</PRE><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>If you tell <CODE><B>CONCATENATE</B></CODE> to
 return a specialized vector, such as a string, all the elements of
 the argument sequences must be instances of the vector's element
-type.</P><P><SUP>10</SUP>When the sequence passed to the sorting functions is
+type.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>When the sequence passed to the sorting functions is
 a vector, the &quot;destruction&quot; is actually guaranteed to entail
 permuting the elements in place, so you could get away without saving
 the returned value. However, it's good style to always do something
 with the return value since the sorting functions can modify lists in
-much more arbitrary ways.</P><P><SUP>11</SUP>By an accident of history, the order of arguments to
+much more arbitrary ways.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>By an accident of history, the order of arguments to
 <CODE><B>GETHASH</B></CODE> is the opposite of <CODE><B>ELT</B></CODE>--<CODE><B>ELT</B></CODE> takes the
 collection first and then the index while <CODE><B>GETHASH</B></CODE> takes the key
-first and then the collection.</P><P><SUP>12</SUP><CODE><B>LOOP</B></CODE>'s
+first and then the collection.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP><CODE><B>LOOP</B></CODE>'s
 hash table iteration is typically implemented on top of a more
 primitive form, <CODE><B>WITH-HASH-TABLE-ITERATOR</B></CODE>, that you don't need to
 worry about; it was added to the language specifically to support

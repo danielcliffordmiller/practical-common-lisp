@@ -35,14 +35,14 @@ are strings containing literal HTML. Language processors for this
 (defmacro html (html)
   &quot;A compiler for the literal HTML language.&quot;
   `(write-sequence ,html *html-output*))</PRE><P>This &quot;language&quot; is highly expressive since it can express <I>any</I>
-HTML you could possibly want to generate.<SUP>1</SUP> On the other hand, this language doesn't win a lot of
+HTML you could possibly want to generate.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> On the other hand, this language doesn't win a lot of
 points for its concision because it gives you zero compression--its
 input <I>is</I> its output.</P><P>To design a language that gives you some useful compression without
 sacrificing too much expressiveness, you need to identify the details
 of the output that are either redundant or uninteresting. You can
 then make those aspects of the output implicit in the semantics of
 the language.</P><P>For instance, because of the structure of HTML, every opening tag is
-paired with a matching closing tag.<SUP>2</SUP> When you write
+paired with a matching closing tag.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> When you write
 HTML by hand, you have to write those closing tags, but you can
 improve the concision of your HTML-generating language by making the
 closing tags implicit.</P><P>Another way you can gain concision at a slight cost in expressiveness
@@ -71,7 +71,7 @@ two FOO language processors--the interpreter, in this chapter, and
 the compiler, in the next.</P><P>Like Lisp itself, the basic syntax of the FOO language is defined in
 terms of forms made up of Lisp objects. The language defines how each
 legal FOO form is translated into HTML.</P><P>The simplest FOO forms are self-evaluating Lisp objects such as
-strings, numbers, and keyword symbols.<SUP>3</SUP> You'll need a function <CODE>self-evaluating-p</CODE> that
+strings, numbers, and keyword symbols.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> You'll need a function <CODE>self-evaluating-p</CODE> that
 tests whether a given object is self-evaluating for FOO's purposes.</P><PRE>(defun self-evaluating-p (form)
   (and (atom form) (if (symbolp form) (keywordp form) t)))</PRE><P>Objects that satisfy this predicate will be emitted by converting
 them to strings with <CODE><B>PRINC-TO-STRING</B></CODE> and then escaping any
@@ -85,7 +85,7 @@ information that describe each element are the tag, a set of
 attributes, and a body containing text and/or more HTML elements.
 Thus, you need a way to represent these three pieces of information
 as Lisp objects, preferably ones that the Lisp reader already knows
-how to read.<SUP>4</SUP> If you forget about attributes for a moment, there's an
+how to read.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> If you forget about attributes for a moment, there's an
 obvious mapping between Lisp lists and HTML elements: any HTML
 element can be represented by a list whose <CODE><B>FIRST</B></CODE> is a symbol
 where the name is the name of the element's tag and whose <CODE><B>REST</B></CODE>
@@ -325,7 +325,7 @@ printer generates pretty output only when the dynamic variable
 <CODE>*pretty*</CODE> is true. When it's <CODE><B>NIL</B></CODE>, you should generate
 compact HTML with no unnecessary whitespace. So, these methods, with
 the exception of <CODE>newline</CODE>, all check <CODE>*pretty*</CODE> before
-doing anything:<SUP>5</SUP></P><PRE>(defmethod newline ((pp html-pretty-printer))
+doing anything:<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><PRE>(defmethod newline ((pp html-pretty-printer))
   (emit-newline (printer pp)))
 
 (defmethod freshline ((pp html-pretty-printer))
@@ -469,7 +469,7 @@ line. The following three parameters list the elements of each type:</P><PRE>(de
     :i :img :ins :kbd :label :legend :q :samp :small :span :strong :sub
     :sup :tt :var))</PRE><P>The functions <CODE>block-element-p</CODE> and <CODE>paragraph-element-p</CODE>
 test whether a given tag is a member of the corresponding
-list.<SUP>6</SUP></P><PRE>(defun block-element-p (tag) (find tag *block-elements*))
+list.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><PRE>(defun block-element-p (tag) (find tag *block-elements*))
 
 (defun paragraph-element-p (tag) (find tag *paragraph-elements*))</PRE><P>Two other categorizations with their own predicates are the elements
 that are always empty, such as <CODE>br</CODE> and <CODE>hr</CODE>, and the three
@@ -516,7 +516,7 @@ they must be keyword symbols, but you should invoke the top-level
 specifying boolean attributes, whose value should be the name of the
 attribute, if the value is <CODE><B>T</B></CODE>--not just any true value but
 actually <CODE><B>T</B></CODE>--then you replace the value with the name of the
-attribute.<SUP>7</SUP></P><PRE>(defun emit-attributes (processor attributes)
+attribute.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><PRE>(defun emit-attributes (processor attributes)
   (loop for (k v) on attributes by #'cddr do
        (raw-string processor (format nil &quot; ~(~a~)='&quot; k))
        (let ((*escapes* *attribute-escapes*))
@@ -572,24 +572,24 @@ compiles FOO expressions into Common Lisp so you can embed HTML
 generation code directly into your Lisp programs. You'll also extend
 the FOO language to make it a bit more expressive by adding its own
 flavor of special operators and macros.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>In fact, it's probably
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>In fact, it's probably
 <I>too</I> expressive since it can also generate all sorts of output
 that's not even vaguely legal HTML. Of course, that might be a
 feature if you need to generate HTML that's not strictly correct to
 compensate for buggy Web browsers. Also, it's common for language
 processors to accept programs that are syntactically correct and
 otherwise well formed that'll nonetheless provoke undefined behavior
-when run.</P><P><SUP>2</SUP>Well, almost every tag.
+when run.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Well, almost every tag.
 Certain tags such as <CODE>IMG</CODE> and <CODE>BR</CODE> don't. You'll deal with
-those in the section &quot;The Basic Evaluation Rule.&quot;</P><P><SUP>3</SUP>In the strict language of
+those in the section &quot;The Basic Evaluation Rule.&quot;</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>In the strict language of
 the Common Lisp standard, keyword symbols aren't <I>self-evaluating</I>,
 though they do, in fact, evaluate to themselves. See section
 3.1.2.1.3 of the language standard or HyperSpec for a brief
-discussion.</P><P><SUP>4</SUP>The requirement to use objects that the Lisp reader
+discussion.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>The requirement to use objects that the Lisp reader
 knows how to read isn't a hard-and-fast one. Since the Lisp reader is
 itself customizable, you could also define a new reader-level syntax
 for a new kind of object. But that tends to be more trouble than it's
-worth.</P><P><SUP>5</SUP>Another, more purely object-oriented, approach
+worth.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Another, more purely object-oriented, approach
 would be to define two classes, perhaps <CODE>html-pretty-printer</CODE>
 and <CODE>html-raw-printer</CODE>, and then define no-op methods
 specialized on <CODE>html-raw-printer</CODE> for the methods that should do
@@ -597,9 +597,9 @@ stuff only when <CODE>*pretty*</CODE> is true. However, in this case, after
 defining all the no-op methods, you'd end up with more code, and then
 you'd have the hassle of making sure you created an instance of the
 right class at the right time. But in general, using polymorphism to
-replace conditionals is a good strategy.</P><P><SUP>6</SUP>You don't need a predicate for <CODE>*inline-elements*</CODE>
+replace conditionals is a good strategy.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>You don't need a predicate for <CODE>*inline-elements*</CODE>
 since you only ever test for block and paragraph elements. I include
-the parameter here for completeness.</P><P><SUP>7</SUP>While XHTML requires boolean attributes to be notated
+the parameter here for completeness.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>While XHTML requires boolean attributes to be notated
 with their name as the value to indicate a true value, in HTML it's
 also legal to simply include the name of the attribute with no value,
 for example, <CODE><B>&lt;option selected&gt;</B></CODE> rather than <CODE><B>&lt;option

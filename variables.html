@@ -1,10 +1,10 @@
 <HTML><HEAD><TITLE>Variables</TITLE><LINK REL="stylesheet" TYPE="text/css" HREF="style.css"/></HEAD><BODY><DIV CLASS="copyright">Copyright &copy; 2003-2005, Peter Seibel</DIV><H1>6. Variables</H1><P>The next basic building block we need to look at are variables.
 Common Lisp supports two kinds of variables: lexical and
-dynamic.<SUP>1</SUP> These two
+dynamic.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> These two
 types correspond roughly to &quot;local&quot; and &quot;global&quot; variables in other
 languages. However, the correspondence is only approximate. On one
 hand, some languages' &quot;local&quot; variables are in fact much like Common
-Lisp's dynamic variables.<SUP>2</SUP> And on the other,
+Lisp's dynamic variables.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> And on the other,
 some languages' local variables are <I>lexically scoped</I> without
 providing all the capabilities provided by Common Lisp's lexical
 variables. In particular, not all languages that provide lexically
@@ -26,8 +26,8 @@ dynamically. For instance, if you pass something other than a number
 to the <CODE><B>+</B></CODE> function, Common Lisp will signal a type error. On the
 other hand, Common Lisp <I>is</I> a <I>strongly typed</I> language in the
 sense that all type errors will be detected--there's no way to treat
-an object as an instance of a class that it's not.<SUP>3</SUP></P><P>All values in Common Lisp are, conceptually at least, references to
-objects.<SUP>4</SUP>
+an object as an instance of a class that it's not.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP></P><P>All values in Common Lisp are, conceptually at least, references to
+objects.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP>
 Consequently, assigning a variable a new value changes <I>what</I>
 object the variable refers to but has no effect on the previously
 referenced object. However, if a variable holds a reference to a
@@ -46,7 +46,7 @@ different bindings during a run of the program. A single variable can
 even have multiple bindings at the same time; parameters to a
 recursive function, for example, are rebound for each call to the
 function.</P><P>As with all Common Lisp variables, function parameters hold object
-references.<SUP>5</SUP> Thus, you
+references.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> Thus, you
 can assign a new value to a function parameter within the body of the
 function, and it will not affect the bindings created for another
 call to the same function. But if the object passed to a function is
@@ -68,7 +68,7 @@ created bindings. After the <CODE><B>LET</B></CODE>, the names refer to whatever
 anything, they referred to before the <CODE><B>LET</B></CODE>. </P><P>The value of the last expression in the body is returned as the value
 of the <CODE><B>LET</B></CODE> expression. Like function parameters, variables
 introduced with <CODE><B>LET</B></CODE> are rebound each time the <CODE><B>LET</B></CODE> is
-entered.<SUP>6</SUP> </P><P>The <I>scope</I> of function parameters and <CODE><B>LET</B></CODE> variables--the area
+entered.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> </P><P>The <I>scope</I> of function parameters and <CODE><B>LET</B></CODE> variables--the area
 of the program where the variable name can be used to refer to the
 variable's binding--is delimited by the form that introduces the
 variable. This form--the function definition or the <CODE><B>LET</B></CODE>--is
@@ -167,7 +167,7 @@ that you can refer to from anywhere in your program. While it's true
 that indiscriminate use of global variables can turn code into
 spaghetti nearly as quickly as unrestrained use of <CODE>goto</CODE>,
 global variables do have legitimate uses and exist in one form or
-another in almost every programming language.<SUP>7</SUP> And as you'll see
+another in almost every programming language.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP> And as you'll see
 in a moment, Lisp's version of global variables, dynamic variables,
 are both more useful and more manageable.</P><P>Common Lisp provides two ways to create global variables: <CODE><B>DEFVAR</B></CODE>
 and <CODE><B>DEFPARAMETER</B></CODE>. Both forms take a variable name, an initial
@@ -193,7 +193,7 @@ two variables defined previously are part of an application for
 controlling a widget factory. It's appropriate to define the
 <CODE>*count*</CODE> variable with <CODE><B>DEFVAR</B></CODE> because the number of
 widgets made so far isn't invalidated just because you make some
-changes to the widget-making code.<SUP>8</SUP> </P><P>On the other hand, the variable <CODE>*gap-tolerance*</CODE> presumably has
+changes to the widget-making code.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> </P><P>On the other hand, the variable <CODE>*gap-tolerance*</CODE> presumably has
 some effect on the behavior of the widget-making code itself. If you
 decide you need a tighter or looser tolerance and change the value in
 the <CODE><B>DEFPARAMETER</B></CODE> form, you'd like the change to take effect when
@@ -217,7 +217,7 @@ send their output to the file.</P><P>This works fine until you forget to set <CO
 to the original stream when you're done. If you forget to reset
 <CODE>*standard-output*</CODE>, all the other code in the program that uses
 <CODE>*standard-output*</CODE> will also send its output to the
-file.<SUP>9</SUP></P><P>What you really want, it seems, is a way to wrap a piece of code in
+file.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP></P><P>What you really want, it seems, is a way to wrap a piece of code in
 something that says, &quot;All code below here--all the functions it
 calls, all the functions they call, and so on, down to the
 lowest-level functions--should use <I>this</I> value for the global
@@ -231,7 +231,7 @@ replaces the global binding for the duration of the binding form.
 Unlike a lexical binding, which can be referenced by code only within
 the lexical scope of the binding form, a dynamic binding can be
 referenced by any code that's invoked during the execution of the
-binding form.<SUP>10</SUP> And it
+binding form.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP> And it
 turns out that all global variables are, in fact, dynamic variables.</P><P>Thus, if you want to temporarily redefine <CODE>*standard-output*</CODE>,
 the way to do it is simply to rebind it, say, with a <CODE><B>LET</B></CODE>. </P><PRE>(let ((*standard-output* *some-other-stream*))
   (stuff))</PRE><P>In any code that runs as a result of the call to <CODE>stuff</CODE>,
@@ -245,7 +245,7 @@ binding shadows all other bindings. Conceptually, each new binding
 for a given dynamic variable is pushed onto a stack of bindings for
 that variable, and references to the variable always use the most
 recent binding. As binding forms return, the bindings they created
-are popped off the stack, exposing previous bindings.<SUP>11</SUP></P><P>A simple example shows how this works. </P><PRE>(defvar *x* 10)
+are popped off the stack, exposing previous bindings.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></P><P>A simple example shows how this works. </P><PRE>(defvar *x* 10)
 (defun foo () (format t &quot;X: ~d~%&quot; *x*))</PRE><P>The <CODE><B>DEFVAR</B></CODE> creates a global binding for the variable <CODE>*x*</CODE>
 with the value 10. The reference to <CODE>*x*</CODE> in <CODE>foo</CODE> will
 look up the current binding dynamically. If you call <CODE>foo</CODE> from
@@ -295,7 +295,7 @@ call can see the global binding again and increments it from 12 to
 13. </P><P>So how does this work? How does <CODE><B>LET</B></CODE> know that when it binds
 <CODE>*x*</CODE> it's supposed to create a dynamic binding rather than a
 normal lexical binding? It knows because the name has been declared
-<I>special</I>.<SUP>12</SUP> The name of every variable defined
+<I>special</I>.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP> The name of every variable defined
 with <CODE><B>DEFVAR</B></CODE> and <CODE><B>DEFPARAMETER</B></CODE> is automatically declared
 globally special. This means whenever you use such a name in a
 binding form--in a <CODE><B>LET</B></CODE> or as a function parameter or any other
@@ -313,7 +313,7 @@ binding form, you declare a name special, then the binding created
 for that variable will be dynamic rather than lexical. Other code can
 locally declare a name special in order to refer to the dynamic
 binding. However, locally special variables are relatively rare, so
-you needn't worry about them.<SUP>13</SUP></P><P>Dynamic bindings make global variables much more manageable, but it's
+you needn't worry about them.<SUP ID="fn-top-13"><A HREF="#fn-bot-13">13</A></SUP></P><P>Dynamic bindings make global variables much more manageable, but it's
 important to notice they still allow action at a distance. Binding a
 global variable has two at a distance effects--it can change the
 behavior of downstream code, and it also opens the possibility that
@@ -329,7 +329,7 @@ rebound with any other binding form. Thus, many Lisp programmers
 follow a naming convention of using names starting and ending with
 <CODE>+</CODE> for constants. This convention is somewhat less universally
 followed than the <CODE>*</CODE>-naming convention for globally special
-names but is a good idea for the same reason.<SUP>14</SUP> </P><P>Another thing to note about <CODE><B>DEFCONSTANT</B></CODE> is that while the
+names but is a good idea for the same reason.<SUP ID="fn-top-14"><A HREF="#fn-bot-14">14</A></SUP> </P><P>Another thing to note about <CODE><B>DEFCONSTANT</B></CODE> is that while the
 language allows you to redefine a constant by reevaluating a
 <CODE><B>DEFCONSTANT</B></CODE> with a different initial-value-form, what exactly
 happens after the redefinition isn't defined. In practice, most
@@ -349,7 +349,7 @@ as follows:</P><PRE>(setf <I>place</I> <I>value</I>)</PRE><P>Because <CODE><B>SE
 operations to manipulate that place. When the place is a variable, it
 expands into a call to the special operator <CODE><B>SETQ</B></CODE>, which, as a
 special operator, has access to both lexical and dynamic
-bindings.<SUP>15</SUP> For instance, to assign the value 10 to the variable
+bindings.<SUP ID="fn-top-15"><A HREF="#fn-bot-15">15</A></SUP> For instance, to assign the value 10 to the variable
 <CODE>x</CODE>, you can write this:</P><PRE>(setf x 10)</PRE><P>As I discussed earlier, assigning a new value to a binding has no
 effect on any other bindings of that variable. And it doesn't have
 any effect on the value that was stored in the binding prior to the
@@ -375,7 +375,7 @@ structures, I'll point out which functions can serve as
 &quot;<CODE><B>SETF</B></CODE>able places.&quot; The short version, however, is if you need to
 assign a value to a place, <CODE><B>SETF</B></CODE> is almost certainly the tool to
 use. It's even possible to extend <CODE><B>SETF</B></CODE> to allow it to assign to
-user-defined places though I won't cover that.<SUP>16</SUP></P><P>In this regard <CODE><B>SETF</B></CODE> is no different from the <CODE>=</CODE> assignment
+user-defined places though I won't cover that.<SUP ID="fn-top-16"><A HREF="#fn-bot-16">16</A></SUP></P><P>In this regard <CODE><B>SETF</B></CODE> is no different from the <CODE>=</CODE> assignment
 operator in most C-derived languages. In those languages, the
 <CODE>=</CODE> operator assigns new values to variables, array elements,
 and fields of classes. In languages such as Perl and Python that
@@ -385,7 +385,7 @@ various ways <CODE>=</CODE> is used in those languages. </P><P><DIV CLASS="table
 place to store the value, and the second argument provides the value.
 As with the <CODE>=</CODE> operator in these languages, you use the same
 form to express the place as you'd normally use to fetch the
-value.<SUP>17</SUP> Thus, the Lisp equivalents of the assignments in Table
+value.<SUP ID="fn-top-17"><A HREF="#fn-bot-17">17</A></SUP> Thus, the Lisp equivalents of the assignments in Table
 6-1--given that <CODE><B>AREF</B></CODE> is the array access function, <CODE><B>GETHASH</B></CODE>
 does a hash table lookup, and <CODE>field</CODE> might be a function that
 accesses a slot named <CODE>field</CODE> of a user-defined object--are as
@@ -396,7 +396,7 @@ Slot named 'field': (setf (field o) 10)</PRE><P>Note that <CODE><B>SETF</B></COD
 same semantics as <CODE><B>SETF</B></CODE>ing a variable: the place is modified
 without any effect on the object that was previously stored in the
 place. Again, this is similar to how <CODE><B>=</B></CODE> behaves in Java, Perl,
-and Python.<SUP>18</SUP> </P><A NAME="other-ways-to-modify-places"><H2>Other Ways to Modify Places</H2></A><P>While all assignments can be expressed with <CODE><B>SETF</B></CODE>, certain
+and Python.<SUP ID="fn-top-18"><A HREF="#fn-bot-18">18</A></SUP> </P><A NAME="other-ways-to-modify-places"><H2>Other Ways to Modify Places</H2></A><P>While all assignments can be expressed with <CODE><B>SETF</B></CODE>, certain
 patterns involving assigning a new value based on the current value
 are sufficiently common to warrant their own operators. For instance,
 while you could increment a number with <CODE><B>SETF</B></CODE>, like this:</P><PRE>(setf x (+ x 1))</PRE><P>or decrement it with this:</P><PRE>(setf x (- x 1))</PRE><P>it's a bit tedious, compared to the C-style <CODE>++x</CODE> and
@@ -445,10 +445,10 @@ arguments and, like all modify macros, are guaranteed to evaluate
 them exactly once, in left to right order.</P><P>With the basics of Common Lisp's functions and variables under your
 belt, now you're ready to move onto the feature that continues to
 differentiate Lisp from other languages: macros.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Dynamic variables are also sometimes called <I>special</I>
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Dynamic variables are also sometimes called <I>special</I>
 <I>variables</I> for reasons you'll see later in this chapter. It's
 important to be aware of this synonym, as some folks (and Lisp
-implementations) use one term while others use the other.</P><P><SUP>2</SUP>Early Lisps tended to use dynamic
+implementations) use one term while others use the other.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Early Lisps tended to use dynamic
 variables for local variables, at least when interpreted. Elisp, the
 Lisp dialect used in Emacs, is a bit of a throwback in this respect,
 continuing to support only dynamic variables. Other languages have
@@ -458,32 +458,32 @@ while its <CODE>my</CODE> variables, introduced in Perl 5, are lexical.
 Python never had true dynamic variables but only introduced true
 lexical scoping in version 2.2. (Python's lexical variables are still
 somewhat limited compared to Lisp's because of the conflation of
-assignment and binding in the language's syntax.)</P><P><SUP>3</SUP>Actually,
+assignment and binding in the language's syntax.)</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Actually,
 it's not quite true to say that all type errors will always be
 detected--it's possible to use optional declarations to tell the
 compiler that certain variables will always contain objects of a
 particular type and to turn off runtime type checking in certain
 regions of code. However, declarations of this sort are used to
 optimize code after it has been developed and debugged, not during
-normal development.</P><P><SUP>4</SUP>As an optimization certain kinds of objects, such as
+normal development.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>As an optimization certain kinds of objects, such as
 integers below a certain size and characters, may be represented
 directly in memory where other objects would be represented by a
 pointer to the actual object. However, since integers and characters
 are immutable, it doesn't matter that there may be multiple copies of
 &quot;the same&quot; object in different variables. This is the root of the
-difference between <CODE><B>EQ</B></CODE> and <CODE><B>EQL</B></CODE> discussed in Chapter 4.</P><P><SUP>5</SUP>In compiler-writer terms Common Lisp functions are
+difference between <CODE><B>EQ</B></CODE> and <CODE><B>EQL</B></CODE> discussed in Chapter 4.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>In compiler-writer terms Common Lisp functions are
 &quot;pass-by-value.&quot; However, the values that are passed are references
-to objects. This is similar to how Java and Python work.</P><P><SUP>6</SUP>The variables in <CODE><B>LET</B></CODE> forms and function parameters
+to objects. This is similar to how Java and Python work.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>The variables in <CODE><B>LET</B></CODE> forms and function parameters
 are created by exactly the same mechanism. In fact, in some Lisp
 dialects--though not Common Lisp--<CODE><B>LET</B></CODE> is simply a macro that
 expands into a call to an anonymous function. That is, in those
-dialects, the following:</P><PRE>(let ((x 10)) (format t &quot;~a&quot; x))</PRE><P>is a macro form that expands into this:</P><PRE>((lambda (x) (format t &quot;~a&quot; x)) 10)</PRE><P><SUP>7</SUP>Java disguises
+dialects, the following:</P><PRE>(let ((x 10)) (format t &quot;~a&quot; x))</PRE><P>is a macro form that expands into this:</P><PRE>((lambda (x) (format t &quot;~a&quot; x)) 10)</PRE><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>Java disguises
 global variables as public static fields, C uses <CODE>extern</CODE>
 variables, and Python's module-level and Perl's package-level
-variables can likewise be accessed from anywhere.</P><P><SUP>8</SUP>If you specifically want to
+variables can likewise be accessed from anywhere.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>If you specifically want to
 reset a <CODE><B>DEFVAR</B></CODE>ed variable, you can either set it directly with
 <CODE><B>SETF</B></CODE> or make it unbound using <CODE><B>MAKUNBOUND</B></CODE> and then
-reevaluate the <CODE><B>DEFVAR</B></CODE> form.</P><P><SUP>9</SUP>The strategy of temporarily reassigning *standard-output*
+reevaluate the <CODE><B>DEFVAR</B></CODE> form.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>The strategy of temporarily reassigning *standard-output*
 also breaks if the system is multithreaded--if there are multiple
 threads of control trying to print to different streams at the same
 time, they'll all try to set the global variable to the stream they
@@ -491,7 +491,7 @@ want to use, stomping all over each other. You could use a lock to
 control access to the global variable, but then you're not really
 getting the benefit of multiple concurrent threads, since whatever
 thread is printing has to lock out all the other threads until it's
-done even if they want to print to a different stream.</P><P><SUP>10</SUP>The technical term for the interval during which
+done even if they want to print to a different stream.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>The technical term for the interval during which
 references may be made to a binding is its <I>extent</I>. Thus,
 <I>scope</I> and <I>extent</I> are complementary notions--scope refers to
 space while extent refers to time. Lexical variables have lexical
@@ -500,29 +500,29 @@ indefinite interval, determined by how long they're needed. Dynamic
 variables, by contrast, have indefinite scope since they can be
 referred to from anywhere but <I>dynamic</I> extent. To further confuse
 matters, the combination of indefinite scope and dynamic extent is
-frequently referred to by the misnomer <I>dynamic scope</I>.</P><P><SUP>11</SUP>Though the
+frequently referred to by the misnomer <I>dynamic scope</I>.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>Though the
 standard doesn't specify how to incorporate multithreading into
 Common Lisp, implementations that provide multithreading follow the
 practice established on the Lisp machines and create dynamic bindings
 on a per-thread basis. A reference to a global variable will find the
 binding most recently established in the current thread, or the
-global binding.</P><P><SUP>12</SUP>This is why dynamic variables are also sometimes
-called <I>special variables</I>.</P><P><SUP>13</SUP>If you must know, you can look up
-<CODE><B>DECLARE</B></CODE>, <CODE><B>SPECIAL</B></CODE>, and <CODE><B>LOCALLY</B></CODE> in the HyperSpec.</P><P><SUP>14</SUP>Several key
+global binding.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>This is why dynamic variables are also sometimes
+called <I>special variables</I>.</P><P ID="fn-bot-13"><SUP>13 <A HREF="#fn-top-13">^</A> </SUP>If you must know, you can look up
+<CODE><B>DECLARE</B></CODE>, <CODE><B>SPECIAL</B></CODE>, and <CODE><B>LOCALLY</B></CODE> in the HyperSpec.</P><P ID="fn-bot-14"><SUP>14 <A HREF="#fn-top-14">^</A> </SUP>Several key
 constants defined by the language itself don't follow this
 convention--not least of which are <CODE><B>T</B></CODE> and <CODE><B>NIL</B></CODE>. This is
 occasionally annoying when one wants to use <CODE>t</CODE> as a local
 variable name. Another is <CODE><B>PI</B></CODE>, which holds the best long-float
-approximation of the mathematical constant pi.</P><P><SUP>15</SUP>Some old-school Lispers prefer to use <CODE><B>SETQ</B></CODE> with
+approximation of the mathematical constant pi.</P><P ID="fn-bot-15"><SUP>15 <A HREF="#fn-top-15">^</A> </SUP>Some old-school Lispers prefer to use <CODE><B>SETQ</B></CODE> with
 variables, but modern style tends to use <CODE><B>SETF</B></CODE> for all
-assignments.</P><P><SUP>16</SUP>Look up
-<CODE><B>DEFSETF</B></CODE>, <CODE><B>DEFINE-SETF-EXPANDER</B></CODE> for more information.</P><P><SUP>17</SUP>The prevalence of Algol-derived syntax for assignment
+assignments.</P><P ID="fn-bot-16"><SUP>16 <A HREF="#fn-top-16">^</A> </SUP>Look up
+<CODE><B>DEFSETF</B></CODE>, <CODE><B>DEFINE-SETF-EXPANDER</B></CODE> for more information.</P><P ID="fn-bot-17"><SUP>17 <A HREF="#fn-top-17">^</A> </SUP>The prevalence of Algol-derived syntax for assignment
 with the &quot;place&quot; on the left side of the <CODE>=</CODE> and the new value
 on the right side has spawned the terminology <I>lvalue</I>, short for
 &quot;left value,&quot; meaning something that can be assigned to, and
 <I>rvalue</I>, meaning something that provides a value. A compiler
 hacker would say, &quot;<CODE><B>SETF</B></CODE> treats its first argument as an
-lvalue.&quot;</P><P><SUP>18</SUP>C programmers may want to think of variables and
+lvalue.&quot;</P><P ID="fn-bot-18"><SUP>18 <A HREF="#fn-top-18">^</A> </SUP>C programmers may want to think of variables and
 other places as holding a pointer to the real object; assigning to a
 variable simply changes what object it points to while assigning to a
 part of a composite object is similar to indirecting through the

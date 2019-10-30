@@ -5,7 +5,7 @@ apart is its macro system. Unfortunately, the word <I>macro</I> describes
 a lot of things in computing to which Common Lisp's macros bear only a
 vague and metaphorical similarity. This causes no end of
 misunderstanding when Lispers try to explain to non-Lispers what a
-great feature macros are.<SUP>1</SUP> To understand
+great feature macros are.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> To understand
 Lisp's macros, you really need to come at them fresh, without
 preconceptions based on other things that also happen to be called
 macros. So let's start our discussion of Lisp's macros by taking a
@@ -54,7 +54,7 @@ Lisp. These are some of the things that, if Lisp didn't have macros,
 would have to be built into the language core. When you use them, you
 don't have to care that they're implemented as macros, but they
 provide a good example of some of the things you can do with
-macros.<SUP>2</SUP> In the
+macros.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> In the
 next chapter, I'll show you how you can define your own macros. </P><A NAME="when-and-unless"><H2>WHEN and UNLESS</H2></A><P>As you've already seen, the most basic form of conditional
 execution--if <I>x</I>, do <I>y</I>; otherwise do <I>z</I>--is provided by the
 <CODE><B>IF</B></CODE> special operator, which has this basic form:</P><PRE>(if <I>condition</I> <I>then-form</I> [<I>else-form</I>])</PRE><P>The <I>condition</I> is evaluated and, if its value is non-<CODE><B>NIL</B></CODE>, the
@@ -90,7 +90,7 @@ with a standard macro, <CODE><B>WHEN</B></CODE>, which lets you write this: </P>
   (file-in-spam-folder current-message)
   (update-spam-database current-message))</PRE><P>But if it wasn't built into the standard library, you could define
 <CODE><B>WHEN</B></CODE> yourself with a macro such as this, using the backquote
-notation I discussed in Chapter 3:<SUP>3</SUP></P><PRE>(defmacro when (condition &amp;rest body)
+notation I discussed in Chapter 3:<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP></P><PRE>(defmacro when (condition &amp;rest body)
   `(if ,condition (progn ,@body)))</PRE><P>A counterpart to the <CODE><B>WHEN</B></CODE> macro is <CODE><B>UNLESS</B></CODE>, which reverses
 the condition, evaluating its body forms only if the condition is
 false. In other words: </P><PRE>(defmacro unless (condition &amp;rest body)
@@ -158,7 +158,7 @@ have-your-cake-and-eat-it-too style of programming that macros
 provide.</P><P>As it turns out, none of Lisp's 25 special operators directly support
 structured looping. All of Lisp's looping control constructs are
 macros built on top of a pair of special operators that provide a
-primitive goto facility.<SUP>4</SUP> Like many good abstractions,
+primitive goto facility.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> Like many good abstractions,
 syntactic or otherwise, Lisp's looping macros are built as a set of
 layered abstractions starting from the base provided by those two
 special operators.</P><P>At the bottom (leaving aside the special operators) is a very general
@@ -184,7 +184,7 @@ dislike it because it's not Lispy enough. But whichever side one
 comes down on, it's a remarkable example of the power of macros to
 add new constructs to the language. </P><A NAME="dolist-and-dotimes"><H2>DOLIST and DOTIMES</H2></A><P>I'll start with the easy-to-use <CODE><B>DOLIST</B></CODE> and <CODE><B>DOTIMES</B></CODE> macros.</P><P><CODE><B>DOLIST</B></CODE> loops across the items of a list, executing the loop body
 with a variable holding the successive items of the
-list.<SUP>5</SUP> This is the
+list.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> This is the
 basic skeleton (leaving out some of the more esoteric options):</P><PRE>(dolist (<I>var</I> <I>list-form</I>)
   <I>body-form</I>*)</PRE><P>When the loop starts, the <I>list-form</I> is evaluated once to produce
 a list. Then the body of the loop is evaluated once for each item in
@@ -246,7 +246,7 @@ are evaluated, and the value of the last result form is returned as
 the value of the <CODE><B>DO</B></CODE> expression.</P><P>At each step of the iteration the step forms for all the variables
 are evaluated before assigning any of the values to the variables.
 This means you can refer to any of the other loop variables in the
-step forms.<SUP>6</SUP> That is, in a loop like this: </P><PRE>(do ((n 0 (1+ n))
+step forms.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> That is, in a loop like this: </P><PRE>(do ((n 0 (1+ n))
      (cur 0 next)
      (next 1 (+ cur next)))
     ((= 10 n) cur))</PRE><P>the step forms <CODE>(1+ n)</CODE>, <CODE>next</CODE>, and <CODE>(+ cur next)</CODE>
@@ -274,7 +274,7 @@ Here are some example <CODE><B>DO</B></CODE> loops with the skeleton in bold: </
     <B>(</B>(&gt;= i 4)<B>)</B>
   (print i)<B>)</B></PRE><P>Notice that the result form has been omitted. This is, however, not a
 particularly idiomatic use of <CODE><B>DO</B></CODE>, as this loop is much more
-simply written using <CODE><B>DOTIMES</B></CODE>.<SUP>7</SUP></P><PRE>(dotimes (i 4) (print i))</PRE><P>As another example, here's the bodiless Fibonacci-computing loop:</P><PRE><B>(</B>do <B>(</B>(n 0 (1+ n))
+simply written using <CODE><B>DOTIMES</B></CODE>.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><PRE>(dotimes (i 4) (print i))</PRE><P>As another example, here's the bodiless Fibonacci-computing loop:</P><PRE><B>(</B>do <B>(</B>(n 0 (1+ n))
      (cur 0 next)
      (next 1 (+ cur next))<B>)</B>
     <B>(</B>(= 10 n) cur<B>))</B></PRE><P>Finally, the next loop demonstrates a <CODE><B>DO</B></CODE> loop that binds no
@@ -328,7 +328,7 @@ loop used earlier: </P><PRE>(loop for i below 10
 <CODE>collecting</CODE>, <CODE>counting</CODE>, <CODE>finally</CODE>, <CODE>for</CODE>,
 <CODE>from</CODE>, <CODE>summing</CODE>, <CODE>then</CODE>, and <CODE>to</CODE> are some of
 the loop keywords whose presence identifies these as instances of the
-extended <CODE><B>LOOP</B></CODE>. <SUP>8</SUP></P><P>I'll save the details of <CODE><B>LOOP</B></CODE> for Chapter 22, but it's worth
+extended <CODE><B>LOOP</B></CODE>. <SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP></P><P>I'll save the details of <CODE><B>LOOP</B></CODE> for Chapter 22, but it's worth
 noting here as another example of the way macros can be used to
 extend the base language. While <CODE><B>LOOP</B></CODE> provides its own language
 for expressing looping constructs, it doesn't cut you off from the
@@ -341,21 +341,21 @@ included in the standard library, you could implement it yourself or
 get a third-party library that does.</P><P>With that I'll conclude our tour of the basic control-construct
 macros. Now you're ready to take a closer look at how to define your
 own macros. 
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>To see what this misunderstanding looks
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>To see what this misunderstanding looks
 like, find any longish Usenet thread cross-posted between
 comp.lang.lisp and any other comp.lang.* group with <I>macro</I> in the
 subject. A rough paraphrase goes like this:</P><P>Lispnik: &quot;Lisp is the best because of its macros!&quot;;</P><P>Othernik: &quot;You think Lisp is good <I>because of</I> macros?! But macros
-are horrible and evil; Lisp must be horrible and evil.&quot;</P><P><SUP>2</SUP>Another important class of language constructs that are
+are horrible and evil; Lisp must be horrible and evil.&quot;</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Another important class of language constructs that are
 defined using macros are all the definitional constructs such as
 <CODE><B>DEFUN</B></CODE>, <CODE><B>DEFPARAMETER</B></CODE>, <CODE><B>DEFVAR</B></CODE>, and others. In Chapter 24
 you'll define your own definitional macros that will allow you to
-concisely write code for reading and writing binary data.</P><P><SUP>3</SUP>You can't actually feed this
+concisely write code for reading and writing binary data.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>You can't actually feed this
 definition to Lisp because it's illegal to redefine names in the
 <CODE>COMMON-LISP</CODE> package where <CODE><B>WHEN</B></CODE> comes from. If you really
 want to try writing such a macro, you'd need to change the name to
-something else, such as <CODE>my-when</CODE>.</P><P><SUP>4</SUP>The special operators, if you must
+something else, such as <CODE>my-when</CODE>.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>The special operators, if you must
 know, are <CODE><B>TAGBODY</B></CODE> and <CODE><B>GO</B></CODE>. There's no need to discuss them
-now, but I'll cover them in Chapter 20.</P><P><SUP>5</SUP><CODE><B>DOLIST</B></CODE> is similar to Perl's <CODE>foreach</CODE> or
+now, but I'll cover them in Chapter 20.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP><CODE><B>DOLIST</B></CODE> is similar to Perl's <CODE>foreach</CODE> or
 Python's <CODE>for</CODE>. Java added a similar kind of loop construct with
 the &quot;enhanced&quot; <CODE>for</CODE> loop in Java 1.5, as part of JSR-201.
 Notice what a difference macros make. A Lisp programmer who notices a
@@ -371,13 +371,13 @@ programmer's favorite compiler supports the new version of Java, they
 probably <I>still</I> can't use the new feature until they're allowed to
 break source compatibility with older versions of Java. So an
 annoyance that Common Lisp programmers can resolve for themselves
-within five minutes plagues Java programmers for years.</P><P><SUP>6</SUP>A variant of <CODE><B>DO</B></CODE>, <CODE><B>DO*</B></CODE>, assigns each
+within five minutes plagues Java programmers for years.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>A variant of <CODE><B>DO</B></CODE>, <CODE><B>DO*</B></CODE>, assigns each
 variable its value before evaluating the step form for subsequent
 variables. For more details, consult your favorite Common Lisp
-reference.</P><P><SUP>7</SUP>The <CODE><B>DOTIMES</B></CODE> is also
+reference.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>The <CODE><B>DOTIMES</B></CODE> is also
 preferred because the macro expansion will likely include
 declarations that allow the compiler to generate more efficient
-code.</P><P><SUP>8</SUP><I>Loop keywords</I> is a bit of a misnomer
+code.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP><I>Loop keywords</I> is a bit of a misnomer
 since they aren't keyword symbols. In fact, <CODE><B>LOOP</B></CODE> doesn't care
 what package the symbols are from. When the <CODE><B>LOOP</B></CODE> macro parses
 its body, it considers any appropriately named symbols equivalent.

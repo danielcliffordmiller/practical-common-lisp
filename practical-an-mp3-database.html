@@ -123,7 +123,7 @@ strings (translate all <CODE><B>STRING=</B></CODE> values to a single string
 object). Thus, you'll need only as many strings as there are distinct
 values, regardless of how many rows are in the table, and you can use
 <CODE><B>EQL</B></CODE> to compare column values rather than the slower
-<CODE><B>STRING=</B></CODE>.<SUP>1</SUP></P><A NAME="defining-a-schema"><H2>Defining a Schema</H2></A><P>Thus, to make an instance of <CODE>table</CODE>, you need to build a list
+<CODE><B>STRING=</B></CODE>.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><A NAME="defining-a-schema"><H2>Defining a Schema</H2></A><P>Thus, to make an instance of <CODE>table</CODE>, you need to build a list
 of <CODE>column</CODE> objects. You could build the list by hand, using
 <CODE><B>LIST</B></CODE> and <CODE><B>MAKE-INSTANCE</B></CODE>. But you'll soon notice that you're
 frequently making a lot column objects with the same comparator and
@@ -159,7 +159,7 @@ signals an error:</P><PRE>(defun not-nullable (value column)
   (or value (error &quot;Column ~a can't be null&quot; (name column))))</PRE><P>This is important because <CODE><B>STRING&lt;</B></CODE> and <CODE><B>STRING=</B></CODE> will signal
 an error if called on <CODE><B>NIL</B></CODE>; it's better to catch bad values
 before they go into the table rather than when you try to use
-them.<SUP>2</SUP></P><P>Another column type you'll need for the MP3 database is an
+them.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP></P><P>Another column type you'll need for the MP3 database is an
 <CODE>interned-string</CODE> whose values are interned as discussed
 previously. Since you need a hash table in which to intern values,
 you should define a subclass of <CODE>column</CODE>,
@@ -244,7 +244,7 @@ stored as the ASCII representation of the track number and sometimes
 as a number followed by a slash followed by the total number of
 tracks on the album. Since you care only about the actual track
 number, you should use the <CODE>:end</CODE> argument to <CODE><B>PARSE-INTEGER</B></CODE>
-to specify that it should parse only up to the slash, if any.<SUP>3</SUP></P><PRE>(defun parse-track (track)
+to specify that it should parse only up to the slash, if any.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP></P><PRE>(defun parse-track (track)
   (when track (parse-integer track :end (position #\/ track))))
 
 (defun parse-year (year)
@@ -452,7 +452,7 @@ contains the values you want to match. For instance, suppose you
 wanted to find all the songs in the MP3 database that have names the
 same as a song performed by the Dixie Chicks. You can write that
 where clause using <CODE>in</CODE> and a sub<CODE>select</CODE> like
-this:<SUP>4</SUP></P><PRE>(select
+this:<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><PRE>(select
   :columns '(:artist :song)
   :from *mp3s*
   :where (in :song 
@@ -491,7 +491,7 @@ abstractions. You can provide two ways to iterate over the rows of a
 table: a macro <CODE>do-rows</CODE>, which provides a basic looping
 construct, and a function <CODE>map-rows</CODE>, which builds a list
 containing the results of applying a function to each row in the
-table.<SUP>5</SUP></P><PRE>(defmacro do-rows ((row table) &amp;body body)
+table.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><PRE>(defmacro do-rows ((row table) &amp;body body)
   `(loop for ,row across (rows ,table) do ,@body))
 
 (defun map-rows (fn table)
@@ -581,20 +581,20 @@ interface for browsing a collection of MP3 files. But before you get
 to that, you need to implement the part of the server that streams
 MP3s using the Shoutcast protocol, which is the topic of the next
 chapter.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>The general theory behind interning objects is
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>The general theory behind interning objects is
 that if you're going to compare a particular value many times, it's
 worth it to pay the cost of interning it. The <CODE>value-normalizer</CODE>
 runs once when you insert a value into the table and, as you'll see,
 once at the beginning of each query. Since a query can involve
 invoking the <CODE>equality-predicate</CODE> once per row in the table, the
 amortized cost of interning the values will quickly approach zero.
-</P><P><SUP>2</SUP>As always, the first causality of concise exposition in
+</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>As always, the first causality of concise exposition in
 programming books is proper error handling; in production code you'd
 probably want to define your own error type, such as the following,
 and signal it instead:</P><PRE>(error 'illegal-column-value :value value :column column)</PRE><P>Then you'd want to think about where you can add restarts that might
 be able to recover from this condition. And, finally, in any given
 application you could establish condition handlers that would choose
-from among those restarts.</P><P><SUP>3</SUP>If
+from among those restarts.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>If
 any MP3 files have malformed data in the track and year frames,
 <CODE><B>PARSE-INTEGER</B></CODE> could signal an error. One way to deal with that
 is to pass <CODE><B>PARSE-INTEGER</B></CODE> the <CODE>:junk-allowed</CODE> argument of
@@ -604,7 +604,7 @@ string. Or, if you want practice at using the condition system, you
 could define an error and signal it from these functions when the
 data is malformed and also establish a few restarts to allow these
 functions to recover.
-</P><P><SUP>4</SUP>This query will also return all the songs performed by the
+</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>This query will also return all the songs performed by the
 Dixie Chicks. If you want to limit it to songs by artists other than
 the Dixie Chicks, you need a more complex <CODE>:where</CODE> function.
 Since the <CODE>:where</CODE> argument can be any function, it's certainly
@@ -614,7 +614,7 @@ query:</P><PRE>(let* ((dixie-chicks (matching *mp3s* :artist &quot;Dixie Chicks&
        (query #'(lambda (row) (and (not (funcall dixie-chicks row)) (funcall same-song row)))))
   (select :columns '(:artist :song) :from *mp3s* :where query))</PRE><P>This obviously isn't quite as convenient. If you were going to write
 an application that needed to do lots of complex queries, you might
-want to consider coming up with a more expressive query language.</P><P><SUP>5</SUP>The version of <CODE><B>LOOP</B></CODE> implemented at M.I.T. before
+want to consider coming up with a more expressive query language.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>The version of <CODE><B>LOOP</B></CODE> implemented at M.I.T. before
 Common Lisp was standardized included a mechanism for extending the
 <CODE><B>LOOP</B></CODE> grammar to support iteration over new data structures. Some
 Common Lisp implementations that inherited their <CODE><B>LOOP</B></CODE>

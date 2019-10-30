@@ -132,7 +132,7 @@ the skeleton of a <CODE><B>DEFUN</B></CODE>.</P><PRE>(defmacro <I>name</I> (<I>p
   &quot;Optional documentation string.&quot;
   <I>body-form</I>*)</PRE><P>Like a function, a macro consists of a name, a parameter list, an
 optional documentation string, and a body of Lisp
-expressions.<SUP>1</SUP>
+expressions.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP>
 However, as I just discussed, the job of a macro isn't to do anything
 directly--its job is to generate code that will later do what you
 want.</P><P>Macros can use the full power of Lisp to generate their expansion,
@@ -274,7 +274,7 @@ what code the reader must produce as long as it generates the right
 list structure.</P><P>Table 8-1 shows some examples of backquoted expressions along with
 equivalent list-building code and the result you'd get if you
 evaluated either the backquoted expression or the equivalent
-code.<SUP>2</SUP> </P><P><DIV CLASS="table-caption">Table 8-1. Backquote Examples</DIV></P><TABLE CLASS="book-table"><TR><TD>Backquote Syntax</TD><TD>Equivalent List-Building Code</TD><TD>Result</TD></TR><TR><TD><CODE>`(a (+ 1 2) c)</CODE></TD><TD><CODE>(list 'a '(+ 1 2) 'c)</CODE></TD><TD><CODE>(a (+ 1 2) c)</CODE></TD></TR><TR><TD><CODE>`(a ,(+ 1 2) c)</CODE></TD><TD><CODE>(list 'a (+ 1 2) 'c)</CODE></TD><TD><CODE>(a 3 c)</CODE></TD></TR><TR><TD><CODE>`(a (list 1 2) c)</CODE></TD><TD><CODE>(list 'a '(list 1 2) 'c)</CODE></TD><TD><CODE>(a (list 1 2) c)</CODE></TD></TR><TR><TD><CODE>`(a ,(list 1 2) c)</CODE></TD><TD><CODE>(list 'a (list 1 2) 'c)</CODE></TD><TD><CODE>(a (1 2) c)</CODE></TD></TR><TR><TD><CODE>`(a ,@(list 1 2) c)</CODE></TD><TD><CODE>(append (list 'a) (list 1 2) (list 'c))</CODE></TD><TD><CODE>(a 1 2 c)</CODE></TD></TR></TABLE><P>It's important to note that backquote is just a convenience. But it's
+code.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> </P><P><DIV CLASS="table-caption">Table 8-1. Backquote Examples</DIV></P><TABLE CLASS="book-table"><TR><TD>Backquote Syntax</TD><TD>Equivalent List-Building Code</TD><TD>Result</TD></TR><TR><TD><CODE>`(a (+ 1 2) c)</CODE></TD><TD><CODE>(list 'a '(+ 1 2) 'c)</CODE></TD><TD><CODE>(a (+ 1 2) c)</CODE></TD></TR><TR><TD><CODE>`(a ,(+ 1 2) c)</CODE></TD><TD><CODE>(list 'a (+ 1 2) 'c)</CODE></TD><TD><CODE>(a 3 c)</CODE></TD></TR><TR><TD><CODE>`(a (list 1 2) c)</CODE></TD><TD><CODE>(list 'a '(list 1 2) 'c)</CODE></TD><TD><CODE>(a (list 1 2) c)</CODE></TD></TR><TR><TD><CODE>`(a ,(list 1 2) c)</CODE></TD><TD><CODE>(list 'a (list 1 2) 'c)</CODE></TD><TD><CODE>(a (1 2) c)</CODE></TD></TR><TR><TD><CODE>`(a ,@(list 1 2) c)</CODE></TD><TD><CODE>(append (list 'a) (list 1 2) (list 'c))</CODE></TD><TD><CODE>(a 1 2 c)</CODE></TD></TR></TABLE><P>It's important to note that backquote is just a convenience. But it's
 a big convenience. To appreciate how big, compare the backquoted
 version of <CODE>do-primes</CODE> to the following version, which uses
 explicit list-building code: </P><PRE>(defmacro do-primes-a ((var start end) &amp;body body)
@@ -295,9 +295,9 @@ prints the right series of prime numbers.</P><PRE>CL-USER&gt; (do-primes (p 0 19
 NIL</PRE><P>Or you can check the macro directly by looking at the expansion of a
 particular call. The function <CODE><B>MACROEXPAND-1</B></CODE> takes any Lisp
 expression as an argument and returns the result of doing one level
-of macro expansion.<SUP>3</SUP> Because <CODE><B>MACROEXPAND-1</B></CODE> is a
+of macro expansion.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> Because <CODE><B>MACROEXPAND-1</B></CODE> is a
 function, to pass it a literal macro form you must quote it. You can
-use it to see the expansion of the previous call.<SUP>4</SUP> </P><PRE>CL-USER&gt; (macroexpand-1 '(do-primes (p 0 19) (format t &quot;~d &quot; p)))
+use it to see the expansion of the previous call.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> </P><PRE>CL-USER&gt; (macroexpand-1 '(do-primes (p 0 19) (format t &quot;~d &quot; p)))
 (DO ((P (NEXT-PRIME 0) (NEXT-PRIME (1+ P))))
     ((&gt; P 19))
   (FORMAT T &quot;~d &quot; P))
@@ -312,7 +312,7 @@ is the same as the original handwritten expansion, so it seems that
 term <I>leaky abstraction</I> to describe an abstraction that &quot;leaks&quot;
 details it's supposed to be abstracting away. Since writing a macro
 is a way of creating an abstraction, you need to make sure your
-macros don't leak needlessly.<SUP>5</SUP></P><P>As it turns out, a macro can leak details of its inner workings in
+macros don't leak needlessly.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><P>As it turns out, a macro can leak details of its inner workings in
 three ways. Luckily, it's pretty easy to tell whether a given macro
 suffers from any of those leaks and to fix them.</P><P>The current definition suffers from one of the three possible macro
 leaks: namely, it evaluates the <CODE>end</CODE> subform too many times.
@@ -340,7 +340,7 @@ define this as the behavior of <CODE>do-primes</CODE>. But that's not very
 satisfactory--you should try to observe the Principle of Least
 Astonishment when implementing macros. And programmers will typically
 expect the forms they pass to macros to be evaluated no more times
-than absolutely necessary.<SUP>6</SUP> Furthermore, since <CODE>do-primes</CODE> is built
+than absolutely necessary.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> Furthermore, since <CODE>do-primes</CODE> is built
 on the model of the standard macros, <CODE><B>DOTIMES</B></CODE> and <CODE><B>DOLIST</B></CODE>,
 neither of which causes any of the forms except those in the body to
 be evaluated more than once, most programmers will expect
@@ -395,7 +395,7 @@ isn't at all what you want. Because the binding of
 shadowed by the variable with the same name inside the <CODE><B>DO</B></CODE>, the
 form <CODE>(incf ending-value p)</CODE> increments the loop variable
 <CODE>ending-value</CODE> instead of the outer variable with the same name,
-creating another infinite loop.<SUP>7</SUP></P><P>Clearly, what you need to patch this leak is a symbol that will never
+creating another infinite loop.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>Clearly, what you need to patch this leak is a symbol that will never
 be used outside the code generated by the macro. You could try using
 a really unlikely name, but that's no guarantee. You could also
 protect yourself to some extent by using packages, as described in
@@ -526,29 +526,29 @@ things. In upcoming chapters you'll see examples of macros that allow
 you to express things in ways that would be virtually impossible
 without macros. You'll start in the very next chapter, in which
 you'll build a simple but effective unit test framework.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>As with functions, macros can also contain
-declarations, but you don't need to worry about those for now.</P><P><SUP>2</SUP><CODE><B>APPEND</B></CODE>, which I haven't discussed yet, is a function
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>As with functions, macros can also contain
+declarations, but you don't need to worry about those for now.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP><CODE><B>APPEND</B></CODE>, which I haven't discussed yet, is a function
 that takes any number of list arguments and returns the result of
-splicing them together into a single list.</P><P><SUP>3</SUP>Another function, <CODE><B>MACROEXPAND</B></CODE>, keeps
+splicing them together into a single list.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Another function, <CODE><B>MACROEXPAND</B></CODE>, keeps
 expanding the result as long as the first element of the resulting
 expansion is the name of the macro. However, this will often show you
 a much lower-level view of what the code is doing than you want,
 since basic control constructs such as <CODE><B>DO</B></CODE> are also implemented
 as macros. In other words, while it can be educational to see what
 your macro ultimately expands into, it isn't a very useful view into
-what your own macros are doing.</P><P><SUP>4</SUP>If the macro
+what your own macros are doing.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>If the macro
 expansion is shown all on one line, it's probably because the
 variable <CODE><B>*PRINT-PRETTY*</B></CODE> is <CODE><B>NIL</B></CODE>. If it is, evaluating
 <CODE>(setf *print-pretty* t)</CODE> should make the macro expansion easier
-to read.</P><P><SUP>5</SUP>This is from <I>Joel on Software</I>
+to read.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>This is from <I>Joel on Software</I>
 by Joel Spolsky, also available at
 <CODE>http://www.joelonsoftware.com/
 articles/LeakyAbstractions.html</CODE>. Spolsky's point in the essay is
 that all abstractions leak to some extent; that is, there are no
 perfect abstractions. But that doesn't mean you should tolerate leaks
-you can easily plug.</P><P><SUP>6</SUP>Of course, certain forms are supposed
+you can easily plug.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Of course, certain forms are supposed
 to be evaluated more than once, such as the forms in the body of a
-<CODE>do-primes</CODE> loop.</P><P><SUP>7</SUP>It may not be obvious that this
+<CODE>do-primes</CODE> loop.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>It may not be obvious that this
 loop is necessarily infinite given the nonuniform occurrences of
 prime numbers. The starting point for a proof that it is in fact
 infinite is Bertrand's postulate, which says for any <I>n</I> &gt; 1, there

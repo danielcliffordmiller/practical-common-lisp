@@ -2,7 +2,7 @@
 the basic building blocks of the language itself, the building blocks
 of your programs will be the data structures you use. As Fred Brooks
 observed in <I>The Mythical Man-Month</I>, &quot;Representation <I>is</I> the
-essence of programming.&quot;<SUP>1</SUP></P><P>Common Lisp provides built-in support for most of the data types
+essence of programming.&quot;<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><P>Common Lisp provides built-in support for most of the data types
 typically found in modern languages: numbers (integer, floating
 point, and complex), characters, strings, arrays (including
 multidimensional arrays), lists, hash tables, input and output
@@ -33,7 +33,7 @@ individual characters and manipulate strings with a function that
 operates on sequences. But I'll discuss strings here because most of
 the string-specific functions manipulate them as single values and
 also because of the close relation between several of the string
-functions and their character counterparts.</P><A NAME="numbers"><H2>Numbers</H2></A><P>Math, as Barbie says, is hard.<SUP>2</SUP> Common
+functions and their character counterparts.</P><A NAME="numbers"><H2>Numbers</H2></A><P>Math, as Barbie says, is hard.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> Common
 Lisp can't make the math part any easier, but it does tend to get in
 the way a lot less than other programming languages. That's not
 surprising given its mathematical heritage. Lisp was originally
@@ -50,15 +50,15 @@ behave more like true mathematical numbers than the approximations of
 numbers that are easy to implement in finite computer hardware. For
 instance, integers in Common Lisp can be almost arbitrarily large
 rather than being limited by the size of a machine
-word.<SUP>3</SUP> And dividing two integers results in an exact
+word.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> And dividing two integers results in an exact
 ratio, not a truncated value. And since ratios are represented as
 pairs of arbitrarily sized integers, ratios can represent arbitrarily
-precise fractions.<SUP>4</SUP></P><P>On the other hand, for high-performance numeric programming, you may
+precise fractions.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><P>On the other hand, for high-performance numeric programming, you may
 be willing to trade the exactitude of rationals for the speed offered
 by using the hardware's underlying floating-point operations. So,
 Common Lisp also offers several types of floating-point numbers,
 which are mapped by the implementation to the appropriate
-hardware-supported floating-point representations.<SUP>5</SUP> Floats are also used
+hardware-supported floating-point representations.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> Floats are also used
 to represent the results of a computation whose true mathematical
 value would be an irrational number.</P><P>Finally, Common Lisp supports complex numbers--the numbers that
 result from doing things such as taking square roots and logarithms
@@ -101,7 +101,7 @@ are taken from the letters <CODE>A</CODE>-<CODE>Z</CODE> or <CODE>a</CODE>-<CODE
 Note that these radix indicators apply to the whole rational--it's
 not possible to write a ratio with the numerator in one base and
 denominator in another. Also, you can write integer values, but not
-ratios, as decimal digits terminated with a decimal point.<SUP>6</SUP> Some examples of rationals,
+ratios, as decimal digits terminated with a decimal point.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> Some examples of rationals,
 with their canonical, decimal representation are as follows: </P><PRE>123                            ==&gt; 123
 +123                           ==&gt; 123
 -123                           ==&gt; -123
@@ -121,10 +121,10 @@ four subtypes of floating-point number: short, single, double, and
 long. Each subtype can use a different number of bits in its
 representation, which means each subtype can represent values
 spanning a different range and with different precision. More bits
-gives a wider range and more precision.<SUP>7</SUP> </P><P>The basic format for floating-point numbers is an optional sign
+gives a wider range and more precision.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP> </P><P>The basic format for floating-point numbers is an optional sign
 followed by a nonempty sequence of decimal digits possibly with an
 embedded decimal point. This sequence can be followed by an exponent
-marker for &quot;computerized scientific notation.&quot;<SUP>8</SUP> The exponent marker consists of a single
+marker for &quot;computerized scientific notation.&quot;<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> The exponent marker consists of a single
 letter followed by an optional sign and a sequence of digits, which
 are interpreted as the power of ten by which the number before the
 exponent marker should be multiplied. The letter does double duty: it
@@ -181,7 +181,7 @@ equivalent to calling the same function on the first two arguments and
 then calling it again on the resulting value and the rest of the
 arguments. For example, <CODE>(+ 1 2 3)</CODE> is equivalent to <CODE>(+ (+
 1 2) 3)</CODE>. With only one argument, <CODE><B>+</B></CODE> and <CODE><B>*</B></CODE> return the value;
-<CODE><B>-</B></CODE> returns its negation and <CODE><B>/</B></CODE> its reciprocal.<SUP>9</SUP></P><PRE>(+ 1 2)              ==&gt; 3
+<CODE><B>-</B></CODE> returns its negation and <CODE><B>/</B></CODE> its reciprocal.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP></P><PRE>(+ 1 2)              ==&gt; 3
 (+ 1 2 3)            ==&gt; 6
 (+ 10.0 3.0)         ==&gt; 13.0
 (+ #c(1 2) #c(3 4))  ==&gt; #c(4 6)
@@ -224,7 +224,7 @@ modulus and remainder of a truncating division on real numbers. These
 two functions are related to the <CODE><B>FLOOR</B></CODE> and <CODE><B>TRUNCATE</B></CODE>
 functions as follows:</P><PRE>(+ (* (floor    (/ x y)) y) (mod x y)) === x
 (+ (* (truncate (/ x y)) y) (rem x y)) === x</PRE><P>Thus, for positive quotients they're equivalent, but for negative
-quotients they produce different results.<SUP>10</SUP></P><P>The functions <CODE><B>1+</B></CODE> and <CODE><B>1-</B></CODE> provide a shorthand way to express
+quotients they produce different results.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP></P><P>The functions <CODE><B>1+</B></CODE> and <CODE><B>1-</B></CODE> provide a shorthand way to express
 adding and subtracting one from a number. Note that these are
 different from the macros <CODE><B>INCF</B></CODE> and <CODE><B>DECF</B></CODE>. <CODE><B>1+</B></CODE> and
 <CODE><B>1-</B></CODE> are just functions that return a new value, but <CODE><B>INCF</B></CODE> and
@@ -280,7 +280,7 @@ number. For a complete list, see any Common Lisp reference.</P><A NAME="characte
 That's as it should be--characters are <I>not</I> numbers, and
 languages that treat them as if they are tend to run into problems
 when character encodings change, say, from 8-bit ASCII to 21-bit
-Unicode.<SUP>11</SUP> Because the Common Lisp
+Unicode.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP> Because the Common Lisp
 standard didn't mandate a particular representation for characters,
 today several Lisp implementations use Unicode as their &quot;native&quot;
 character encoding despite Unicode being only a gleam in a standards
@@ -342,7 +342,7 @@ you need to use function such as <CODE><B>FORMAT</B></CODE> designed to print
 human-readable output. For example, here's what you see if you type a
 string containing an embedded quotation mark at the REPL: </P><PRE>CL-USER&gt; &quot;foo\&quot;bar&quot;
 &quot;foo\&quot;bar&quot;</PRE><P><CODE><B>FORMAT</B></CODE>, on the other hand, will show you the actual string
-contents:<SUP>12</SUP> </P><PRE>CL-USER&gt; (format t &quot;foo\&quot;bar&quot;)
+contents:<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP> </P><PRE>CL-USER&gt; (format t &quot;foo\&quot;bar&quot;)
 foo&quot;bar
 NIL</PRE><A NAME="string-comparisons"><H2>String Comparisons</H2></A><P>You can compare strings using a set of functions that follow the same
 naming convention as the character comparison functions except with
@@ -373,9 +373,9 @@ function, <CODE><B>ELT</B></CODE>, or the generic array element accessor functio
 <CODE><B>AREF</B></CODE>. Or you can use the string-specific accessor, <CODE><B>CHAR</B></CODE>.
 But those functions, and others, are the topic of the next chapter,
 so let's move on. 
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Fred Brooks, <I>The Mythical Man-Month</I>,
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Fred Brooks, <I>The Mythical Man-Month</I>,
 20th Anniversary Edition (Boston: Addison-Wesley, 1995), p. 103.
-Emphasis in original.</P><P><SUP>2</SUP>Mattel's Teen Talk Barbie</P><P><SUP>3</SUP>Obviously, the size of a number that can be represented on
+Emphasis in original.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Mattel's Teen Talk Barbie</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Obviously, the size of a number that can be represented on
 a computer with finite memory is still limited in practice;
 furthermore, the actual representation of <I>bignums</I> used in a
 particular Common Lisp implementation may place other limits on the
@@ -383,7 +383,7 @@ size of number that can be represented. But these limits are going to
 be well beyond &quot;astronomically&quot; large numbers. For instance, the
 number of atoms in the universe is estimated to be less than 2^269;
 current Common Lisp implementations can easily handle numbers up to
-and beyond 2^262144.</P><P><SUP>4</SUP>Folks interested in using Common Lisp for
+and beyond 2^262144.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>Folks interested in using Common Lisp for
 intensive numeric computation should note that a naive comparison of
 the performance of numeric code in Common Lisp and languages such as
 C or FORTRAN will probably show Common Lisp to be much slower. This
@@ -398,20 +398,20 @@ types of numbers you're using that will enable it to generate code
 that does only as much work as the code that would be generated by a
 C or FORTRAN compiler. Tuning numeric code for this kind of
 performance is beyond the scope of this book, but it's certainly
-possible.</P><P><SUP>5</SUP>While the
+possible.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>While the
 standard doesn't require it, many Common Lisp implementations support
 the IEEE standard for floating-point arithmetic, <I>IEEE Standard for
 Binary Floating-Point Arithmetic, ANSI/ IEEE Std 754-1985</I> (Institute
-of Electrical and Electronics Engineers, 1985).</P><P><SUP>6</SUP>It's
+of Electrical and Electronics Engineers, 1985).</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>It's
 also possible to change the default base the reader uses for numbers
 without a specific radix marker by changing the value of the global
 variable <CODE><B>*READ-BASE*</B></CODE>. However, it's not clear that's the path to
-anything other than complete insanity.</P><P><SUP>7</SUP>Since the purpose of
+anything other than complete insanity.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>Since the purpose of
 floating-point numbers is to make efficient use of floating-point
 hardware, each Lisp implementation is allowed to map these four
 subtypes onto the native floating-point types as appropriate. If the
 hardware supports fewer than four distinct representations, one or
-more of the types may be equivalent.</P><P><SUP>8</SUP>&quot;Computerized
+more of the types may be equivalent.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>&quot;Computerized
 scientific notation&quot; is in scare quotes because, while commonly used
 in computer languages since the days of FORTRAN, it's actually quite
 different from real scientific notation. In particular, something
@@ -420,18 +420,18 @@ notation that would be written as 1.0 x 10^4. And to further confuse
 matters, in true scientific notation the letter <I>e</I> stands for the
 base of the natural logarithm, so something like 1.0 x <I>e</I>^4, while
 superficially similar to <CODE>1.0e4</CODE>, is a completely different
-value, approximately 54.6.</P><P><SUP>9</SUP>For
+value, approximately 54.6.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>For
 mathematical consistency, <CODE><B>+</B></CODE> and <CODE><B>*</B></CODE> can also be called with no
 arguments, in which case they return the appropriate identity: 0 for
-<CODE><B>+</B></CODE> and 1 for <CODE><B>*</B></CODE>.</P><P><SUP>10</SUP>Roughly speaking,
+<CODE><B>+</B></CODE> and 1 for <CODE><B>*</B></CODE>.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>Roughly speaking,
 <CODE><B>MOD</B></CODE> is equivalent to the <CODE>%</CODE> operator in Perl and Python,
 and <CODE><B>REM</B></CODE> is equivalent to the % in C and Java. (Technically, the
-exact behavior of % in C wasn't specified until the C99 standard.)</P><P><SUP>11</SUP>Even Java, which was designed from the beginning to use
+exact behavior of % in C wasn't specified until the C99 standard.)</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>Even Java, which was designed from the beginning to use
 Unicode characters on the theory that Unicode was the going to be
 <I>the</I> character encoding of the future, has run into trouble since
 Java characters are defined to be a 16-bit quantity and the Unicode
 3.1 standard extended the range of the Unicode character set to
-require a 21-bit representation. Ooops.</P><P><SUP>12</SUP>Note, however, that not all literal strings can be
+require a 21-bit representation. Ooops.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>Note, however, that not all literal strings can be
 printed by passing them as the second argument to <CODE><B>FORMAT</B></CODE> since
 certain sequences of characters have a special meaning to
 <CODE><B>FORMAT</B></CODE>. To safely print an arbitrary string--say, the value of a

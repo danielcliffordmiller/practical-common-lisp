@@ -14,11 +14,11 @@ patterns so you can express them directly.</P><P>The <CODE><B>LOOP</B></CODE> ma
 I'll tackle <CODE><B>LOOP</B></CODE> head on, giving you a systematic tour of the
 various parts and how they fit together.</P><A NAME="the-parts-of-a-loop"><H2>The Parts of a LOOP</H2></A><P>You can do the following in a <CODE><B>LOOP</B></CODE>:</P><UL><LI>Step variables numerically and over various data structures</LI><LI>Collect, count, sum, minimize, and maximize values seen while looping</LI><LI>Execute arbitrary Lisp expressions</LI><LI>Decide when to terminate the loop</LI><LI>Conditionally do any of these</LI></UL><P>Additionally, <CODE><B>LOOP</B></CODE> provides syntax for the following:</P><UL><LI>Creating local variables for use within the loop</LI><LI>Specifying arbitrary Lisp expressions to run before and after
 the loop proper</LI></UL><P>The basic structure of a <CODE><B>LOOP</B></CODE> is a set of clauses, each of which
-begins with a <I>loop keyword</I>.<SUP>1</SUP> How each clause is parsed by the
+begins with a <I>loop keyword</I>.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> How each clause is parsed by the
 <CODE><B>LOOP</B></CODE> macro depends on the keyword. Some of the main keywords,
 which you saw in Chapter 7, are <CODE>for</CODE>, <CODE>collecting</CODE>,
 <CODE>summing</CODE>, <CODE>counting</CODE>, <CODE>do</CODE>, and <CODE>finally</CODE>.</P><A NAME="iteration-control"><H2>Iteration Control</H2></A><P>Most of the so-called iteration control clauses start with the loop
-keyword <CODE>for</CODE>, or its synonym <CODE>as</CODE>,<SUP>2</SUP>
+keyword <CODE>for</CODE>, or its synonym <CODE>as</CODE>,<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP>
 followed by the name of a variable. What follows after the variable
 name depends on the type of <CODE>for</CODE> clause.</P><P>The subclauses of a <CODE>for</CODE> clause can iterate over the following:</P><UL><LI>Ranges of numbers, up or down, by specified intervals</LI><LI>The individual items of a list</LI><LI>The cons cells that make up a list</LI><LI>The elements of a vector, including subtypes such as strings and
 bit vectors</LI><LI>The pairs of a hash table</LI><LI>The symbols in a package</LI><LI>The results of repeatedly evaluating a given form</LI></UL><P>A single loop can have multiple <CODE>for</CODE> clauses with each clause
@@ -71,7 +71,7 @@ sublist. For instance, you could collect every other element of a
 list with a loop like this:</P><PRE>(loop for i in (list 10 20 30 40) by #'cddr collect i) ==&gt; (10 30)</PRE><P>An <CODE>on</CODE> prepositional phrase is used to step <I>var</I> over the
 cons cells that make up a list.</P><PRE>(loop for x on (list 10 20 30) collect x) ==&gt; ((10 20 30) (20 30) (30))</PRE><P>This phrase too can take a <CODE>by</CODE> preposition:</P><PRE>(loop for x on (list 10 20 30 40) by #'cddr collect x) ==&gt; ((10 20 30 40) (30 40))</PRE><P>Looping over the elements of a vector (which includes strings and bit
 vectors) is similar to looping over the elements of a list except the
-preposition <CODE>across</CODE> is used instead of <CODE>in</CODE>.<SUP>3</SUP> For instance:</P><PRE>(loop for x across &quot;abcd&quot; collect x) ==&gt; (#\a #\b #\c #\d)</PRE><P>Iterating over a hash table or package is slightly more complicated
+preposition <CODE>across</CODE> is used instead of <CODE>in</CODE>.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> For instance:</P><PRE>(loop for x across &quot;abcd&quot; collect x) ==&gt; (#\a #\b #\c #\d)</PRE><P>Iterating over a hash table or package is slightly more complicated
 because hash tables and packages have different sets of values you
 might want to iterate over--the keys or values in a hash table and
 the different kinds of symbols in a package. Both kinds of iteration
@@ -96,7 +96,7 @@ iterating over a hash table, the hash table clauses support a
 (loop for v being the hash-values in h using (hash-key k) ...)</PRE><P>Both of these loops will bind <CODE>k</CODE> to each key in the hash table
 and <CODE>v</CODE> to the corresponding value. Note that the first element
 of the <CODE>using</CODE> subclause must be in the singular
-form.<SUP>4</SUP></P><A NAME="equals-then-iteration"><H2>Equals-Then Iteration</H2></A><P>If none of the other <CODE>for</CODE> clauses supports exactly the form of
+form.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><A NAME="equals-then-iteration"><H2>Equals-Then Iteration</H2></A><P>If none of the other <CODE>for</CODE> clauses supports exactly the form of
 variable stepping you need, you can take complete control over
 stepping with an <I>equals-then</I> clause. This clause is similar to
 the binding clauses in a <CODE><B>DO</B></CODE> loop but cast in a more Algolish
@@ -189,10 +189,10 @@ available as synonyms are the present participle forms:
 <I>form</I> in the order they're seen. This is a particularly useful
 construct because the code you'd have to write to collect a list in
 order as efficiently as <CODE><B>LOOP</B></CODE> does is more painful than you'd
-normally write by hand.<SUP>5</SUP> Related to <CODE>collect</CODE> are the verbs <CODE>append</CODE> and
+normally write by hand.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> Related to <CODE>collect</CODE> are the verbs <CODE>append</CODE> and
 <CODE>nconc</CODE>. These verbs also accumulate values into a list, but they
 join the values, which must be lists, into a single list as if by the
-functions <CODE><B>APPEND</B></CODE> or <CODE><B>NCONC</B></CODE>. <SUP>6</SUP></P><P>The remaining accumulation clauses are used to accumulate numeric
+functions <CODE><B>APPEND</B></CODE> or <CODE><B>NCONC</B></CODE>. <SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P>The remaining accumulation clauses are used to accumulate numeric
 values. The verb <CODE>count</CODE> counts the number of times <I>form</I> is
 true, <CODE>sum</CODE> collects a running total of the values of <I>form</I>,
 <CODE>maximize</CODE> collects the largest value seen for <I>form</I>, and
@@ -210,7 +210,7 @@ be a very good general-purpose iteration facility if there wasn't a
 way to execute arbitrary Lisp code in the loop body.</P><P>The simplest way to execute arbitrary code within a loop body is with
 a <CODE>do</CODE> clause. Compared to the clauses I've described so far,
 with their prepositions and subclauses, <CODE>do</CODE> is a model of
-Yodaesque simplicity.<SUP>7</SUP> A <CODE>do</CODE> clause
+Yodaesque simplicity.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP> A <CODE>do</CODE> clause
 consists of the word <CODE>do</CODE> (or <CODE>doing</CODE>) followed by one or
 more Lisp forms that are all evaluated when the <CODE>do</CODE> clause is.
 The <CODE>do</CODE> clause ends at the closing parenthesis of the loop or
@@ -290,7 +290,7 @@ various variables accumulated by the clauses within the conditionals.</P><PRE>(l
 about actual loops &quot;in the wild&quot; is that the loop proper is often
 preceded by a bit of code to set things up and then followed by some
 more code that does something with the values computed by the loop. A
-trivial example, in Perl,<SUP>8</SUP> might look like this:</P><PRE>my $evens_sum = 0;
+trivial example, in Perl,<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> might look like this:</P><PRE>my $evens_sum = 0;
 my $odds_sum  = 0;
 foreach my $i (@list_of_numbers) {
   if ($i % 2) {
@@ -306,7 +306,7 @@ if ($evens_sum &gt; $odds_sum) {
 }</PRE><P>The loop proper in this code is the <CODE>foreach</CODE> statement. But the
 <CODE>foreach</CODE> loop doesn't stand on its own: the code in the loop
 body refers to variables declared in the two lines before the
-loop.<SUP>9</SUP> And
+loop.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP> And
 the work the loop does is all for naught without the <CODE>if</CODE>
 statement after the loop that actually reports the results. In Common
 Lisp, of course, the <CODE><B>LOOP</B></CODE> construct is an expression that
@@ -324,7 +324,7 @@ run after the last iteration of the loop body. Both the prologue and
 epilogue code can refer to local loop variables.</P><P>The prologue is always run, even if the loop body iterates zero
 times. The loop can return without running the epilogue if any of the
 following happens:</P><UL><LI>A <CODE>return</CODE> clause executes.</LI><LI><CODE><B>RETURN</B></CODE> , <CODE><B>RETURN-FROM</B></CODE>, or another transfer of control
-construct is called from within a Lisp form within the body.<SUP>10</SUP></LI><LI>The loop is terminated by an <CODE>always</CODE>, <CODE>never</CODE>, or
+construct is called from within a Lisp form within the body.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP></LI><LI>The loop is terminated by an <CODE>always</CODE>, <CODE>never</CODE>, or
 <CODE>thereis</CODE> clause, as I'll discuss in the next section.</LI></UL><P>Within the epilogue code, <CODE><B>RETURN</B></CODE> or <CODE><B>RETURN-FROM</B></CODE> can be used
 to explicitly provide a return value for the loop. Such an explicit
 return value will take precedence over any value that might otherwise
@@ -393,7 +393,7 @@ of <CODE><B>NIL</B></CODE>.</P><PRE>(loop for char across &quot;abc123&quot; the
 can combine any of the clauses I've discussed as long as you abide by
 the following rules:</P><UL><LI>The <CODE>named</CODE> clause, if any, must be the first clause.</LI><LI>After the <CODE>named</CODE> clause come all the <CODE>initially</CODE>,
 <CODE>with</CODE>, <CODE>for</CODE>, and <CODE>repeat</CODE> clauses.</LI><LI>Then comes the body clauses: conditional and unconditional
-execution, accumulation, and termination test.<SUP>11</SUP></LI><LI>End with any <CODE>finally</CODE> clauses.</LI></UL><P>The <CODE><B>LOOP</B></CODE> macro will expand into code that performs the following
+execution, accumulation, and termination test.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></LI><LI>End with any <CODE>finally</CODE> clauses.</LI></UL><P>The <CODE><B>LOOP</B></CODE> macro will expand into code that performs the following
 actions:</P><UL><LI>Initializes all local loop variables as declared with
 <CODE>with</CODE> or <CODE>for</CODE> clauses as well as those implicitly created
 by accumulation clauses. The initial value forms are evaluated in the
@@ -405,22 +405,22 @@ any iteration control variables and then executing any conditional or
 unconditional execution, accumulation, or termination test clauses in
 the order they appear in the loop code. If any of the clauses in the
 loop body terminate the loop, the rest of the body is skipped and the
-loop returns, possibly after running the epilogue.</P><P>And that's pretty much all there is to it.<SUP>12</SUP> You'll use
+loop returns, possibly after running the epilogue.</P><P>And that's pretty much all there is to it.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP> You'll use
 <CODE><B>LOOP</B></CODE> fairly often in the code later in this book, so it's worth
 having some knowledge of it. Beyond that, it's up to you how much you
 use it.</P><P>And with that, you're ready to dive into the practical chapters that
 make up the rest of the book--up first, writing a spam filter.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>The term <I>loop keyword</I> is a
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>The term <I>loop keyword</I> is a
 bit unfortunate, as loop keywords aren't keywords in the normal sense
 of being symbols in the <CODE>KEYWORD</CODE> package. In fact, any symbol,
 from any package, with the appropriate name will do; the <CODE><B>LOOP</B></CODE>
 macro cares only about their names. Typically, though, they're
 written with no package qualifier and are thus read (and interned as
-necessary) in the current package.</P><P><SUP>2</SUP>Because one of the
+necessary) in the current package.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Because one of the
 goals of <CODE><B>LOOP</B></CODE> is to allow loop expressions to be written with a
 quasi-English syntax, many of the keywords have synonyms that are
 treated the same by <CODE><B>LOOP</B></CODE> but allow some freedom to express
-things in slightly more idiomatic English for different contexts.</P><P><SUP>3</SUP>You may
+things in slightly more idiomatic English for different contexts.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>You may
 wonder why <CODE><B>LOOP</B></CODE> can't figure out whether it's looping over a
 list or a vector without needing different prepositions. This is
 another consequence of <CODE><B>LOOP</B></CODE> being a macro: the value of the list
@@ -429,8 +429,8 @@ has to generate code at compile time. And <CODE><B>LOOP</B></CODE>'s designers
 wanted it to generate extremely efficient code. To be able to
 generate efficient code for looping across, say, a vector, it needs
 to know at compile time that the value will be a vector at
-runtime--thus, the different prepositions are needed.</P><P><SUP>4</SUP>Don't ask me why <CODE><B>LOOP</B></CODE>'s authors chickened out on the
-no-parentheses style for the <CODE><B>using</B></CODE> subclause.</P><P><SUP>5</SUP>The trick is to keep ahold of the tail
+runtime--thus, the different prepositions are needed.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>Don't ask me why <CODE><B>LOOP</B></CODE>'s authors chickened out on the
+no-parentheses style for the <CODE><B>using</B></CODE> subclause.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>The trick is to keep ahold of the tail
 of the list and add new cons cells by <CODE><B>SETF</B></CODE>ing the <CODE><B>CDR</B></CODE> of
 the tail. A handwritten equivalent of the code generated by
 <CODE>(loop for i upto 10 collect i)</CODE> would look like this:</P><PRE>(do ((list nil) (tail nil) (i 0 (1+ i)))
@@ -442,26 +442,26 @@ the tail. A handwritten equivalent of the code generated by
     (setf tail new)))</PRE><P>Of course you'll rarely, if ever, write code like that. You'll use
 either <CODE><B>LOOP</B></CODE> or (if, for some reason, you don't want to use
 <CODE><B>LOOP</B></CODE>) the standard <CODE><B>PUSH</B></CODE>/<CODE><B>NREVERSE</B></CODE> idiom for collecting
-values.</P><P><SUP>6</SUP>Recall that <CODE><B>NCONC</B></CODE> is
+values.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Recall that <CODE><B>NCONC</B></CODE> is
 the destructive version of <CODE><B>APPEND</B></CODE>--it's safe to use an
 <CODE>nconc</CODE> clause only if the values you're collecting are fresh
 lists that don't share any structure with other lists. For instance,
 this is safe:</P><PRE>(loop for i upto 3 nconc (list i i)) ==&gt; (0 0 1 1 2 2 3 3)</PRE><P>But this will get you into trouble:</P><PRE>(loop for i on (list 1 2 3) nconc i) ==&gt; <I>undefined</I></PRE><P>The later will most likely get into an infinite loop as the various
 parts of the list produced by (list 1 2 3) are destructively modified
 to point to each other. But even that's not guaranteed--the behavior
-is simply undefined.</P><P><SUP>7</SUP>&quot;No! Try not. Do . . . or do not. There is
-no try.&quot; -- Yoda, <I>The Empire Strikes Back</I></P><P><SUP>8</SUP>I'm not picking on Perl here--this
+is simply undefined.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>&quot;No! Try not. Do . . . or do not. There is
+no try.&quot; -- Yoda, <I>The Empire Strikes Back</I></P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>I'm not picking on Perl here--this
 example would look pretty much the same in any language that bases
-its syntax on C's.</P><P><SUP>9</SUP>Perl would let you get away with not declaring those
+its syntax on C's.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>Perl would let you get away with not declaring those
 variables if your program didn't <CODE>use strict</CODE>. But you should
 <I>always</I> <CODE>use strict</CODE> in Perl. The equivalent code in Python,
-Java, or C would always require the variables to be declared.</P><P><SUP>10</SUP>You
+Java, or C would always require the variables to be declared.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>You
 can cause a loop to finish normally, running the epilogue, from Lisp
 code executed as part of the loop body with the local macro
-<CODE><B>LOOP-FINISH</B></CODE>.</P><P><SUP>11</SUP>Some Common Lisp
+<CODE><B>LOOP-FINISH</B></CODE>.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>Some Common Lisp
 implementations will let you get away with mixing body clauses and
 <CODE>for</CODE> clauses, but that's strictly undefined, and some
-implementations will reject such loops.</P><P><SUP>12</SUP>The one aspect of
+implementations will reject such loops.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>The one aspect of
 <CODE><B>LOOP</B></CODE> I haven't touched on at all is the syntax for declaring the
 types of loop variables. Of course, I haven't discussed type
 declarations outside of <CODE><B>LOOP</B></CODE> either. I'll cover the general

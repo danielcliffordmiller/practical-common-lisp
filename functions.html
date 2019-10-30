@@ -17,10 +17,10 @@ the program after all the macros are expanded--will consist entirely
 of calls to functions and special operators. Not to mention, macros
 themselves are also functions, albeit functions that are used to
 generate code rather than to perform the actions of the
-program.<SUP>1</SUP></P><A NAME="defining-new-functions"><H2>Defining New Functions</H2></A><P>Normally functions are defined using the <CODE><B>DEFUN</B></CODE> macro. The basic
+program.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><A NAME="defining-new-functions"><H2>Defining New Functions</H2></A><P>Normally functions are defined using the <CODE><B>DEFUN</B></CODE> macro. The basic
 skeleton of a <CODE><B>DEFUN</B></CODE> looks like this:</P><PRE>(defun <I>name</I> (<I>parameter</I>*)
   &quot;Optional documentation string.&quot;
-  <I>body-form</I>*)</PRE><P>Any symbol can be used as a function name.<SUP>2</SUP> Usually function names contain only
+  <I>body-form</I>*)</PRE><P>Any symbol can be used as a function name.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> Usually function names contain only
 alphabetic characters and hyphens, but other characters are allowed
 and are used in certain naming conventions. For instance, functions
 that convert one kind of value to another sometimes use <CODE>-&gt;</CODE> in
@@ -31,14 +31,14 @@ compound names with hyphens rather than underscores or inner caps.
 Thus, <CODE>frob-widget</CODE> is better Lisp style than either
 <CODE>frob_widget</CODE> or <CODE>frobWidget</CODE>.</P><P>A function's parameter list defines the variables that will be used
 to hold the arguments passed to the function when it's
-called.<SUP>3</SUP> If the function takes no
+called.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> If the function takes no
 arguments, the list is empty, written as <CODE>()</CODE>. Different flavors
 of parameters handle required, optional, multiple, and keyword
 arguments. I'll discuss the details in the next section.</P><P>If a string literal follows the parameter list, it's a documentation
 string that should describe the purpose of the function. When the
 function is defined, the documentation string will be associated with
 the name of the function and can later be obtained using the
-<CODE><B>DOCUMENTATION</B></CODE> function.<SUP>4</SUP></P><P>Finally, the body of a <CODE><B>DEFUN</B></CODE> consists of any number of Lisp
+<CODE><B>DOCUMENTATION</B></CODE> function.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><P>Finally, the body of a <CODE><B>DEFUN</B></CODE> consists of any number of Lisp
 expressions. They will be evaluated in order when the function is
 called and the value of the last expression is returned as the value
 of the function. Or the <CODE><B>RETURN-FROM</B></CODE> special operator can be used
@@ -85,7 +85,7 @@ code that implements the data structure pick a good general-purpose
 value. In Common Lisp you can accommodate both kinds of callers by
 using an optional parameter; callers who don't care will get a
 reasonable default, and other callers can provide a specific
-value.<SUP>5</SUP></P><P>To define a function with optional parameters, after the names of any
+value.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><P>To define a function with optional parameters, after the names of any
 required parameters, place the symbol <CODE><B>&amp;optional</B></CODE> followed by the
 names of the optional parameters. A simple example looks like this:</P><PRE>(defun foo (a b &amp;optional c d) (list a b c d))</PRE><P>When the function is called, arguments are first bound to the
 required parameters. After all the required parameters have been
@@ -150,7 +150,7 @@ parameters in the body of the function. To do it properly, you'd have
 to have as many optional parameters as the number of arguments that
 can legally be passed in a function call. This number is
 implementation dependent but guaranteed to be at least 50. And in
-current implementations it ranges from 4,096 to 536,870,911.<SUP>6</SUP> Blech. That kind of mind-bending
+current implementations it ranges from 4,096 to 536,870,911.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> Blech. That kind of mind-bending
 tedium is definitely <I>not</I> The Lisp Way. </P><P>Instead, Lisp lets you include a catchall parameter after the symbol
 <CODE><B>&amp;rest</B></CODE>. If a function includes a <CODE><B>&amp;rest</B></CODE> parameter, any
 arguments remaining after values have been doled out to all the
@@ -233,7 +233,7 @@ was amiss.</P><P>In general, if you find yourself writing a function that uses b
 change it to use all <CODE><B>&amp;key</B></CODE> parameters--they're more flexible, and
 you can always add new keyword parameters without disturbing existing
 callers of the function. You can also remove keyword parameters, as
-long as no one is using them.<SUP>7</SUP> In
+long as no one is using them.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP> In
 general, using keyword parameters helps make code much easier to
 maintain and evolve--if you need to add some new behavior to a
 function that requires new parameters, you can add keyword parameters
@@ -273,7 +273,7 @@ it finds it:</P><PRE>(defun foo (n)
         (return-from foo (list i j))))))</PRE><P>Admittedly, having to specify the name of the function you're
 returning from is a bit of a pain--for one thing, if you change the
 function's name, you'll need to change the name used in the
-<CODE><B>RETURN-FROM</B></CODE> as well.<SUP>8</SUP> But
+<CODE><B>RETURN-FROM</B></CODE> as well.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> But
 it's also the case that explicit <CODE><B>RETURN-FROM</B></CODE>s are used much less
 frequently in Lisp than <CODE>return</CODE> statements in C-derived
 languages, because <I>all</I> Lisp expressions, including control
@@ -288,7 +288,7 @@ can be used with many different comparison functions. Similarly,
 callbacks and hooks depend on being able to store references to code
 in order to run it later. Since functions are already the standard
 way to abstract bits of code, it makes sense to allow functions to be
-treated as data.<SUP>9</SUP></P><P>In Lisp, functions are just another kind of object. When you define a
+treated as data.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP></P><P>In Lisp, functions are just another kind of object. When you define a
 function with <CODE><B>DEFUN</B></CODE>, you're really doing two things: creating a
 new function object and giving it a name. It's also possible, as you
 saw in Chapter 3, to use <CODE><B>LAMBDA</B></CODE> expressions to create a function
@@ -300,16 +300,16 @@ you've got it.</P><P>The special operator <CODE><B>FUNCTION</B></CODE> provides 
 at a function object. It takes a single argument and returns the
 function with that name. The name isn't quoted. Thus, if you've
 defined a function <CODE>foo</CODE>, like so:</P><PRE>CL-USER&gt; (defun foo (x) (* 2 x))
-FOO</PRE><P>you can get the function object like this:<SUP>10</SUP></P><PRE>CL-USER&gt; (function foo)
+FOO</PRE><P>you can get the function object like this:<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP></P><PRE>CL-USER&gt; (function foo)
 #&lt;Interpreted Function FOO&gt;</PRE><P>In fact, you've already used <CODE><B>FUNCTION</B></CODE>, but it was in disguise.
 The syntax <CODE>#'</CODE>, which you used in Chapter 3, is syntactic sugar
 for <CODE><B>FUNCTION</B></CODE>, just the way <CODE>'</CODE> is syntactic sugar for
-<CODE><B>QUOTE</B></CODE>.<SUP>11</SUP> Thus, you can also get
+<CODE><B>QUOTE</B></CODE>.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP> Thus, you can also get
 the function object for <CODE>foo</CODE> like this: </P><PRE>CL-USER&gt; #'foo
 #&lt;Interpreted Function FOO&gt;</PRE><P>Once you've got the function object, there's really only one thing
 you can do with it--invoke it. Common Lisp provides two functions
 for invoking a function through a function object: <CODE><B>FUNCALL</B></CODE> and
-<CODE><B>APPLY</B></CODE>.<SUP>12</SUP>  They differ
+<CODE><B>APPLY</B></CODE>.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP>  They differ
 only in how they obtain the arguments to pass to the function. </P><P><CODE><B>FUNCALL</B></CODE> is the one to use when you know the number of arguments
 you're going to pass to the function at the time you write the code.
 The first argument to <CODE><B>FUNCALL</B></CODE> is the function object to be
@@ -376,7 +376,7 @@ in the place of a function name with <CODE>#'</CODE>.</P><PRE>(funcall #'(lambda
 in a function call expression. If you wanted, you could write the
 previous <CODE><B>FUNCALL</B></CODE> expression more concisely. </P><PRE>((lambda (x y) (+ x y)) 2 3) ==&gt; 5</PRE><P>But this is almost never done; it's merely worth noting that it's
 legal in order to emphasize that <CODE><B>LAMBDA</B></CODE> expressions can be used
-anywhere a normal function name can be.<SUP>13</SUP></P><P>Anonymous functions can be useful when you need to pass a function as
+anywhere a normal function name can be.<SUP ID="fn-top-13"><A HREF="#fn-bot-13">13</A></SUP></P><P>Anonymous functions can be useful when you need to pass a function as
 an argument to another function and the function you need to pass is
 simple enough to express inline. For instance, suppose you wanted to
 plot the function <I>2x</I>. You <I>could</I> define the following
@@ -410,7 +410,7 @@ they're created. You used closures a bit in Chapter 3, but the
 details of how closures work and what they're used for is really more
 about how variables work than functions, so I'll save that discussion
 for the next chapter. 
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Despite the importance of functions in Common Lisp, it
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Despite the importance of functions in Common Lisp, it
 isn't really accurate to describe it as a <I>functional</I> language.
 It's true some of Common Lisp's features, such as its list
 manipulation functions, are designed to be used in a body-form* style
@@ -421,20 +421,20 @@ intentionally designed to support many different styles of
 programming. In the Lisp family, Scheme is the nearest thing to a
 &quot;pure&quot; functional language, and even it has several features that
 disqualify it from absolute purity compared to languages such as
-Haskell and ML.</P><P><SUP>2</SUP>Well, almost any
+Haskell and ML.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Well, almost any
 symbol. It's undefined what happens if you use any of the names
 defined in the language standard as a name for one of your own
 functions. However, as you'll see in Chapter 21, the Lisp package
 system allows you to create names in different namespaces, so this
-isn't really an issue.</P><P><SUP>3</SUP>Parameter lists are sometimes also called <I>lambda
+isn't really an issue.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Parameter lists are sometimes also called <I>lambda
 lists</I> because of the historical relationship between Lisp's notion
-of functions and the lambda calculus.</P><P><SUP>4</SUP>For example, the following:</P><PRE>(documentation 'foo 'function)</PRE><P>returns the documentation string for the function <CODE>foo</CODE>. Note,
+of functions and the lambda calculus.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>For example, the following:</P><PRE>(documentation 'foo 'function)</PRE><P>returns the documentation string for the function <CODE>foo</CODE>. Note,
 however, that documentation strings are intended for human
 consumption, not programmatic access. A Lisp implementation isn't
 <I>required</I> to store them and is allowed to discard them at any time,
 so portable programs shouldn't depend on their presence. In some
 implementations an implementation-defined variable needs to be set
-before it will store documentation strings.</P><P><SUP>5</SUP>In languages that don't support optional parameters
+before it will store documentation strings.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>In languages that don't support optional parameters
 directly, programmers typically find ways to simulate them. One
 technique is to use distinguished &quot;no-value&quot; values that the caller
 can pass to indicate they want the default value of a given
@@ -443,9 +443,9 @@ a distinguished value. However, such a protocol between the function
 and its callers is ad hoc--in some functions or for some arguments
 <CODE>NULL</CODE> may be the distinguished value while in other functions
 or for other arguments the magic value may be -1 or some
-<CODE>#defined</CODE> constant.</P><P><SUP>6</SUP>The
+<CODE>#defined</CODE> constant.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>The
 constant <CODE><B>CALL-ARGUMENTS-LIMIT</B></CODE> tells you the
-implementation-specific value.</P><P><SUP>7</SUP>Four standard functions take
+implementation-specific value.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>Four standard functions take
 both<CODE><B> &amp;optional</B></CODE> and <CODE><B>&amp;key</B></CODE> arguments--<CODE><B>READ-FROM-STRING</B></CODE>,
 <CODE><B>PARSE-NAMESTRING</B></CODE>, <CODE><B>WRITE-LINE</B></CODE>, and <CODE><B>WRITE-STRING</B></CODE>. They
 were left that way during standardization for backward compatibility
@@ -454,27 +454,27 @@ that catches new Lisp programmers most frequently--a call such as
 <CODE>(read-from-string s :start 10)</CODE> seems to ignore the
 <CODE>:start</CODE> keyword argument, reading from index 0 instead of 10.
 That's because <CODE><B>READ-FROM-STRING </B></CODE>also has two <CODE><B>&amp;optional</B></CODE>
-parameters that swallowed up the arguments <CODE>:start</CODE> and 10.</P><P><SUP>8</SUP>Another macro, <CODE><B>RETURN</B></CODE>, doesn't
+parameters that swallowed up the arguments <CODE>:start</CODE> and 10.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>Another macro, <CODE><B>RETURN</B></CODE>, doesn't
 require a name. However, you can't use it instead of <CODE><B>RETURN-FROM</B></CODE>
 to avoid having to specify the function name; it's syntactic sugar
 for returning from a block named <CODE><B>NIL</B></CODE>. I'll cover it, along with
-the details of <CODE><B>BLOCK</B></CODE> and <CODE><B>RETURN-FROM</B></CODE>, in Chapter 20.</P><P><SUP>9</SUP>Lisp, of course, isn't the only language to
+the details of <CODE><B>BLOCK</B></CODE> and <CODE><B>RETURN-FROM</B></CODE>, in Chapter 20.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>Lisp, of course, isn't the only language to
 treat functions as data. C uses function pointers, Perl uses
 subroutine references, Python uses a scheme similar to Lisp, and C#
 introduces delegates, essentially typed function pointers, as an
 improvement over Java's rather clunky reflection and anonymous class
-mechanisms.</P><P><SUP>10</SUP>The exact printed
+mechanisms.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>The exact printed
 representation of a function object will differ from implementation
-to implementation.</P><P><SUP>11</SUP>The best way to think of <CODE><B>FUNCTION</B></CODE> is as a
+to implementation.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>The best way to think of <CODE><B>FUNCTION</B></CODE> is as a
 special kind of quotation.<CODE><B> QUOTE</B></CODE>ing a symbol prevents it from
 being evaluated at all, resulting in the symbol itself rather than
 the value of the variable named by that symbol. <CODE><B>FUNCTION</B></CODE> also
 circumvents the normal evaluation rule but, instead of preventing the
 symbol from being evaluated at all, causes it to be evaluated as the
 name of a function, just the way it would if it were used as the
-function name in a function call expression.</P><P><SUP>12</SUP>There's actually a third, the special operator
+function name in a function call expression.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>There's actually a third, the special operator
 <CODE><B>MULTIPLE-VALUE-CALL</B></CODE>, but I'll save that for when I discuss
-expressions that return multiple values in Chapter 20.</P><P><SUP>13</SUP>In Common Lisp it's also
+expressions that return multiple values in Chapter 20.</P><P ID="fn-bot-13"><SUP>13 <A HREF="#fn-top-13">^</A> </SUP>In Common Lisp it's also
 possible to use a <CODE><B>LAMBDA</B></CODE> expression as an argument to
 <CODE><B>FUNCALL</B></CODE> (or some other function that takes a function argument
 such as <CODE><B>SORT</B></CODE> or <CODE><B>MAPCAR</B></CODE>) with no <CODE>#'</CODE> before it, like

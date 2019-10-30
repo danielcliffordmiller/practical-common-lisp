@@ -27,14 +27,14 @@ operators provides one fundamental kind of control over the
 evaluation of one or more forms. <CODE><B>QUOTE</B></CODE> prevents evaluation
 altogether and allows you to get at s-expressions as data. <CODE><B>IF</B></CODE>
 provides the fundamental boolean choice operation from which all
-other conditional execution constructs can be built.<SUP>1</SUP> And
+other conditional execution constructs can be built.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> And
 <CODE><B>PROGN</B></CODE> provides the ability to sequence a number of forms.</P><A NAME="manipulating-the-lexical-environment"><H2>Manipulating the Lexical Environment</H2></A><P>The largest class of special operators contains the operators that
 manipulate and access the <I>lexical environment</I>. <CODE><B>LET</B></CODE> and
 <CODE><B>LET*</B></CODE>, which I've already discussed, are examples of special
 operators that manipulate the lexical environment since they can
 introduce new lexical bindings for variables. Any construct, such as
 a <CODE><B>DO</B></CODE> or <CODE><B>DOTIMES</B></CODE>, that binds lexical variables will have to
-expand into a <CODE><B>LET</B></CODE> or <CODE><B>LET*</B></CODE>.<SUP>2</SUP> The <CODE><B>SETQ</B></CODE> special operator is one that
+expand into a <CODE><B>LET</B></CODE> or <CODE><B>LET*</B></CODE>.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> The <CODE><B>SETQ</B></CODE> special operator is one that
 accesses the lexical environment since it can be used to set
 variables whose bindings were created by <CODE><B>LET</B></CODE> and <CODE><B>LET*</B></CODE>.</P><P>Variables, however, aren't the only thing that can be named within a
 lexical scope. While most functions are defined globally with
@@ -81,7 +81,7 @@ enclosing <CODE><B>LET</B></CODE>:</P><PRE>(defun count-versions (dir)
     versions))</PRE><P>This function could also be written using an anonymous function in
 the place of the <CODE><B>FLET</B></CODE>ed <CODE>count-version</CODE>, but giving the
 function a meaningful name makes it a bit easier to read.</P><P>And when a helper function needs to recurse, an anonymous function
-just won't do.<SUP>3</SUP> When
+just won't do.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> When
 you don't want to define a recursive helper function as a global
 function, you can use <CODE><B>LABELS</B></CODE>. For example, the following
 function, <CODE>collect-leaves</CODE>, uses the recursive helper function
@@ -133,7 +133,7 @@ following <CODE><B>WITH-SLOTS</B></CODE> form:</P><PRE>(with-slots (x y z) foo (
        (z (slot-value #:g149 'z)))
     (list x y z)))</PRE><P>When the expression <CODE>(list x y z)</CODE> is evaluated, the symbols
 <CODE>x</CODE>, <CODE>y</CODE>, and <CODE>z</CODE> will be replaced with their
-expansions, such as <CODE>(slot-value #:g149 'x)</CODE>.<SUP>4</SUP></P><P>Symbol macros are most often local, defined with
+expansions, such as <CODE>(slot-value #:g149 'x)</CODE>.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><P>Symbol macros are most often local, defined with
 <CODE><B>SYMBOL-MACROLET</B></CODE>, but Common Lisp also provides a macro
 <CODE><B>DEFINE-SYMBOL-MACRO</B></CODE> that defines a global symbol macro. A symbol
 macro defined with <CODE><B>SYMBOL-MACROLET</B></CODE> shadows other symbol macros
@@ -211,7 +211,7 @@ Common Lisp in order to make various FORTRAN libraries available to
 Common Lisp programmers. Since many FORTRAN libraries were written
 before the structured programming revolution, they're full of gotos.
 The f2cl compiler can simply translate those gotos to <CODE><B>GO</B></CODE>s within
-appropriate <CODE><B>TAGBODY</B></CODE>s.<SUP>5</SUP></P><P>Similarly, <CODE><B>TAGBODY</B></CODE> and <CODE><B>GO</B></CODE> can be handy when translating
+appropriate <CODE><B>TAGBODY</B></CODE>s.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><P>Similarly, <CODE><B>TAGBODY</B></CODE> and <CODE><B>GO</B></CODE> can be handy when translating
 algorithms described in prose or by flowcharts--for instance, in
 Donald Knuth's classic series <I>The Art of Computer Programming</I>, he
 describes algorithms using a &quot;recipe&quot; format: step 1, do this; step
@@ -252,7 +252,7 @@ function, after renaming a few variables, as follows:</P><PRE>(defun algorithm-s
 faithful translation of Knuth's algorithm. But, this code, unlike
 Knuth's prose description, can be run and tested. Then you can start
 refactoring, checking after each change that the function still
-works.<SUP>6</SUP></P><P>After pushing the pieces around a bit, you might end up with something
+works.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P>After pushing the pieces around a bit, you might end up with something
 like this:</P><PRE>(defun algorithm-s (n max)
   (loop for seen from 0
      when (&lt; (* (- max seen) (random 1.0)) n)
@@ -326,11 +326,11 @@ be passed <I>down</I> the stack to be invoked later, but it can't be
 returned <I>up</I> the stack. If you invoke a closure that tries to
 <CODE><B>RETURN-FROM</B></CODE> a <CODE><B>BLOCK</B></CODE>, after the <CODE><B>BLOCK</B></CODE> itself has
 returned, you'll get an error. Likewise, trying to <CODE><B>GO</B></CODE> to a
-<CODE><B>TAGBODY</B></CODE> that no longer exists will cause an error.<SUP>7</SUP></P><P>It's unlikely you'll need to use <CODE><B>BLOCK</B></CODE> and <CODE><B>TAGBODY</B></CODE> yourself
+<CODE><B>TAGBODY</B></CODE> that no longer exists will cause an error.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>It's unlikely you'll need to use <CODE><B>BLOCK</B></CODE> and <CODE><B>TAGBODY</B></CODE> yourself
 for this kind of stack unwinding. But you'll likely be using them
 indirectly whenever you use the condition system, so understanding
 how they work should help you understand better what exactly, for
-instance, invoking a restart is doing.<SUP>8</SUP></P><P><CODE><B>CATCH</B></CODE> and <CODE><B>THROW</B></CODE> are another pair of special operators that
+instance, invoking a restart is doing.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP></P><P><CODE><B>CATCH</B></CODE> and <CODE><B>THROW</B></CODE> are another pair of special operators that
 can force the stack to unwind. You'll use these operators even less
 often than the others mentioned so far--they're holdovers from
 earlier Lisp dialects that didn't have Common Lisp's condition
@@ -397,7 +397,7 @@ one I've mentioned in passing before--<CODE><B>UNWIND-PROTECT</B></CODE>.
 unwinds--to make sure that certain code always runs regardless of how
 control leaves the scope of the <CODE><B>UNWIND-PROTECT</B></CODE>, whether by a
 normal return, by a restart being invoked, or by any of the ways
-discussed in this section.<SUP>9</SUP> The
+discussed in this section.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP> The
 basic skeleton of <CODE><B>UNWIND-PROTECT</B></CODE> looks like this:</P><PRE>(unwind-protect <I>protected-form</I>
   <I>cleanup-form</I>*)</PRE><P>The single <I>protected-form</I> is evaluated, and then, regardless of
 how it returns, the <I>cleanup-forms</I> are evaluated. If the
@@ -414,7 +414,7 @@ cleaned up after they're done, regardless of whether they return
 normally or bail via a restart or other nonlocal exit. For example,
 if you were writing a database library that defined functions
 <CODE>open-connection</CODE> and <CODE>close-connection</CODE>, you might write a
-macro like this:<SUP>10</SUP></P><PRE>(defmacro with-database-connection ((var &amp;rest open-args) &amp;body body)
+macro like this:<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP></P><PRE>(defmacro with-database-connection ((var &amp;rest open-args) &amp;body body)
   `(let ((,var (open-connection ,@open-args)))
     (unwind-protect (progn ,@body)
       (close-connection ,var))))</PRE><P>which lets you write code like this:</P><PRE>(with-database-connection (conn :host &quot;foo&quot; :user &quot;scott&quot; :password &quot;tiger&quot;)
@@ -461,7 +461,7 @@ some subform will &quot;pass through&quot; multiple values, returning all the
 values returned by the subform. Thus, a function that returns the
 result of calling <CODE><B>VALUES</B></CODE> or <CODE><B>VALUES-LIST</B></CODE> will itself return
 multiple values--and so will another function whose result comes from
-calling the first function. And so on.<SUP>11</SUP></P><P>But when a form is evaluated in a value position, only the primary
+calling the first function. And so on.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></P><P>But when a form is evaluated in a value position, only the primary
 value will be used, which is why the previous addition form works the
 way you'd expect. The special operator <CODE><B>MULTIPLE-VALUE-CALL</B></CODE>
 provides the mechanism for getting your hands on the multiple values
@@ -517,8 +517,8 @@ side effects of evaluating forms earlier in the file can affect how
 forms later in the form are read and evaluated. For instance,
 evaluating an <CODE><B>IN-PACKAGE</B></CODE> form changes the value of
 <CODE><B>*PACKAGE*</B></CODE>, which will affect the way subsequent forms are
-read.<SUP>12</SUP> Similarly, a <CODE><B>DEFMACRO</B></CODE> form early in a file can define a
-macro that can then be used by code later in the file.<SUP>13</SUP></P><P><CODE><B>COMPILE-FILE</B></CODE>, on the other hand, normally doesn't evaluate the
+read.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP> Similarly, a <CODE><B>DEFMACRO</B></CODE> form early in a file can define a
+macro that can then be used by code later in the file.<SUP ID="fn-top-13"><A HREF="#fn-bot-13">13</A></SUP></P><P><CODE><B>COMPILE-FILE</B></CODE>, on the other hand, normally doesn't evaluate the
 forms it's compiling; it's when the FASL is loaded that the forms--or
 their compiled equivalents--will be evaluated. However,
 <CODE><B>COMPILE-FILE</B></CODE> must evaluate some forms, such as <CODE><B>IN-PACKAGE</B></CODE>
@@ -547,7 +547,7 @@ level of a source file are compiled as top-level forms. Similarly,
 any forms appearing directly in a top-level <CODE><B>PROGN</B></CODE> are compiled
 as top-level forms since the <CODE><B>PROGN</B></CODE> itself doesn't <I>do</I>
 anything--it just groups together its subforms, which will be run
-when the FASL is loaded.<SUP>14</SUP> Similarly, forms appearing
+when the FASL is loaded.<SUP ID="fn-top-14"><A HREF="#fn-bot-14">14</A></SUP> Similarly, forms appearing
 directly in a <CODE><B>MACROLET</B></CODE> or <CODE><B>SYMBOL-MACROLET</B></CODE> are compiled as
 top-level forms because after the compiler has expanded the local
 macros or symbol macros, there will be no remnant of the
@@ -607,7 +607,7 @@ of the underlying language that can't be accessed any other way.
 system, which is used to communicate things to the compiler that don't
 affect the meaning of your code but that may help the compiler
 generate better code--faster, clearer error messages, and so
-on.<SUP>15</SUP> I'll
+on.<SUP ID="fn-top-15"><A HREF="#fn-bot-15">15</A></SUP> I'll
 discuss declarations briefly in Chapter 32.</P><P>The other two, <CODE><B>LOAD-TIME-VALUE</B></CODE> and <CODE><B>PROGV</B></CODE>, are infrequently
 used, and explaining the reason why you might ever <I>want</I> to use
 them would take longer than explaining what they do. So I'll just
@@ -640,19 +640,19 @@ back to hard-nosed practical topics and show you how to use Common
 Lisp's package system to take control of your namespaces so you can
 write libraries and applications that can coexist without stomping on
 each other's names.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Of course,
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Of course,
 if <CODE><B>IF</B></CODE> wasn't a special operator but some other conditional form,
 such as <CODE><B>COND</B></CODE>, was, you could build <CODE><B>IF</B></CODE> as a macro. Indeed,
 in many Lisp dialects, starting with McCarthy's original Lisp,
-<CODE><B>COND</B></CODE> was the primitive conditional evaluation operator.</P><P><SUP>2</SUP>Well, technically those
+<CODE><B>COND</B></CODE> was the primitive conditional evaluation operator.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Well, technically those
 constructs could also expand into a <CODE><B>LAMBDA</B></CODE> expression since, as
 I mentioned in Chapter 6, <CODE><B>LET</B></CODE> could be defined--and was in some
 earlier Lisps--as a macro that expands into an invocation of an
-anonymous function.</P><P><SUP>3</SUP>Surprising as it may seem, it actually is
+anonymous function.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Surprising as it may seem, it actually is
 possible to make anonymous functions recurse. However, you must use a
 rather esoteric mechanism known as the <I>Y combinator</I>. But the Y
 combinator is an interesting theoretical result, not a practical
-programming tool, so is well outside the scope of this book.</P><P><SUP>4</SUP>It's not
+programming tool, so is well outside the scope of this book.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>It's not
 required that <CODE><B>WITH-SLOTS</B></CODE> be implemented with
 <CODE><B>SYMBOL-MACROLET</B></CODE>--in some implementations, <CODE><B>WITH-SLOTS</B></CODE> may
 walk the code provided and generate an expansion with <CODE>x</CODE>,
@@ -665,7 +665,7 @@ understands the syntax of all special operators and that recursively
 expands all macro forms in order to determine whether their expansions
 include the symbols in value positions. The Lisp implementation
 obviously has such a code walker at its disposal, but it's one of the
-few parts of Lisp that's not exposed to users of the language.</P><P><SUP>5</SUP>One version of f2cl is available as
+few parts of Lisp that's not exposed to users of the language.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>One version of f2cl is available as
 part of the Common Lisp Open Code Collection (CLOCC):
 <CODE>http://clocc.sourceforge.net/</CODE>. By contrast, consider the
 tricks the authors of f2j, a FORTRAN-to-Java translator, have to
@@ -675,28 +675,28 @@ first compile the FORTRAN code into legal Java source with calls to a
 dummy class to represent the labels and gotos. Then they compile the
 source with a regular Java compiler and postprocess the byte codes to
 translate the dummy calls into JVM-level byte codes. Clever, but what
-a pain.</P><P><SUP>6</SUP>Since this algorithm depends on values returned by
+a pain.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Since this algorithm depends on values returned by
 <CODE><B>RANDOM</B></CODE>, you may want to test it with a consistent random seed,
 which you can get by binding <CODE><B>*RANDOM-STATE*</B></CODE> to the value of
 <CODE>(make-random-state nil)</CODE> around each call to
 <CODE>algorithm-s</CODE>. For instance, you can do a basic sanity check of
 <CODE>algorithm-s</CODE> by evaluating this:</P><PRE>(let ((*random-state* (make-random-state nil))) (algorithm-s 10 200))</PRE><P>If your refactorings are all valid, this expression should evaluate to
-the same list each time.</P><P><SUP>7</SUP>This is
+the same list each time.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>This is
 a pretty reasonable restriction--it's not entirely clear what it'd
 mean to return from a form that has already returned--unless, of
 course, you're a Scheme programmer. Scheme supports
 <I>continuations</I>, a language construct that makes it possible to
 return from the same function call more than once. But for a variety
 of reasons, few, if any, languages other than Scheme support this
-kind of continuation.</P><P><SUP>8</SUP>If you're the kind of
+kind of continuation.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>If you're the kind of
 person who likes to know how things work all the way down to the
 bits, it may be instructive to think about how you might implement
 the condition system's macros using <CODE><B>BLOCK</B></CODE>, <CODE><B>TAGBODY</B></CODE>,
-closures, and dynamic variables.</P><P><SUP>9</SUP><CODE><B>UNWIND-PROTECT</B></CODE> is essentially
-equivalent to <CODE>try/finally</CODE> constructs in Java and Python.</P><P><SUP>10</SUP>And indeed, CLSQL, the multi-Lisp,
+closures, and dynamic variables.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP><CODE><B>UNWIND-PROTECT</B></CODE> is essentially
+equivalent to <CODE>try/finally</CODE> constructs in Java and Python.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>And indeed, CLSQL, the multi-Lisp,
 multidatabase SQL interface library, provides a similar macro called
 <CODE>with-database</CODE>. CLSQL's home page is at
-<CODE>http://clsql.b9.com</CODE>.</P><P><SUP>11</SUP>A small handful of macros
+<CODE>http://clsql.b9.com</CODE>.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>A small handful of macros
 don't pass through extra return values of the forms they evaluate. In
 particular, the <CODE><B>PROG1</B></CODE> macro, which evaluates a number of forms
 like a <CODE><B>PROGN</B></CODE> before returning the value of the first form,
@@ -708,7 +708,7 @@ first form. It's a minor wart that <CODE><B>PROG1</B></CODE> doesn't already beh
 like <CODE><B>MULTIPLE-VALUE-PROG1</B></CODE>, but neither is used often enough that
 it matters much. The <CODE><B>OR</B></CODE> and <CODE><B>COND</B></CODE> macros are also not always
 transparent to multiple values, returning only the primary value of
-certain subforms.</P><P><SUP>12</SUP>The reason loading a file with an <CODE><B>IN-PACKAGE</B></CODE> form in
+certain subforms.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>The reason loading a file with an <CODE><B>IN-PACKAGE</B></CODE> form in
 it has no effect on the value of <CODE><B>*PACKAGE*</B></CODE> after <CODE><B>LOAD</B></CODE>
 returns is because <CODE><B>LOAD</B></CODE> binds <CODE><B>*PACKAGE*</B></CODE> to its current
 value before doing anything else. In other words, something
@@ -716,17 +716,17 @@ equivalent to the following <CODE><B>LET</B></CODE> is wrapped around the rest o
 the code in <CODE><B>LOAD</B></CODE>:</P><PRE>(let ((*package* *package*)) ...)</PRE><P>Any assignment to <CODE><B>*PACKAGE*</B></CODE> will be to the new binding, and the
 old binding will be restored when <CODE><B>LOAD</B></CODE> returns. It also binds the
 variable <CODE><B>*READTABLE*</B></CODE>, which I haven't discussed, in the same
-way.</P><P><SUP>13</SUP>In some
+way.</P><P ID="fn-bot-13"><SUP>13 <A HREF="#fn-top-13">^</A> </SUP>In some
 implementations, you may be able to get away with evaluating
 <CODE><B>DEFUN</B></CODE>s that use undefined macros in the function body as long as
 the macros are defined before the function is actually called. But
 that works, if at all, only when <CODE><B>LOAD</B></CODE>ing the definitions from
 source, not when compiling with <CODE><B>COMPILE-FILE</B></CODE>, so in general macro
-definitions must be evaluated before they're used.</P><P><SUP>14</SUP>By contrast, the subforms in a
+definitions must be evaluated before they're used.</P><P ID="fn-bot-14"><SUP>14 <A HREF="#fn-top-14">^</A> </SUP>By contrast, the subforms in a
 top-level <CODE><B>LET</B></CODE> aren't compiled as top-level forms because they're
 not run directly when the FASL is loaded. They will run, but it's in
 the runtime context of the bindings established by the <CODE><B>LET</B></CODE>.
 Theoretically, a <CODE><B>LET</B></CODE> that binds no variables could be treated
 like a <CODE><B>PROGN</B></CODE>, but it's not--the forms appearing in a <CODE><B>LET</B></CODE>
-are never treated as top-level forms.</P><P><SUP>15</SUP>The one declaration that has an effect on the semantics of a
+are never treated as top-level forms.</P><P ID="fn-bot-15"><SUP>15 <A HREF="#fn-top-15">^</A> </SUP>The one declaration that has an effect on the semantics of a
 program is the <CODE><B>SPECIAL</B></CODE> declaration mentioned in Chapter 6.</P></DIV></BODY></HTML>

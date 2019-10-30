@@ -11,11 +11,11 @@ output checking answers when the computer can do it much more quickly
 and accurately. Consequently, each test case must be an expression
 that yields a boolean value--true or false, pass or fail. For
 instance, if you were writing tests for the built-in <CODE><B>+</B></CODE> function,
-these might be reasonable test cases:<SUP>1</SUP></P><PRE>(= (+ 1 2) 3)
+these might be reasonable test cases:<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><PRE>(= (+ 1 2) 3)
 (= (+ 1 2 3) 6)
 (= (+ -1 -3) -4)</PRE><P>Functions that have side effects will be tested slightly
 differently--you'll have to call the function and then check for
-evidence of the expected side effects.<SUP>2</SUP> But in the end, every test case has to boil down to a
+evidence of the expected side effects.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> But in the end, every test case has to boil down to a
 boolean expression, thumbs up or thumbs down. </P><A NAME="two-first-tries"><H2>Two First Tries</H2></A><P>If you were doing ad hoc testing, you could enter these expressions
 at the REPL and check that they return <CODE><B>T</B></CODE>. But you want a
 framework that makes it easy to organize and run these test cases
@@ -40,7 +40,7 @@ what happens to each test case, you could write something like this:</P><PRE>(de
   (format t &quot;~:[FAIL~;pass~] ... ~a~%&quot; (= (+ -1 -3) -4) '(= (+ -1 -3) -4)))</PRE><P>Now each test case will be reported individually. The
 <CODE>~:[FAIL~;pass~]</CODE> part of the <CODE><B>FORMAT</B></CODE> directive causes
 <CODE><B>FORMAT</B></CODE> to print &quot;FAIL&quot; if the first format argument is false and
-&quot;pass&quot; otherwise.<SUP>3</SUP> Then you label the result
+&quot;pass&quot; otherwise.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> Then you label the result
 with the test expression itself. Now running <CODE>test-+</CODE> shows you
 exactly what's going on.</P><PRE>CL-USER&gt; (test-+)
 pass ... (= (+ 1 2) 3)
@@ -139,11 +139,11 @@ this: </P><PRE>(defmacro combine-results (&amp;body forms)
   `(combine-results
     ,@(loop for f in forms collect `(report-result ,f ',f))))</PRE><P>With that version of <CODE>check</CODE>, <CODE>test-+</CODE> should emit the
 results of its three test expressions and then return <CODE><B>T</B></CODE> to
-indicate that everything passed.<SUP>4</SUP></P><PRE>CL-USER&gt; (test-+)
+indicate that everything passed.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><PRE>CL-USER&gt; (test-+)
 pass ... (= (+ 1 2) 3)
 pass ... (= (+ 1 2 3) 6)
 pass ... (= (+ -1 -3) -4)
-T</PRE><P>And if you change one of the test cases so it fails,<SUP>5</SUP> the final return value changes to <CODE><B>NIL</B></CODE>.</P><PRE>CL-USER&gt; (test-+)
+T</PRE><P>And if you change one of the test cases so it fails,<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> the final return value changes to <CODE><B>NIL</B></CODE>.</P><PRE>CL-USER&gt; (test-+)
 pass ... (= (+ 1 2) 3)
 pass ... (= (+ 1 2 3) 6)
 FAIL ... (= (+ -1 -3) -5)
@@ -264,12 +264,12 @@ with <CODE>deftest</CODE> and make a small change to the <CODE>*test-name*</CODE
 bookkeeping, you can have results reported with a &quot;fully qualified&quot;
 path to the test case, something like this: </P><PRE>pass ... (TEST-ARITHMETIC TEST-+): (= (+ 1 2) 3)</PRE><P>Because you've already abstracted the process of defining a test
 function, you can change the bookkeeping details without modifying
-the code of the test functions.<SUP>6</SUP> To make <CODE>*test-name*</CODE> hold a list of test
+the code of the test functions.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> To make <CODE>*test-name*</CODE> hold a list of test
 function names instead of just the name of the most recently entered
 test function, you just need to change this binding form:</P><PRE>(let ((*test-name* ',name))</PRE><P>to the following:</P><PRE>(let ((*test-name* (append *test-name* (list ',name))))</PRE><P>Since <CODE><B>APPEND</B></CODE> returns a new list made up of the elements of its
 arguments, this version will bind <CODE>*test-name*</CODE> to a list
 containing the old contents of <CODE>*test-name*</CODE> with the new name
-tacked onto the end.<SUP>7</SUP> When
+tacked onto the end.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP> When
 each test function returns, the old value of <CODE>*test-name*</CODE> will
 be restored.</P><P>Now you can redefine <CODE>test-arithmetic</CODE> with <CODE>deftest</CODE>
 instead of <CODE><B>DEFUN</B></CODE>.</P><PRE>(deftest test-arithmetic ()
@@ -357,29 +357,29 @@ the result reporting without touching the test functions.</P><P>Now, with the ba
 and a little practical experience using them, you're ready to start
 exploring Common Lisp's rich standard library of functions and data
 types.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>This is for illustrative
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>This is for illustrative
 purposes only--obviously, writing test cases for built-in functions
 such as <CODE><B>+</B></CODE> is a bit silly, since if such basic things aren't
 working, the chances the tests will be running the way you expect is
 pretty slim. On the other hand, most Common Lisps are implemented
 largely in Common Lisp, so it's not crazy to imagine writing test
-suites in Common Lisp to test the standard library functions.</P><P><SUP>2</SUP>Side effects can include
+suites in Common Lisp to test the standard library functions.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Side effects can include
 such things as signaling errors; I'll discuss Common Lisp's error
 handling system in Chapter 19. You may, after reading that chapter,
 want to think about how to incorporate tests that check whether a
 function does or does not signal a particular error in certain
-situations.</P><P><SUP>3</SUP>I'll discuss this and other <CODE><B>FORMAT</B></CODE>
-directives in more detail in Chapter 18.</P><P><SUP>4</SUP>If <CODE>test-+</CODE> has been
+situations.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>I'll discuss this and other <CODE><B>FORMAT</B></CODE>
+directives in more detail in Chapter 18.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>If <CODE>test-+</CODE> has been
 compiled--which may happen implicitly in certain Lisp
 implementations--you may need to reevaluate the definition of
 <CODE>test-+</CODE> to get the changed definition of <CODE>check</CODE> to affect
 the behavior of <CODE>test-+</CODE>. Interpreted code, on the other hand,
 typically expands macros anew each time the code is interpreted,
-allowing the effects of macro redefinitions to be seen immediately.</P><P><SUP>5</SUP>You have to
+allowing the effects of macro redefinitions to be seen immediately.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>You have to
 change the test to make it fail since you can't change the behavior
-of <CODE><B>+</B></CODE>.</P><P><SUP>6</SUP>Though, again, if the test
+of <CODE><B>+</B></CODE>.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Though, again, if the test
 functions have been compiled, you'll have to recompile them after
-changing the macro.</P><P><SUP>7</SUP>As you'll see in Chapter 12, <CODE><B>APPEND</B></CODE>ing
+changing the macro.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>As you'll see in Chapter 12, <CODE><B>APPEND</B></CODE>ing
 to the end of a list isn't the most efficient way to build a list.
 But for now this is sufficient--as long as the test hierarchies
 aren't too deep, it should be fine. And if it becomes a problem, all

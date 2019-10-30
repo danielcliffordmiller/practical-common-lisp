@@ -1,7 +1,7 @@
 <HTML><HEAD><TITLE>A Few FORMAT Recipes</TITLE><LINK REL="stylesheet" TYPE="text/css" HREF="style.css"/></HEAD><BODY><DIV CLASS="copyright">Copyright &copy; 2003-2005, Peter Seibel</DIV><H1>18. A Few FORMAT Recipes</H1><P>Common Lisp's <CODE><B>FORMAT</B></CODE> function is--along with the extended
 <CODE><B>LOOP</B></CODE> macro--one of the two Common Lisp features that inspires a
 strong emotional response in a lot of Common Lisp users. Some love it;
-others hate it.<SUP>1</SUP></P><P><CODE><B>FORMAT</B></CODE>'s fans love it for its great power and concision, while
+others hate it.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><P><CODE><B>FORMAT</B></CODE>'s fans love it for its great power and concision, while
 its detractors hate it because of the potential for misuse and its
 opacity. Complex <CODE><B>FORMAT</B></CODE> control strings sometimes bear a
 suspicious resemblance to line noise, but <CODE><B>FORMAT</B></CODE> remains popular
@@ -42,7 +42,7 @@ the Common Lisp pretty printer is a customizable system for printing
 block-structured data such as--but not limited to--s-expressions
 while varying indentation and dynamically adding line breaks as
 needed. It's a great thing when you need it, but it's not often
-needed in day-to-day programming.<SUP>2</SUP></P><P>Instead, I'll focus on the parts of <CODE><B>FORMAT</B></CODE> you can use to
+needed in day-to-day programming.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP></P><P>Instead, I'll focus on the parts of <CODE><B>FORMAT</B></CODE> you can use to
 generate human-readable strings with interpolated values. Even
 limiting the scope in that way, there's still a fair bit to cover.
 You shouldn't feel obliged to remember every detail described in this
@@ -57,7 +57,7 @@ these arguments as <I>format arguments</I>.</P><P>The first argument to <CODE><B
 can be <CODE><B>T</B></CODE>, <CODE><B>NIL</B></CODE>, a stream, or a string with a fill pointer.
 <CODE><B>T</B></CODE> is shorthand for the stream <CODE><B>*STANDARD-OUTPUT*</B></CODE>, while
 <CODE><B>NIL</B></CODE> causes <CODE><B>FORMAT</B></CODE> to generate its output to a string, which
-it then returns.<SUP>3</SUP> If the destination is a
+it then returns.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> If the destination is a
 stream, the output is written to the stream. And if the destination
 is a string with a fill pointer, the formatted output is added to the
 end of the string and the fill pointer is adjusted appropriately.
@@ -190,7 +190,7 @@ directive, it tells you this:</P><PRE>(format nil &quot;~:@c&quot; (code-char 0)
 directive. And even if they do, it may or may not be accurate--for
 instance, if you're running OpenMCL in SLIME, the <CODE>C-@</CODE> key
 chord is intercepted by Emacs, invoking
-<CODE>set-mark-command</CODE>.<SUP>4</SUP></P><P>Format directives dedicated to emitting numbers are another important
+<CODE>set-mark-command</CODE>.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><P>Format directives dedicated to emitting numbers are another important
 category. While you can use the <CODE>~A</CODE> and <CODE>~S</CODE> directives to
 emit numbers, if you want fine control over how they're printed, you
 need to use one of the number-specific directives. The numeric
@@ -234,7 +234,7 @@ floating-point values into text. The <CODE>~G</CODE>, or <I>general,</I>
 floating-point directive, on the other hand, combines aspects of the
 <CODE>~F</CODE> and <CODE>~E</CODE> directives in a way that only really makes
 sense for generating tabular output.</P><P>The <CODE>~F</CODE> directive emits its argument, which should be a
-number,<SUP>5</SUP> in
+number,<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> in
 decimal format, possibly controlling the number of digits after the
 decimal point. The <CODE>~F</CODE> directive is, however, allowed to use
 computerized scientific notation if the number is sufficiently large
@@ -254,7 +254,7 @@ controls the minimum number of digits to print before the decimal
 point.</P><PRE>(format nil &quot;~$&quot; pi)    ==&gt; &quot;3.14&quot;
 (format nil &quot;~2,4$&quot; pi) ==&gt; &quot;0003.14&quot;</PRE><P>All three directives, <CODE>~F</CODE>, <CODE>~E</CODE>, and <CODE>~$</CODE>, can be
 made to always print a sign, plus or minus, with the at-sign
-modifier.<SUP>6</SUP></P><A NAME="english-language-directives"><H2>English-Language Directives</H2></A><P>Some of the handiest <CODE><B>FORMAT</B></CODE> directives for generating
+modifier.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><A NAME="english-language-directives"><H2>English-Language Directives</H2></A><P>Some of the handiest <CODE><B>FORMAT</B></CODE> directives for generating
 human-readable messages are the ones for emitting English text. These
 directives allow you to emit numbers as English words, to emit plural
 markers based on the value of a format argument, and to apply case
@@ -424,7 +424,7 @@ irregular plural by combing <CODE>~:*</CODE> with <CODE>~[</CODE>.</P><PRE>(form
 cardinal number. Then the <CODE>~:*</CODE> directive backs up so the number
 is also used as the argument to the <CODE>~[</CODE> directive, selecting
 between the clauses for when the number is zero, one, or anything
-else.<SUP>7</SUP></P><P>Within an <CODE>~{</CODE> directive, <CODE>~*</CODE> skips or backs up over the
+else.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>Within an <CODE>~{</CODE> directive, <CODE>~*</CODE> skips or backs up over the
 items in the list. For instance, you could print only the keys of a
 plist like this:</P><PRE>(format nil &quot;~{~s~*~^ ~}&quot; '(:a 10 :b 20)) ==&gt; &quot;:A :B&quot;</PRE><P>The <CODE>~*</CODE> directive can also be given a prefix parameter. With no
 modifiers or with the colon modifier, this parameter specifies the
@@ -434,7 +434,7 @@ zero-based index of the argument to jump to, defaulting to zero. The
 at-sign variant of <CODE>~*</CODE> can be useful if you want to use
 different control strings to generate different messages for the same
 arguments and if different messages need to use the arguments in
-different orders.<SUP>8</SUP></P><A NAME="and-more---"><H2>And More . . .</H2></A><P>And there's more--I haven't mentioned the <CODE>~?</CODE> directive, which
+different orders.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP></P><A NAME="and-more---"><H2>And More . . .</H2></A><P>And there's more--I haven't mentioned the <CODE>~?</CODE> directive, which
 can take snippets of control strings from the format arguments or the
 <CODE>~/</CODE> directive, which allows you to call an arbitrary function
 to handle the next format argument. And then there are all the
@@ -443,7 +443,7 @@ directives discussed in this chapter should be plenty for the time
 being.</P><P>In the next chapter, you'll move onto Common Lisp's condition system,
 the Common Lisp analog to other languages' exception and error
 handling systems.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Of course, most folks realize it's not worth
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Of course, most folks realize it's not worth
 getting that worked up over <I>anything</I> in a programming language and
 use it or not without a lot of angst. On the other hand, it's
 interesting that these two features are the two features in Common
@@ -453,29 +453,29 @@ control strings is character based, while the extended <CODE><B>LOOP</B></CODE> 
 can be understood only in terms of the grammar of the <CODE><B>LOOP</B></CODE>
 keywords. That one of the common knocks on both <CODE><B>FORMAT</B></CODE> and
 <CODE><B>LOOP</B></CODE> is that they &quot;aren't Lispy enough&quot; is evidence that Lispers
-really do like the s-expression syntax.</P><P><SUP>2</SUP>Readers interested in the
+really do like the s-expression syntax.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Readers interested in the
 pretty printer may want to read the paper &quot;XP: A Common Lisp Pretty
 Printing System&quot; by Richard Waters. It's a description of the pretty
 printer that was eventually incorporated into Common Lisp. You can
 download it from
-<CODE>ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-1102a.pdf</CODE>.</P><P><SUP>3</SUP>To slightly confuse matters, most other I/O
+<CODE>ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-1102a.pdf</CODE>.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>To slightly confuse matters, most other I/O
 functions also accept <CODE><B>T</B></CODE> and <CODE><B>NIL</B></CODE> as <I>stream designators</I>
 but with a different meaning: as a stream designator, <CODE><B>T</B></CODE>
 designates the bidirectional stream <CODE><B>*TERMINAL-IO*</B></CODE>, while
 <CODE><B>NIL</B></CODE> designates <CODE><B>*STANDARD-OUTPUT*</B></CODE> as an output stream and
-<CODE><B>*STANDARD-INPUT*</B></CODE> as an input stream.</P><P><SUP>4</SUP>This variant on the <CODE>~C</CODE> directive
+<CODE><B>*STANDARD-INPUT*</B></CODE> as an input stream.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>This variant on the <CODE>~C</CODE> directive
 makes more sense on platforms like the Lisp Machines where key press
-events were represented by Lisp characters.</P><P><SUP>5</SUP>Technically, if the argument isn't a real number,
+events were represented by Lisp characters.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Technically, if the argument isn't a real number,
 <CODE>~F</CODE> is supposed to format it as if by the <CODE>~D</CODE> directive,
 which in turn behaves like the <CODE>~A</CODE> directive if the argument
-isn't a number, but not all implementations get this right.</P><P><SUP>6</SUP>Well, that's what the language standard says. For some
+isn't a number, but not all implementations get this right.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Well, that's what the language standard says. For some
 reason, perhaps rooted in a common ancestral code base, several
 Common Lisp implementations don't implement this aspect of the
-<CODE>~F</CODE> directive correctly.</P><P><SUP>7</SUP>If you find &quot;I saw zero elves&quot; to be a bit clunky, you
+<CODE>~F</CODE> directive correctly.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>If you find &quot;I saw zero elves&quot; to be a bit clunky, you
 could use a slightly more elaborate format string that makes another
 use of <CODE>~:*</CODE> like this:</P><PRE>(format nil &quot;I saw ~[no~:;~:*~r~] el~:*~[ves~;f~:;ves~].&quot; 0) ==&gt; &quot;I saw no elves.&quot;
 (format nil &quot;I saw ~[no~:;~:*~r~] el~:*~[ves~;f~:;ves~].&quot; 1) ==&gt; &quot;I saw one elf.&quot;
-(format nil &quot;I saw ~[no~:;~:*~r~] el~:*~[ves~;f~:;ves~].&quot; 2) ==&gt; &quot;I saw two elves.&quot;</PRE><P><SUP>8</SUP>This kind of problem can arise when trying to
+(format nil &quot;I saw ~[no~:;~:*~r~] el~:*~[ves~;f~:;ves~].&quot; 2) ==&gt; &quot;I saw two elves.&quot;</PRE><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>This kind of problem can arise when trying to
 localize an application and translate human-readable messages into
 different languages. <CODE><B>FORMAT</B></CODE> can help with some of these problems
 but is by no means a full-blown localization system.</P></DIV></BODY></HTML>

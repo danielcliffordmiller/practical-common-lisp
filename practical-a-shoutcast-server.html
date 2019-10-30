@@ -1,7 +1,7 @@
 <HTML><HEAD><TITLE>Practical: A Shoutcast Server</TITLE><LINK REL="stylesheet" TYPE="text/css" HREF="style.css"/></HEAD><BODY><DIV CLASS="copyright">Copyright &copy; 2003-2005, Peter Seibel</DIV><H1>28. Practical: A Shoutcast Server</H1><P>In this chapter you'll develop another important part of what will
 eventually be a Web-based application for streaming MP3s, namely, the
 server that implements the Shoutcast protocol for actually streaming
-MP3s to clients such as iTunes, XMMS,<SUP>1</SUP> or Winamp.</P><A NAME="the-shoutcast-protocol"><H2>The Shoutcast Protocol</H2></A><P>The Shoutcast protocol was invented by the folks at Nullsoft, the
+MP3s to clients such as iTunes, XMMS,<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> or Winamp.</P><A NAME="the-shoutcast-protocol"><H2>The Shoutcast Protocol</H2></A><P>The Shoutcast protocol was invented by the folks at Nullsoft, the
 makers of the Winamp MP3 software. It was designed to support
 Internet audio broadcasting--Shoutcast DJs send audio data from their
 personal computers to a central Shoutcast server that then turns
@@ -15,7 +15,7 @@ the format of the response, including the mechanism by which metadata
 about what song is currently playing is embedded in the stream.</P><P>The initial request from the MP3 client to the Shoutcast server is
 formatted as a normal HTTP request. In response, the Shoutcast server
 sends an ICY response that looks like an HTTP response except with
-the string &quot;ICY&quot;<SUP>2</SUP> in place of the normal HTTP version string and with
+the string &quot;ICY&quot;<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> in place of the normal HTTP version string and with
 different headers. After sending the headers and a blank line, the
 server streams a potentially endless amount of MP3 data.</P><P>The only tricky thing about the Shoutcast protocol is the way
 metadata about the songs being streamed is embedded in the data sent
@@ -90,7 +90,7 @@ returned by current-song.&quot;))
 so a single operation checks whether the song is current and, if it
 is, moves the song source to the next song. This will be important in
 the next chapter when you need to implement a song source that can be
-safely manipulated from two different threads.<SUP>3</SUP></P><P>To represent the information about a song that the Shoutcast server
+safely manipulated from two different threads.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP></P><P>To represent the information about a song that the Shoutcast server
 needs, you can define a class, <CODE>song</CODE>, with slots to hold the
 name of the MP3 file, the title to send in the Shoutcast metadata,
 and the size of the ID3 tag so you can skip it when serving up the
@@ -153,7 +153,7 @@ Instead, you need to write a regular function that looks like this:</P><PRE>(def
          (request-socket request)
          (find-song-source *song-source-type* request)
          (if wants-metadata-p *metadata-interval*))))))</PRE><P>Then publish that function under the path <CODE>/stream.mp3</CODE> like
-this:<SUP>4</SUP></P><PRE>(publish :path &quot;/stream.mp3&quot; :function 'shoutcast)</PRE><P>In the call to <CODE>with-http-response</CODE>, in addition to the usual
+this:<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><PRE>(publish :path &quot;/stream.mp3&quot; :function 'shoutcast)</PRE><P>In the call to <CODE>with-http-response</CODE>, in addition to the usual
 <CODE>request</CODE> and <CODE>entity</CODE> arguments, you need to pass
 <CODE>:content-type</CODE> and <CODE>:timeout</CODE> arguments. The
 <CODE>:content-type</CODE> argument tells AllegroServe how to set the
@@ -171,9 +171,9 @@ be sent, you need to manipulate the reply that AllegroServe will
 send. The function <CODE>prepare-icy-response</CODE> encapsulates the
 necessary manipulations: changing the protocol string from the
 default of &quot;HTTP&quot; to &quot;ICY&quot; and adding the Shoutcast-specific
-headers.<SUP>5</SUP> You also need,
+headers.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> You also need,
 in order to work around a bug in iTunes, to tell AllegroServe not to
-use <I>chunked transfer-encoding</I>.<SUP>6</SUP> The functions <CODE>request-reply-protocol-string</CODE>,
+use <I>chunked transfer-encoding</I>.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> The functions <CODE>request-reply-protocol-string</CODE>,
 <CODE>request-uri</CODE>, and <CODE>reply-header-slot-value</CODE> are all part
 of AllegroServe.</P><PRE>(defun prepare-icy-response (request metadata-interval)
   (setf (request-reply-protocol-string request) &quot;ICY&quot;)
@@ -260,7 +260,7 @@ buffer containing the metadata it'll need to send by passing the
 title to <CODE>make-icy-metadata</CODE>. Then it opens the file and skips
 past the ID3 tag using the two-argument form of <CODE><B>FILE-POSITION</B></CODE>.
 Then it commences reading bytes from the file and writing them to the
-request stream.<SUP>7</SUP></P><P>It'll break out of the loop either when it reaches the end of the
+request stream.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>It'll break out of the loop either when it reaches the end of the
 file or when the song source's current song changes out from under
 it. In the meantime, whenever <CODE>next-metadata</CODE> gets to zero (if
 you're supposed to send metadata at all), it writes <CODE>metadata</CODE>
@@ -272,9 +272,9 @@ next song. Otherwise, it broke out of the loop because someone
 changed the current song out from under it, and it just returns. In
 either case, it returns the number of bytes left before the next
 metadata is due so it can be passed in the next call to
-<CODE>play-current</CODE>.<SUP>8</SUP></P><P>The function <CODE>make-icy-metadata</CODE>, which takes the title of the
+<CODE>play-current</CODE>.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP></P><P>The function <CODE>make-icy-metadata</CODE>, which takes the title of the
 current song and generates an array of bytes containing a properly
-formatted chunk of ICY metadata, is also straightforward.<SUP>9</SUP></P><PRE>(defun make-icy-metadata (title)
+formatted chunk of ICY metadata, is also straightforward.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP></P><PRE>(defun make-icy-metadata (title)
   (let* ((text (format nil &quot;StreamTitle='~a';&quot; (substitute #\Space #\' title)))
          (blocks (ceiling (length text) 16))
          (buffer (make-array (1+ (* blocks 16))
@@ -351,38 +351,38 @@ uses <CODE><B>READ-SEQUENCE</B></CODE> and <CODE><B>WRITE-SEQUENCE</B></CODE> mi
 you'll write a Web interface to the Shoutcast server developed in
 this chapter, using the MP3 database from Chapter 27 as the source of
 songs.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>The version of XMMS shipped
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>The version of XMMS shipped
 with Red Hat 8.0 and 9.0 and Fedora no longer knows how to play MP3s
 because the folks at Red Hat were worried about the licensing issues
 related to the MP3 codec. To get an XMMS with MP3 support on these
 versions of Linux, you can grab the source from
 <CODE>http://www.xmms.org</CODE> and build it yourself. Or, see
 <CODE>http://www.fedorafaq.org/#xmms-mp3</CODE> for information about other
-possibilities.</P><P><SUP>2</SUP>To further confuse matters, there's a different
+possibilities.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>To further confuse matters, there's a different
 streaming protocol called <I>Icecast</I>. There seems to be no
 connection between the ICY header used by Shoutcast and the Icecast
-protocol.</P><P><SUP>3</SUP>Technically, the
+protocol.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Technically, the
 implementation in this chapter will also be manipulated from two
 threads--the AllegroServe thread running the Shoutcast server and the
 REPL thread. But you can live with the race condition for now. I'll
 discuss how to use locking to make code thread safe in the next
-chapter.</P><P><SUP>4</SUP>Another thing you may want to do while working on this
+chapter.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>Another thing you may want to do while working on this
 code is to evaluate the form <CODE>(net.aserve::debug-on :notrap)</CODE>.
 This tells AllegroServe to not trap errors signaled by your code,
 which will allow you to debug them in the normal Lisp debugger. In
 SLIME this will pop up a SLIME debugger buffer just like any other
-error.</P><P><SUP>5</SUP>Shoutcast headers are usually sent in lowercase, so you
+error.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Shoutcast headers are usually sent in lowercase, so you
 need to escape the names of the keyword symbols used to identify them
 to AllegroServe to keep the Lisp reader from converting them to all
 uppercase. Thus, you'd write <CODE>:|icy-metaint|</CODE> rather than
 <CODE>:icy-metaint</CODE>. You could also write
-<CODE>:\i\c\y-\m\e\t\a\i\n\t</CODE>, but that'd be silly.</P><P><SUP>6</SUP>The function
+<CODE>:\i\c\y-\m\e\t\a\i\n\t</CODE>, but that'd be silly.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>The function
 <CODE>turn-off-chunked-transfer-encoding</CODE> is a bit of a kludge.
 There's no way to turn off chunked transfer encoding via
 AllegroServe's official APIs without specifying a content length
 because any client that advertises itself as an HTTP/1.1 client,
 which iTunes does, is supposed to understand it. But this does the
-trick.</P><P><SUP>7</SUP>Most MP3-playing software will display the
+trick.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>Most MP3-playing software will display the
 metadata somewhere in the user interface. However, the XMMS program
 on Linux by default doesn't. To get XMMS to display Shoutcast
 metadata, press Ctrl+P to see the Preferences pane. Then in the Audio
@@ -390,14 +390,14 @@ I/O Plugins tab (the leftmost tab in version 1.2.10), select the MPEG
 Layer 1/2/3 Player (<CODE>libmpg123.so</CODE>) and hit the Configure
 button. Then select the Streaming tab on the configuration window,
 and at the bottom of the tab in the SHOUTCAST/Icecast section, check
-the &quot;Enable SHOUTCAST/Icecast title streaming&quot; box.</P><P><SUP>8</SUP>Folks coming to Common Lisp from Scheme
+the &quot;Enable SHOUTCAST/Icecast title streaming&quot; box.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>Folks coming to Common Lisp from Scheme
 might wonder why <CODE>play-current</CODE> can't just call itself
 recursively. In Scheme that would work fine since Scheme
 implementations are required by the Scheme specification to support
 &quot;an unbounded number of active tail calls.&quot; Common Lisp
 implementations are allowed to have this property, but it isn't
 required by the language standard. Thus, in Common Lisp the idiomatic
-way to write loops is with a looping construct, not with recursion.</P><P><SUP>9</SUP>This
+way to write loops is with a looping construct, not with recursion.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>This
 function assumes, as has other code you've written, that your Lisp
 implementation's internal character encoding is ASCII or a superset
 of ASCII, so you can use <CODE><B>CHAR-CODE</B></CODE> to translate Lisp

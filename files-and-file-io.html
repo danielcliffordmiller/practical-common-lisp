@@ -77,18 +77,18 @@ a file, <CODE><B>PRINT</B></CODE> and <CODE><B>READ</B></CODE> provide an easy w
 having to design a data format or write a parser. They even--as the
 previous example demonstrated--give you comments for free. And
 because s-expressions were designed to be human editable, it's also a
-fine format for things like configuration files.<SUP>1</SUP> </P><A NAME="reading-binary-data"><H2>Reading Binary Data</H2></A><P>By default <CODE><B>OPEN</B></CODE> returns character streams, which translate the
+fine format for things like configuration files.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> </P><A NAME="reading-binary-data"><H2>Reading Binary Data</H2></A><P>By default <CODE><B>OPEN</B></CODE> returns character streams, which translate the
 underlying bytes to characters according to a particular
-character-encoding scheme.<SUP>2</SUP> To read the raw
+character-encoding scheme.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> To read the raw
 bytes, you need to pass <CODE><B>OPEN</B></CODE> an <CODE>:element-type</CODE> argument of
-<CODE>'(unsigned-byte 8)</CODE>.<SUP>3</SUP>
+<CODE>'(unsigned-byte 8)</CODE>.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP>
 You can pass the resulting stream to the function <CODE><B>READ-BYTE</B></CODE>,
 which will return an integer between 0 and 255 each time it's called.
 <CODE><B>READ-BYTE</B></CODE>, like the character-reading functions, also accepts
 optional arguments to specify whether it should signal an error if
 called at the end of the file and what value to return if not. In
 Chapter 24 you'll build a library that allows you to conveniently
-read structured binary data using <CODE><B>READ-BYTE</B></CODE>.<SUP>4</SUP> </P><A NAME="bulk-reads"><H2>Bulk Reads</H2></A><P>One last reading function, <CODE><B>READ-SEQUENCE</B></CODE>, works with both
+read structured binary data using <CODE><B>READ-BYTE</B></CODE>.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> </P><A NAME="bulk-reads"><H2>Bulk Reads</H2></A><P>One last reading function, <CODE><B>READ-SEQUENCE</B></CODE>, works with both
 character and binary streams. You pass it a sequence (typically a
 vector) and a stream, and it attempts to fill the sequence with data
 from the stream. It returns the index of the first element of the
@@ -158,7 +158,7 @@ time. </P><A NAME="closing-files"><H2>Closing Files</H2></A><P>As anyone who has
 it's important to close files when you're done with them, because
 file handles tend to be a scarce resource. If you open files and
 don't close them, you'll soon discover you can't open any more
-files.<SUP>5</SUP> It might seem
+files.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> It might seem
 straightforward enough to just be sure every <CODE><B>OPEN</B></CODE> has a matching
 <CODE><B>CLOSE</B></CODE>. For instance, you could always structure your file using
 code like this:</P><PRE>(let ((stream (open &quot;/some/file/name.txt&quot;)))
@@ -211,7 +211,7 @@ and crannies of the pathname abstraction make little sense if all
 you're concerned about is representing Unix or Windows filenames.
 However, once you understand which parts of the pathname abstraction
 you can ignore as artifacts of pathnames' evolutionary history, they
-do provide a convenient way to manipulate filenames.<SUP>6</SUP> </P><P>Most places a filename is called for, you can use either a namestring
+do provide a convenient way to manipulate filenames.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> </P><P>Most places a filename is called for, you can use either a namestring
 or a pathname. Which to use depends mostly on where the name
 originated. Filenames provided by the user--for example, as arguments
 or as values in configuration files--will typically be namestrings,
@@ -284,7 +284,7 @@ depending on whether the name (ignoring the drive letter, if any)
 began with a path separator. This list becomes the directory
 component of the pathname. The last element is then split on the
 rightmost dot, if any, and the two parts put into the name and type
-components of the pathname.<SUP>7</SUP></P><P>You can examine these individual components of a pathname with the
+components of the pathname.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>You can examine these individual components of a pathname with the
 functions <CODE><B>PATHNAME-DIRECTORY</B></CODE>, <CODE><B>PATHNAME-NAME</B></CODE>, and
 <CODE><B>PATHNAME-TYPE</B></CODE>.</P><PRE>(pathname-directory (pathname &quot;/foo/bar/baz.txt&quot;)) ==&gt; (:ABSOLUTE &quot;foo&quot; &quot;bar&quot;)
 (pathname-name (pathname &quot;/foo/bar/baz.txt&quot;))      ==&gt; &quot;baz&quot;
@@ -302,12 +302,12 @@ takes a pathname designator and returns a namestring. Two other
 functions, <CODE><B>DIRECTORY-NAMESTRING</B></CODE> and <CODE><B>FILE-NAMESTRING</B></CODE>, return
 a partial namestring. <CODE><B>DIRECTORY-NAMESTRING</B></CODE> combines the elements
 of the directory component into a local directory name, and
-<CODE><B>FILE-NAMESTRING</B></CODE> combines the name and type components.<SUP>8</SUP> </P><PRE>(namestring #p&quot;/foo/bar/baz.txt&quot;)           ==&gt; &quot;/foo/bar/baz.txt&quot;
+<CODE><B>FILE-NAMESTRING</B></CODE> combines the name and type components.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> </P><PRE>(namestring #p&quot;/foo/bar/baz.txt&quot;)           ==&gt; &quot;/foo/bar/baz.txt&quot;
 (directory-namestring #p&quot;/foo/bar/baz.txt&quot;) ==&gt; &quot;/foo/bar/&quot;
 (file-namestring #p&quot;/foo/bar/baz.txt&quot;)      ==&gt; &quot;baz.txt&quot;</PRE><A NAME="constructing-new-pathnames"><H2>Constructing New Pathnames</H2></A><P>You can construct arbitrary pathnames using the <CODE><B>MAKE-PATHNAME</B></CODE>
 function. It takes one keyword argument for each pathname component
 and returns a pathname with any supplied components filled in and the
-rest <CODE><B>NIL</B></CODE>.<SUP>9</SUP></P><PRE>(make-pathname
+rest <CODE><B>NIL</B></CODE>.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP></P><PRE>(make-pathname
   :directory '(:absolute &quot;foo&quot; &quot;bar&quot;)
   :name &quot;baz&quot;
   :type &quot;txt&quot;) ==&gt; #p&quot;/foo/bar/baz.txt&quot;</PRE><P>However, if you want your programs to be portable, you probably don't
@@ -331,7 +331,7 @@ other components the same as the pathname in the variable
 this code will be robust in the face of operating system and
 implementation differences such as whether filenames have drive
 letters in them and where they're stored in a pathname if they
-do.<SUP>10</SUP></P><P>You can use the same technique to create a pathname with a different
+do.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP></P><P>You can use the same technique to create a pathname with a different
 directory component.</P><PRE>(make-pathname :directory '(:relative &quot;backups&quot;) :defaults input-file)</PRE><P>However, this will create a pathname whose whole directory component
 is the relative directory <CODE>backups/</CODE>, regardless of any
 directory component <CODE>input-file</CODE> may have had. For example: </P><PRE>(make-pathname :directory '(:relative &quot;backups&quot;)
@@ -431,7 +431,7 @@ In the next chapter you'll define a <CODE>list-directory</CODE> function
 that smoothes over some of these differences.</P><P><CODE><B>DELETE-FILE</B></CODE> and <CODE><B>RENAME-FILE</B></CODE> do what their names suggest.
 <CODE><B>DELETE-FILE</B></CODE> takes a pathname designator and deletes the named
 file, returning true if it succeeds. Otherwise it signals a
-<CODE><B>FILE-ERROR</B></CODE>.<SUP>11</SUP></P><P><CODE><B>RENAME-FILE</B></CODE> takes two pathname designators and renames the file
+<CODE><B>FILE-ERROR</B></CODE>.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></P><P><CODE><B>RENAME-FILE</B></CODE> takes two pathname designators and renames the file
 named by the first name to the second name. </P><P>You can create directories with the function
 <CODE><B>ENSURE-DIRECTORIES-EXIST</B></CODE>. It takes a pathname designator and
 ensures that all the elements of the directory component exist and
@@ -444,7 +444,7 @@ created.</P><P>The functions <CODE><B>FILE-WRITE-DATE</B></CODE> and <CODE><B>FI
 pathname designator. <CODE><B>FILE-WRITE-DATE</B></CODE> returns the time in number
 of seconds since midnight January 1, 1900, Greenwich mean time (GMT),
 that the file was last written, and <CODE><B>FILE-AUTHOR</B></CODE> returns, on Unix
-and Windows, the file owner.<SUP>12</SUP></P><P>To find the length of a file, you can use the function
+and Windows, the file owner.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP></P><P>To find the length of a file, you can use the function
 <CODE><B>FILE-LENGTH</B></CODE>. For historical reasons <CODE><B>FILE-LENGTH</B></CODE> takes a
 stream as an argument rather than a pathname. In theory this allows
 <CODE><B>FILE-LENGTH</B></CODE> to return the length in terms of the element type of
@@ -454,7 +454,7 @@ actually reading the whole file to measure it, is its length in
 bytes, that's what most implementations return, even when
 <CODE><B>FILE-LENGTH</B></CODE> is passed a character stream. However, the standard
 doesn't require this behavior, so for predictable results, the best
-way to get the length of a file is to use a binary stream.<SUP>13</SUP> </P><PRE>(with-open-file (in filename :element-type '(unsigned-byte 8))
+way to get the length of a file is to use a binary stream.<SUP ID="fn-top-13"><A HREF="#fn-bot-13">13</A></SUP> </P><PRE>(with-open-file (in filename :element-type '(unsigned-byte 8))
   (file-length in))</PRE><P>A related function that also takes an open file stream as its
 argument is <CODE><B>FILE-POSITION</B></CODE>. When called with just a stream, this
 function returns the current position in the file--the number of
@@ -510,7 +510,7 @@ various kinds of stream &quot;plumbing,&quot; allowing you to plug together
 streams in almost any configuration. A <CODE><B>BROADCAST-STREAM</B></CODE> is an
 output stream that sends any data written to it to a set of output
 streams provided as arguments to its constructor function,
-<CODE><B>MAKE-BROADCAST-STREAM</B></CODE>.<SUP>14</SUP> Conversely, a
+<CODE><B>MAKE-BROADCAST-STREAM</B></CODE>.<SUP ID="fn-top-14"><A HREF="#fn-bot-14">14</A></SUP> Conversely, a
 <CODE><B>CONCATENATED-STREAM</B></CODE> is an input stream that takes its input from
 a set of input streams, moving from stream to stream as it hits the
 end of each stream. <CODE><B>CONCATENATED-STREAM</B></CODE>s are constructed with
@@ -530,35 +530,35 @@ of the conversation.</P><P>Using these five kinds of streams, you can build almo
 of stream plumbing you want.</P><P>Finally, although the Common Lisp standard doesn't say anything about
 networking APIs, most implementations support socket programming and
 typically implement sockets as another kind of stream, so you can use
-all the regular I/O functions with them.<SUP>15</SUP></P><P>Now you're ready to move on to building a library that smoothes over
+all the regular I/O functions with them.<SUP ID="fn-top-15"><A HREF="#fn-bot-15">15</A></SUP></P><P>Now you're ready to move on to building a library that smoothes over
 some of the differences between how the basic pathname functions
 behave in different Common Lisp implementations.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Note, however,
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Note, however,
 that while the Lisp reader knows how to skip comments, it completely
 skips them. Thus, if you use <CODE><B>READ</B></CODE> to read in a configuration
 file containing comments and then use <CODE><B>PRINT</B></CODE> to save changes to
-the data, you'll lose the comments.</P><P><SUP>2</SUP>By default <CODE><B>OPEN</B></CODE> uses the default
+the data, you'll lose the comments.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>By default <CODE><B>OPEN</B></CODE> uses the default
 character encoding for the operating system, but it also accepts a
 keyword parameter, <CODE>:external-format</CODE>, that can pass
 implementation-defined values that specify a different encoding.
 Character streams also translate the platform-specific end-of-line
-sequence to the single character <CODE>#\Newline</CODE>.</P><P><SUP>3</SUP>The type <CODE>(unsigned-byte 8)</CODE>
+sequence to the single character <CODE>#\Newline</CODE>.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>The type <CODE>(unsigned-byte 8)</CODE>
 indicates an 8-bit byte; Common Lisp &quot;byte&quot; types aren't a fixed size
 since Lisp has run at various times on architectures with byte sizes
 from 6 to 9 bits, to say nothing of the PDP-10, which had
-individually addressable variable-length bit fields of 1 to 36 bits.</P><P><SUP>4</SUP>In general, a
+individually addressable variable-length bit fields of 1 to 36 bits.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>In general, a
 stream is either a character stream or a binary stream, so you can't
 mix calls to <CODE><B>READ-BYTE</B></CODE> and <CODE><B>READ-CHAR</B></CODE> or other
 character-based read functions. However, some implementations, such
 as Allegro, support so-called bivalent streams, which support both
-character and binary I/O.</P><P><SUP>5</SUP>Some folks expect this wouldn't be a problem in a
+character and binary I/O.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Some folks expect this wouldn't be a problem in a
 garbage-collected language such as Lisp. It is the case in most Lisp
 implementations that a stream that becomes garbage will automatically
 be closed. However, this isn't something to rely on--the problem is
 that garbage collectors usually run only when memory is low; they
 don't know about other scarce resources such as file handles. If
 there's plenty of memory available, it's easy to run out of file
-handles long before the garbage collector runs.</P><P><SUP>6</SUP>Another
+handles long before the garbage collector runs.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Another
 reason the pathname system is considered somewhat baroque is because
 of the inclusion of <I>logical pathnames</I>. However, you can use the
 rest of the pathname system perfectly well without knowing anything
@@ -570,28 +570,28 @@ file system when the program was installed by defining a &quot;logical
 pathname translation&quot; that translates logical pathnames matching
 certain wildcards to pathnames representing files in the file system,
 so-called physical pathnames. They have their uses in certain
-situations, but you can get pretty far without worrying about them.</P><P><SUP>7</SUP>Many Unix-based implementations
+situations, but you can get pretty far without worrying about them.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>Many Unix-based implementations
 treat filenames whose last element starts with a dot and don't
 contain any other dots specially, putting the whole element, with the
 dot, in the name component and leaving the type component <CODE><B>NIL</B></CODE>.</P><PRE>(pathname-name (pathname &quot;/foo/.emacs&quot;)) ==&gt; &quot;.emacs&quot;
 (pathname-type (pathname &quot;/foo/.emacs&quot;)) ==&gt; NIL</PRE><P>However, not all implementations follow this convention; some will
-create a pathname with &quot;&quot; as the name and <CODE>emacs</CODE> as the type.</P><P><SUP>8</SUP>The
+create a pathname with &quot;&quot; as the name and <CODE>emacs</CODE> as the type.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>The
 name returned by <CODE><B>FILE-NAMESTRING</B></CODE> also includes the version
-component on file systems that use it.</P><P><SUP>9</SUP>The host component may not default to <CODE><B>NIL</B></CODE>,
-but if not, it will be an opaque implementation-defined value.</P><P><SUP>10</SUP>For absolutely maximum portability, you should really write
+component on file systems that use it.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>The host component may not default to <CODE><B>NIL</B></CODE>,
+but if not, it will be an opaque implementation-defined value.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>For absolutely maximum portability, you should really write
 this:</P><PRE>(make-pathname :type &quot;html&quot; :version :newest :defaults input-file)</PRE><P>Without the <CODE>:version</CODE> argument, on a file system with built-in
 versioning, the output pathname would inherit its version number from
 the input file which isn't likely to be right--if the input file has
 been saved many times it will have a much higher version number than
 the generated HTML file. On implementations without file versioning,
 the <CODE>:version</CODE> argument should be ignored. It's up to you if you
-care that much about portability.</P><P><SUP>11</SUP>See Chapter 19 for more on handling errors.</P><P><SUP>12</SUP>For applications that need access
+care that much about portability.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>See Chapter 19 for more on handling errors.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>For applications that need access
 to other file attributes on a particular operating system or file
 system, libraries provide bindings to underlying C system calls. The
 Osicat library at <CODE>http://common-lisp.net/project/osicat/</CODE>
 provides a simple API built using the Universal Foreign Function
 Interface (UFFI), which should run on most Common Lisps that run on a
-POSIX operating system.</P><P><SUP>13</SUP>The
+POSIX operating system.</P><P ID="fn-bot-13"><SUP>13 <A HREF="#fn-top-13">^</A> </SUP>The
 number of bytes and characters in a file can differ even if you're
 not using a multibyte character encoding. Because character streams
 also translate platform-specific line endings to a single
@@ -603,8 +603,8 @@ this:</P><PRE>(with-open-file (in filename)
   (loop while (read-char in nil) count t))</PRE><P>or maybe something more efficient like this:</P><PRE>(with-open-file (in filename)
   (let ((scratch (make-string 4096)))
     (loop for read = (read-sequence scratch in)
-          while (plusp read) sum read)))</PRE><P><SUP>14</SUP><CODE><B>MAKE-BROADCAST-STREAM</B></CODE> can make
-a data black hole by calling it with no arguments.</P><P><SUP>15</SUP>The biggest missing
+          while (plusp read) sum read)))</PRE><P ID="fn-bot-14"><SUP>14 <A HREF="#fn-top-14">^</A> </SUP><CODE><B>MAKE-BROADCAST-STREAM</B></CODE> can make
+a data black hole by calling it with no arguments.</P><P ID="fn-bot-15"><SUP>15 <A HREF="#fn-top-15">^</A> </SUP>The biggest missing
 piece in Common Lisp's standard I/O facilities is a way for users to
 define new stream classes. There are, however, two de facto standards
 for user-defined streams. During the Common Lisp standardization,

@@ -38,7 +38,7 @@ want to be tied to a particular implementation, it's a little more
 annoying.</P><P>For portable libraries--portable either because they're written
 entirely in standard Common Lisp or because they contain appropriate
 read-time conditionalization to work on multiple
-implementations<SUP>1</SUP>--your best bet
+implementations<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP>--your best bet
 is to go to the Web. With the usual caveats about URLs going stale as
 soon as they're printed on paper, these are three of the best current
 starting points:</P><UL><LI>Common-Lisp.net (<CODE>http://www.common-lisp.net/</CODE>) is a site
@@ -86,7 +86,7 @@ an existing library written in another language, such as C.</P><P>The language s
 call code written in another language or even require that
 implementations provide such a mechanism. But these days, almost all
 Common Lisp implementations support what's called a <I>Foreign
-Function Interface</I>, or FFI for short.<SUP>2</SUP> The basic job of an FFI is to allow
+Function Interface</I>, or FFI for short.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> The basic job of an FFI is to allow
 you to give Lisp enough information to be able to link in the foreign
 code. Thus, if you're going to call a function from a C library, you
 need to tell Lisp about how to translate the Lisp objects passed to
@@ -101,9 +101,9 @@ appropriate FFI code for the implementation it's running in. The UFFI
 takes a lowest common denominator approach, which means it can't take
 advantage of all the features of different implementations' FFIs, but
 it does provide a good way to build a simple Lisp wrapper around a
-basic C API.<SUP>3</SUP></P><A NAME="make-it-work-make-it-right-make-it-fast"><H2>Make It Work, Make It Right, Make It Fast</H2></A><P>As has been said many times, and variously attributed to Donald
+basic C API.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP></P><A NAME="make-it-work-make-it-right-make-it-fast"><H2>Make It Work, Make It Right, Make It Fast</H2></A><P>As has been said many times, and variously attributed to Donald
 Knuth, C.A.R. Hoare, and Edsger Dijkstra, premature optimization is
-the root of all evil.<SUP>4</SUP> Common Lisp is an
+the root of all evil.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> Common Lisp is an
 excellent language to program in if you want to heed this wisdom yet
 still need high performance. This may come as a surprise if you've
 heard the conventional wisdom that Lisp is slow. In Lisp's earliest
@@ -156,12 +156,12 @@ This is presumably because in Perl a regular expression is translated
 into what are essentially bytecodes that are then interpreted by the
 regex engine, while CL-PPCRE translates a regular expression into a
 tree of compiled closures that invoke each other via the normal
-function-calling machinery.<SUP>5</SUP></P><P>However, even with the right algorithm and a high-quality compiler,
+function-calling machinery.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><P>However, even with the right algorithm and a high-quality compiler,
 you may not get the raw speed you need. Then it's time to think about
 profiling and tuning. The key, in Lisp as in any language, is to
 profile first to find the spots where your program is actually
 spending its time and then worry about speeding up those
-parts.<SUP>6</SUP></P><P>You have a number of different ways to approach profiling. The
+parts.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P>You have a number of different ways to approach profiling. The
 language standard provides a few rudimentary tools for measuring how
 long certain forms take to execute. In particular, the <CODE><B>TIME</B></CODE>
 macro can be wrapped around any form and will return whatever values
@@ -307,7 +307,7 @@ For instance, you could tell the compiler that the arguments to
   (declare (fixnum x y))
   (+ x y))</PRE><P>The <CODE><B>DECLARE</B></CODE> expression isn't a Lisp form; rather, it's part of
 the syntax of the <CODE><B>DEFUN</B></CODE> and must appear before any other code in
-the function body.<SUP>7</SUP> This declaration declares that the arguments
+the function body.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP> This declaration declares that the arguments
 passed for the parameters <CODE>x</CODE> and <CODE>y</CODE> will always be
 fixnums. In other words, it's a promise to the compiler, and the
 compiler is allowed to generate code on the assumption that whatever
@@ -420,7 +420,7 @@ what kind of software you need to deliver to what kind of user with
 what Common Lisp implementation. In this section I'll give an
 overview of some of the different options.</P><P>If you've written code you want to share with fellow Lisp
 programmers, the most straightforward way to distribute it is as
-source code.<SUP>8</SUP>
+source code.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP>
 You can distribute a simple library as a single source file, which
 programmers can <CODE><B>LOAD</B></CODE> into their Lisp image, possibly after
 compiling it with <CODE><B>COMPILE-FILE</B></CODE>.</P><P>More complex libraries or applications, broken up across multiple
@@ -438,7 +438,7 @@ definition tools allow you to specify the dependencies between
 different files and then take care of loading and compiling the files
 in the correct order while trying to do only work that's
 necessary--recompiling only files that have changed, for example.</P><P>These days the most widely used system definition tool is ASDF, which
-stands for <I>Another System Definition Facility</I>.<SUP>9</SUP>
+stands for <I>Another System Definition Facility</I>.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP>
 The basic idea behind ASDF is that you define systems in ASD files,
 and ASDF provides a number of operations on systems such as loading
 them or compiling them. A system can also be defined to depend on
@@ -460,7 +460,7 @@ FOO library from Chapters 31 and 32:</P><PRE>(defpackage :com.gigamonkeys.html-s
    (:file &quot;html&quot; :depends-on (&quot;packages&quot;))
    (:file &quot;css&quot; :depends-on (&quot;packages&quot; &quot;html&quot;)))
   :depends-on (:macro-utilities))</PRE><P>If you add a symbolic link to this file from a directory listed in
-<CODE>asdf:*central-registry*</CODE>,<SUP>10</SUP> then you can type this:</P><PRE>(asdf:operate 'asdf:load-op :html)</PRE><P>to compile and load the files <CODE>packages.lisp</CODE>, <CODE>html.lisp</CODE>,
+<CODE>asdf:*central-registry*</CODE>,<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP> then you can type this:</P><PRE>(asdf:operate 'asdf:load-op :html)</PRE><P>to compile and load the files <CODE>packages.lisp</CODE>, <CODE>html.lisp</CODE>,
 and <CODE>html-macros.lisp</CODE> in the correct order after first making
 sure the <CODE>:macro-utilities</CODE> system has been compiled and loaded.
 For other examples of ASD files, you can look at this book's source
@@ -469,7 +469,7 @@ with appropriate intersystem dependencies expressed in the ASD files.</P><P>Most
 with an ASD file. Some will use other system definition tools such as
 the slightly older MK:DEFSYSTEM or even utilities devised by the
 library's author, but the tide seems to be turning in the direction
-of ASDF.<SUP>11</SUP></P><P>Of course, while ASDF makes it easy for Lispers to install Lisp
+of ASDF.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></P><P>Of course, while ASDF makes it easy for Lispers to install Lisp
 libraries, it's not much help if you want to package an application
 for an end user who doesn't know or care about Lisp. If you're
 delivering a pure end-user application, presumably you want to
@@ -548,7 +548,7 @@ prepared by Kent Pitman and made available by LispWorks at
 The HyperSpec is by no means a tutorial, but it's as authoritative a
 guide to the language as you can get without buying a printed copy of
 the standard from ANSI and much more convenient for day-to-day
-use.<SUP>12</SUP></P><P>If you want to get in touch with other Lispers, <CODE>comp.lang.lisp</CODE>
+use.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP></P><P>If you want to get in touch with other Lispers, <CODE>comp.lang.lisp</CODE>
 on Usenet and the <CODE>#lisp</CODE> IRC channel or the Freenode network
 (<CODE>http://www.freenode.net</CODE>) are two of the main online hang-
 outs. There are also a number of Lisp-related blogs, most of which
@@ -559,7 +559,7 @@ New York to Oakland, from Cologne to Munich, and from Geneva to
 Helsinki.</P><P>If you want to stick to books, here are a few suggestions. For a nice
 thick reference book to stick on your desk, grab <I>The ANSI Common
 Lisp Reference Book</I> edited by David Margolies (Apress,
-2005).<SUP>13</SUP></P><P>For more on Common Lisp's object system, you can start with
+2005).<SUP ID="fn-top-13"><A HREF="#fn-bot-13">13</A></SUP></P><P>For more on Common Lisp's object system, you can start with
 <I>Object-Oriented Programming in Common Lisp: A Programmer's Guide
 to CLOS</I> by Sonya E. Keene (Addison-Wesley, 1989). Then if you really
 want to become an object wizard or just to stretch your mind in
@@ -615,26 +615,26 @@ Hacker's Dictionary</I> edited by Guy Steele (Harper &amp; Row, 1983).</P><P>But
 programming--the only way to really learn a language is to use it. If
 you've made it this far, you're certainly ready to do that. Happy
 hacking!
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>The combination of Common Lisp's read-time
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>The combination of Common Lisp's read-time
 conditionalization and macros makes it quite feasible to develop
 portability libraries that do nothing but provide a common API
 layered over whatever API different implementations provide for
 facilities not specified in the language standard. The portable
 pathname library from Chapter 15 is an example of this kind of
 library, albeit to smooth over differences in interpretation of the
-standard rather than implementation-dependent APIs.</P><P><SUP>2</SUP>A Foreign Function
+standard rather than implementation-dependent APIs.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>A Foreign Function
 Interface is basically equivalent to JNI in Java, XS in Perl, or the
-extension module API in Python.</P><P><SUP>3</SUP>As of this writing, the two main drawbacks of UFFI
+extension module API in Python.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>As of this writing, the two main drawbacks of UFFI
 are the lack of support for callbacks from C into Lisp, which many
 but not all implementations' FFIs support, and the lack of support
 for CLISP, whose FFI is quite good but different enough from the
-others as to not fit easily into the UFFI model.</P><P><SUP>4</SUP>Knuth has used the saying several times in
+others as to not fit easily into the UFFI model.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>Knuth has used the saying several times in
 publications, including in his 1974 ACM Turing Award paper, &quot;Computer
 Programming as an Art,&quot; and in his paper &quot;Structured Programs with
 goto Statements.&quot; In his paper &quot;The Errors of TeX,&quot; he attributes the
 saying to C.A.R. Hoare. And Hoare, in an 2004 e-mail to Hans Genwitz
 of phobia.com, said he didn't remember the origin of the saying but
-that he might have attributed it to Dijkstra.</P><P><SUP>5</SUP>CL-PPCRE also takes advantage of
+that he might have attributed it to Dijkstra.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>CL-PPCRE also takes advantage of
 another Common Lisp feature I haven't discussed, <I>compiler macros</I>.
 A compiler macro is a special kind of macro that's given a chance to
 optimize calls to a specific function by transforming calls to that
@@ -644,16 +644,16 @@ compiler macros optimize calls to those functions in which the
 regular expression is a constant value by parsing the regular
 expression at compile time rather than leaving it to be done at
 runtime. Look up <CODE><B>DEFINE-COMPILER-MACRO</B></CODE> in your favorite Common
-Lisp reference for more information about compiler macros.</P><P><SUP>6</SUP>The word <I>premature</I> in &quot;premature optimization&quot; can
+Lisp reference for more information about compiler macros.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>The word <I>premature</I> in &quot;premature optimization&quot; can
 pretty much be defined as &quot;before profiling.&quot; Remember that even if
 you can speed up a piece of code to the point where it takes
 literally no time to run, you'll still speed up your program only by
-whatever percentage of time it spent in that piece of code.</P><P><SUP>7</SUP>Declarations can appear in most forms that
+whatever percentage of time it spent in that piece of code.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>Declarations can appear in most forms that
 introduce new variables, such as <CODE><B>LET</B></CODE>, <CODE><B>LET*</B></CODE>, and the <CODE><B>DO</B></CODE>
 family of looping macros. <CODE><B>LOOP</B></CODE> has its own syntax for declaring
 the types of loop variables. The special operator <CODE><B>LOCALLY</B></CODE>,
 mentioned in Chapter 20, does nothing but create a scope in which you
-can make declarations.</P><P><SUP>8</SUP>The FASL files produced by <CODE><B>COMPILE-FILE</B></CODE> are
+can make declarations.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>The FASL files produced by <CODE><B>COMPILE-FILE</B></CODE> are
 implementation dependent and may or may not be compatible between
 different versions of the same Common Lisp implementation. Thus,
 they're not a very good way to distribute Lisp code. The one time
@@ -661,20 +661,20 @@ they can be handy is as a way of providing patches to be applied to
 an application running in a known version of a particular
 implementation. Applying the patch simply entails <CODE><B>LOAD</B></CODE>ing the
 FASL, and because a FASL can contain arbitrary code, it can be used
-to upgrade existing data as well as to provide new code definitions.</P><P><SUP>9</SUP>ASDF was
+to upgrade existing data as well as to provide new code definitions.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>ASDF was
 originally written by Daniel Barlow, one of the SBCL developers, and
 has been included as part of SBCL for a long time and also
 distributed as a stand-alone library. It has recently been adopted
-and included in other implementations such as OpenMCL and Allegro.</P><P><SUP>10</SUP>On Windows, where there are no
+and included in other implementations such as OpenMCL and Allegro.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>On Windows, where there are no
 symbolic links, it works a little bit differently but roughly the
-same.</P><P><SUP>11</SUP>Another tool, ASDF-INSTALL, builds on top of ASDF and
+same.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>Another tool, ASDF-INSTALL, builds on top of ASDF and
 MK:DEFSYSTEM, providing an easy way to automatically download and
 install libraries from the network. The best starting point for
 learning about ASDF-INSTALL is Edi Weitz's &quot;A tutorial for
-ASDF-INSTALL&quot; (<CODE>http:// www.weitz.de/asdf-install/</CODE>).</P><P><SUP>12</SUP>SLIME incorporates an Elisp library that allows you to
+ASDF-INSTALL&quot; (<CODE>http:// www.weitz.de/asdf-install/</CODE>).</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>SLIME incorporates an Elisp library that allows you to
 automatically jump to the HyperSpec entry for any name defined in the
 standard. You can also download a complete copy of the HyperSpec to
-keep locally for offline browsing.</P><P><SUP>13</SUP>Another classic reference is <I>Common Lisp: The
+keep locally for offline browsing.</P><P ID="fn-bot-13"><SUP>13 <A HREF="#fn-top-13">^</A> </SUP>Another classic reference is <I>Common Lisp: The
 Language</I> by Guy Steele (Digital Press, 1984 and 1990). The first
 edition, a.k.a. CLtL1, was the de facto standard for the language for
 a number of years. While waiting for the official ANSI standard to be

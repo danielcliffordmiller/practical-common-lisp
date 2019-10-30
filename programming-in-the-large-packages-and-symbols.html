@@ -2,7 +2,7 @@
 into objects to be passed to the evaluator, representing them with a
 kind of object called a <I>symbol</I>. It turns out that having a
 built-in data type specifically for representing names is quite handy
-for a lot of kinds of programming.<SUP>1</SUP>
+for a lot of kinds of programming.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP>
 That, however, isn't the topic of this chapter. In this chapter I'll
 discuss one of the more immediate and practical aspects of dealing
 with names: how to avoid name conflicts between independently
@@ -132,7 +132,7 @@ including how to make one package use another and how to export,
 shadow, and import symbols. But first let's look at a few packages
 you've been using already. When you first start Lisp, the value of
 <CODE><B>*PACKAGE*</B></CODE> is typically the <CODE>COMMON-LISP-USER</CODE> package, also
-known as <CODE>CL-USER</CODE>.<SUP>2</SUP>
+known as <CODE>CL-USER</CODE>.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP>
 <CODE>CL-USER</CODE> uses the package <CODE>COMMON-LISP</CODE>, which exports all
 the names defined by the language standard. Thus, when you type an
 expression at the REPL, all the names of standard functions, macros,
@@ -152,7 +152,7 @@ this:</P><PRE>CL-USER&gt; (defvar *x* 10)
 not allowed to intern new symbols in it; <CODE>COMMON-LISP-USER</CODE>
 serves as a &quot;scratch&quot; package where you can create your own names
 while still having easy access to all the symbols in
-<CODE>COMMON-LISP</CODE>.<SUP>3</SUP> Typically, all packages you'll define will also use
+<CODE>COMMON-LISP</CODE>.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> Typically, all packages you'll define will also use
 <CODE>COMMON-LISP</CODE>, so you don't have to write things like this:</P><PRE>(cl:defun (x) (cl:+ x 2))</PRE><P>The third standard package is the <CODE><B>KEYWORD</B></CODE> package, the package
 the Lisp reader uses to intern names starting with colon. Thus, you
 can also refer to any keyword symbol with an explicit package
@@ -177,12 +177,12 @@ the symbol is interpreted as the name of a function or variable or
 whatever else. Thus, it doesn't make sense to talk about exporting a
 function or a variable from a package. You can export symbols to make
 certain names easier to refer to, but the package system doesn't
-allow you to restrict how those names are used.<SUP>4</SUP></P><P>With that in mind, you can start looking at how to define packages
+allow you to restrict how those names are used.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><P>With that in mind, you can start looking at how to define packages
 and tie them together. You define new packages with the macro
 <CODE><B>DEFPACKAGE</B></CODE>, which allows you to not only create the package but
 to specify what packages it uses, what symbols it exports, and what
 symbols it imports from other packages and to resolve conflicts by
-creating shadowing symbols.<SUP>5</SUP> </P><P>I'll describe the various options in terms of how you might use
+creating shadowing symbols.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> </P><P>I'll describe the various options in terms of how you might use
 packages while writing a program that organizes e-mail messages into
 a searchable database. The program is purely hypothetical, as are the
 libraries I'll refer to--the point is to look at how the packages
@@ -194,7 +194,7 @@ beyond the facilities provided by the language itself, you could
 define a simple package like this: </P><PRE>(defpackage :com.gigamonkeys.email-db
   (:use :common-lisp))</PRE><P>This defines a package, named <CODE>COM.GIGAMONKEYS.EMAIL-DB</CODE>, that
 inherits all the symbols exported by the <CODE>COMMON-LISP</CODE>
-package.<SUP>6</SUP></P><P>You actually have several choices of how to represent the names of
+package.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P>You actually have several choices of how to represent the names of
 packages and, as you'll see, the names of symbols in a
 <CODE><B>DEFPACKAGE</B></CODE>. Packages and symbols are named with strings. However,
 in a <CODE><B>DEFPACKAGE</B></CODE> form, you can specify the names of packages and
@@ -207,20 +207,20 @@ in lowercase--the reader will convert the names to uppercase for you.
 You could also write the <CODE><B>DEFPACKAGE</B></CODE> with strings, but then you
 have to write them in all uppercase, because the true names of most
 symbols and packages are in fact uppercase because of the case
-conversion performed by the reader.<SUP>7</SUP></P><PRE>(defpackage &quot;COM.GIGAMONKEYS.EMAIL-DB&quot;
+conversion performed by the reader.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><PRE>(defpackage &quot;COM.GIGAMONKEYS.EMAIL-DB&quot;
   (:use &quot;COMMON-LISP&quot;))</PRE><P>You could also use nonkeyword symbols--the names in <CODE><B>DEFPACKAGE</B></CODE>
 aren't evaluated--but then the very act of reading the
 <CODE><B>DEFPACKAGE</B></CODE> form would cause those symbols to be interned in the
 current package, which at the very least will pollute that namespace
 and may also cause problems later if you try to use the
-package.<SUP>8</SUP></P><P>To read code in this package, you need to make it the current package
+package.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP></P><P>To read code in this package, you need to make it the current package
 with the <CODE><B>IN-PACKAGE</B></CODE> macro:</P><PRE>(in-package :com.gigamonkeys.email-db)</PRE><P>If you type this expression at the REPL, it will change the value of
 <CODE><B>*PACKAGE*</B></CODE>, affecting how the REPL reads subsequent expressions,
 until you change it with another call to <CODE><B>IN-PACKAGE</B></CODE>. Similarly,
 if you include an <CODE><B>IN-PACKAGE</B></CODE> in a file that's loaded with
 <CODE><B>LOAD</B></CODE> or compiled with <CODE><B>COMPILE-FILE</B></CODE>, it will change the
 package, affecting the way subsequent expressions in the file are
-read.<SUP>9</SUP></P><P>With the current package set to the <CODE>COM.GIGAMONKEYS.EMAIL-DB</CODE>
+read.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP></P><P>With the current package set to the <CODE>COM.GIGAMONKEYS.EMAIL-DB</CODE>
 package, other than names inherited from the <CODE>COMMON-LISP</CODE>
 package, you can use any name you want for whatever purpose you want.
 Thus, you could define a new <CODE>hello-world</CODE> function that could
@@ -228,7 +228,7 @@ coexist with the <CODE>hello-world</CODE> function previously defined in
 <CODE>COMMON-LISP-USER</CODE>. Here's the behavior of the existing
 function: </P><PRE>CL-USER&gt; (hello-world)
 hello, world
-NIL</PRE><P>Now you can switch to the new package using <CODE><B>IN-PACKAGE</B></CODE>.<SUP>10</SUP> Notice how the prompt changes--the exact
+NIL</PRE><P>Now you can switch to the new package using <CODE><B>IN-PACKAGE</B></CODE>.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP> Notice how the prompt changes--the exact
 form is determined by the development environment, but in SLIME the
 default prompt consists of an abbreviated version of the package
 name. </P><PRE>CL-USER&gt; (in-package :com.gigamonkeys.email-db)
@@ -267,7 +267,7 @@ exported from the package <CODE>COM.ACME.EMAIL</CODE>, so you could
 <CODE>:use</CODE> that package to get easy access to those names. But
 suppose you need to use only one function from this library, and
 other exported symbols conflict with names you already use (or plan
-to use) in our own code.<SUP>11</SUP> In this case, you can import the one
+to use) in our own code.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP> In this case, you can import the one
 symbol you need with an <CODE>:import-from</CODE> clause in the
 <CODE><B>DEFPACKAGE</B></CODE>. For instance, if the name of the function you want
 to use is <CODE>parse-email-address</CODE>, you can change the
@@ -368,7 +368,7 @@ programs you can automate the steps by writing a file,
 <CODE><B>COMPILE-FILE</B></CODE> calls in the right order. Then you can just
 <CODE><B>LOAD</B></CODE> that file. For more complex programs you'll want to use a
 <I>system definition</I> facility to manage loading and compiling files
-in the right order.<SUP>12</SUP></P><P>The other key rule of thumb is that each file should contain exactly
+in the right order.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP></P><P>The other key rule of thumb is that each file should contain exactly
 one <CODE><B>IN-PACKAGE</B></CODE> form, and it should be the first form in the file
 other than comments. Files containing <CODE><B>DEFPACKAGE</B></CODE> forms should
 start with <CODE>(in-package &quot;COMMON-LISP-USER&quot;)</CODE>, and all other
@@ -460,7 +460,7 @@ evaluator doesn't necessarily know that. However, in most Lisps
 you'll get an warning about &quot;<CODE>redefining BAR, originally defined
 in</CODE>?&quot;. You should heed those warnings. If you clobber a definition
 from a library, you can restore it by reloading the library code with
-<CODE><B>LOAD</B></CODE>.<SUP>13</SUP></P><P>The last package-related gotcha is, by comparison, quite trivial, but
+<CODE><B>LOAD</B></CODE>.<SUP ID="fn-top-13"><A HREF="#fn-bot-13">13</A></SUP></P><P>The last package-related gotcha is, by comparison, quite trivial, but
 it bites most Lisp programmers at least a few times: you define a
 package that uses <CODE>COMMON-LISP</CODE> and maybe a few libraries. Then
 at the REPL you change to that package to play around. Then you decide
@@ -476,15 +476,15 @@ I'll discuss the details of the extended <CODE><B>LOOP</B></CODE> macro. After t
 the rest of the book is devoted to &quot;practicals&quot;: a spam filter, a
 library for parsing binary files, and various parts of a streaming
 MP3 server with a Web interface. 
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>The kind of programming that
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>The kind of programming that
 relies on a symbol data type is called, appropriately enough,
 <I>symbolic</I> computation. It's typically contrasted to <I>numeric</I>
 programming. An example of a primarily symbolic program that all
 programmers should be familiar with is a compiler--it treats the text
-of a program as symbolic data and translates it into a new form.</P><P><SUP>2</SUP>Every package has one official name and
+of a program as symbolic data and translates it into a new form.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Every package has one official name and
 zero or more <I>nicknames</I> that can be used anywhere you need to use
 the package name, such as in package-qualified names or to refer to
-the package in a <CODE><B>DEFPACKAGE</B></CODE> or <CODE><B>IN-PACKAGE</B></CODE> form.</P><P><SUP>3</SUP><CODE>COMMON-LISP-USER</CODE> is also allowed to
+the package in a <CODE><B>DEFPACKAGE</B></CODE> or <CODE><B>IN-PACKAGE</B></CODE> form.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP><CODE>COMMON-LISP-USER</CODE> is also allowed to
 provide access to symbols exported by other implementation-defined
 packages. While this is intended as a convenience for the user--it
 makes implementation-specific functionality readily accessible--it
@@ -495,25 +495,25 @@ symbols from in a particular implementation, evaluate this expression
 at the REPL:</P><PRE>(mapcar #'package-name (package-use-list :cl-user))</PRE><P>And to find out what package a symbol came from originally, evaluate
 this:</P><PRE>(package-name (symbol-package 'some-symbol))</PRE><P>with <CODE>some-symbol</CODE> replaced by the symbol in question. For instance:</P><PRE>(package-name (symbol-package 'car)) ==&gt; &quot;COMMON-LISP&quot;
 (package-name (symbol-package 'foo)) ==&gt; &quot;COMMON-LISP-USER&quot;</PRE><P>Symbols inherited from implementation-defined packages will return
-some other value.</P><P><SUP>4</SUP>This is
+some other value.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>This is
 different from the Java package system, which provides a namespace
 for classes but is also involved in Java's access control mechanism.
 The non-Lisp language with a package system most like Common Lisp's
-packages is Perl.</P><P><SUP>5</SUP>All the manipulations performed by
+packages is Perl.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>All the manipulations performed by
 <CODE><B>DEFPACKAGE</B></CODE> can also be performed with functions that man-
 ipulate package objects. However, since a package generally needs to
 be fully defined before it can be used, those functions are rarely
 used. Also, <CODE><B>DEFPACKAGE</B></CODE> takes care of performing all the package
 manipulations in the right order--for instance, <CODE><B>DEFPACKAGE</B></CODE> adds
 symbols to the shadowing list before it tries to use the used
-packages.</P><P><SUP>6</SUP>In many Lisp implementations the <CODE>:use</CODE> clause is
+packages.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>In many Lisp implementations the <CODE>:use</CODE> clause is
 optional if you want only to <CODE>:use</CODE> <CODE>COMMON-LISP</CODE>--if it's
 omitted, the package will automatically inherit names from an
 implementation-defined list of packages that will usually include
 <CODE>COMMON-LISP</CODE>. However, your code will be more portable if you
 always explicitly specify the packages you want to <CODE>:use</CODE>. Those
 who are averse to typing can use the package's nickname and write
-<CODE>(:use :cl)</CODE>.</P><P><SUP>7</SUP>Using keywords instead of
+<CODE>(:use :cl)</CODE>.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>Using keywords instead of
 strings has another advantage--Allegro provides a &quot;modern mode&quot; Lisp
 in which the reader does no case conversion of names and in which,
 instead of a <CODE><B>COMMON-LISP</B></CODE> package with uppercase names, provides a
@@ -521,26 +521,26 @@ instead of a <CODE><B>COMMON-LISP</B></CODE> package with uppercase names, provi
 this Lisp isn't a conforming Common Lisp since all the names in the
 standard are defined to be uppercase. But if you write your
 <CODE><B>DEFPACKAGE</B></CODE> forms using keyword symbols, they will work both in
-Common Lisp and in this near relative.</P><P><SUP>8</SUP>Some folks, instead of keywords, use uninterned
+Common Lisp and in this near relative.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>Some folks, instead of keywords, use uninterned
 symbols, using the <CODE>#:</CODE> syntax.</P><PRE>(defpackage #:com.gigamonkeys.email-db
   (:use #:common-lisp))</PRE><P>This saves a tiny bit of memory by not interning any symbols in the
 keyword package--the symbol can become garbage after <CODE><B>DEFPACKAGE</B></CODE>
 (or the code it expands into) is done with it. However, the difference
-is so slight that it really boils down to a matter of aesthetics.</P><P><SUP>9</SUP>The reason to use <CODE><B>IN-PACKAGE</B></CODE> instead of just
+is so slight that it really boils down to a matter of aesthetics.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>The reason to use <CODE><B>IN-PACKAGE</B></CODE> instead of just
 <CODE><B>SETF</B></CODE>ing <CODE><B>*PACKAGE*</B></CODE> is that <CODE><B>IN-PACKAGE</B></CODE> expands into code
 that will run when the file is compiled by <CODE><B>COMPILE-FILE</B></CODE> as well
 as when the file is loaded, changing the way the reader reads the
-rest of the file during compilation.</P><P><SUP>10</SUP>In
+rest of the file during compilation.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>In
 the REPL buffer in SLIME you can also change packages with a REPL
 shortcut. Type a comma, and then enter <CODE>change-package</CODE> at the
-<CODE>Command:</CODE> prompt.</P><P><SUP>11</SUP>During development, if you try to
+<CODE>Command:</CODE> prompt.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>During development, if you try to
 <CODE>:use</CODE> a package that exports a symbol with the same name as a
 symbol already interned in the using package, Lisp will signal an
 error and typically offer you a restart that will unintern the
 offending symbol from the using package. For more on this, see the
-section &quot;Package Gotchas.&quot;</P><P><SUP>12</SUP>The code for the &quot;Practical&quot; chapters,
+section &quot;Package Gotchas.&quot;</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>The code for the &quot;Practical&quot; chapters,
 available from this book's Web site, uses the ASDF system definition
-library. ASDF stands for Another System Definition Facility.</P><P><SUP>13</SUP>Some Common Lisp implementations, such as Allegro and
+library. ASDF stands for Another System Definition Facility.</P><P ID="fn-bot-13"><SUP>13 <A HREF="#fn-top-13">^</A> </SUP>Some Common Lisp implementations, such as Allegro and
 SBCL, provide a facility for &quot;locking&quot; the symbols in a particular
 package so they can be used in defining forms such as <CODE><B>DEFUN</B></CODE>,
 <CODE><B>DEFVAR</B></CODE>, and <CODE><B>DEFCLASS</B></CODE> only when their home package is the

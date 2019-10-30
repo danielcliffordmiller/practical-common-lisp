@@ -22,7 +22,7 @@ really need to know the difference. I will, however, refer to
 different operators as functions or macros or special operators as
 appropriate, rather than trying to hide the details behind the word
 <I>operator</I>. For now you can treat <I>function</I>, <I>macro</I>, and
-<I>special operator</I> as all more or less equivalent.<SUP>1</SUP></P><P>Also, keep in mind that I won't bust out all the most sophisticated
+<I>special operator</I> as all more or less equivalent.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><P>Also, keep in mind that I won't bust out all the most sophisticated
 Common Lisp techniques for your very first post-&quot;hello, world&quot;
 program. The point of this chapter isn't that this is how you would
 write a database in Lisp; rather, the point is for you to get an idea
@@ -77,7 +77,7 @@ larger construct to hold the records. Again, for simplicity's sake, a
 list seems like a good choice. Also for simplicity you can use a
 global variable, <CODE>*db*</CODE>, which you can define with the
 <CODE><B>DEFVAR</B></CODE> macro. The asterisks (*) in the name are a Lisp naming
-convention for global variables.<SUP>2</SUP></P><PRE>(defvar *db* nil)</PRE><P>You can use the <CODE><B>PUSH</B></CODE> macro to add items to <CODE>*db*</CODE>. But it's
+convention for global variables.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP></P><PRE>(defvar *db* nil)</PRE><P>You can use the <CODE><B>PUSH</B></CODE> macro to add items to <CODE>*db*</CODE>. But it's
 probably a good idea to abstract things a tiny bit, so you should
 define a function <CODE>add-record</CODE> that adds a record to the
 database.</P><PRE>(defun add-record (cd) (push cd *db*))</PRE><P>Now you can use <CODE>add-record</CODE> and <CODE>make-cd</CODE> together to add
@@ -129,7 +129,7 @@ contain both literal text and directives telling <CODE><B>FORMAT</B></CODE> thin
 such as how to interpolate the rest of its arguments. Format
 directives start with <CODE>~</CODE> (much the way <CODE>printf</CODE>'s
 directives start with <CODE>%</CODE>). <CODE><B>FORMAT</B></CODE> understands dozens of
-directives, each with their own set of options.<SUP>3</SUP> However, for now I'll just focus on the ones you need to write
+directives, each with their own set of options.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> However, for now I'll just focus on the ones you need to write
 <CODE>dump-db</CODE>.</P><P>The <CODE>~a</CODE> directive is the <I>aesthetic</I> directive; it means to
 consume one argument and output it in a human-readable form. This
 will render keywords without the leading : and strings without
@@ -270,7 +270,7 @@ like this: </P><PRE>CL-USER&gt; (save-db &quot;~/my-cds.db&quot;)
  (:TITLE &quot;Home&quot; :ARTIST &quot;Dixie Chicks&quot; :RATING 9 :RIPPED T)
  (:TITLE &quot;Fly&quot; :ARTIST &quot;Dixie Chicks&quot; :RATING 8 :RIPPED T)
  (:TITLE &quot;Roses&quot; :ARTIST &quot;Kathy Mattea&quot; :RATING 9 :RIPPED T))</PRE><P>On Windows, the filename might be something like
-&quot;<CODE>c:/my-cds.db</CODE>&quot; or &quot;<CODE>c:\\my-cds.db</CODE>.&quot;<SUP>4</SUP></P><P>You can open this file in any text editor to see what it looks like.
+&quot;<CODE>c:/my-cds.db</CODE>&quot; or &quot;<CODE>c:\\my-cds.db</CODE>.&quot;<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><P>You can open this file in any text editor to see what it looks like.
 You should see something a lot like what the REPL prints if you type
 <CODE>*db*</CODE>.</P><P>The function to load the database back in is similar.</P><PRE>(defun load-db (filename)
   (with-open-file (in filename)
@@ -319,7 +319,7 @@ expression as the following: </P><PRE>CL-USER&gt; (remove-if-not #'(lambda (x) (
 words, is even). If you wanted to extract only the odd numbers using
 an anonymous function, you'd write this:</P><PRE>CL-USER&gt; (remove-if-not #'(lambda (x) (= 1 (mod x 2))) '(1 2 3 4 5 6 7 8 9 10))
 (1 3 5 7 9)</PRE><P>Note that <CODE>lambda</CODE> isn't the name of the function--it's the
-indicator you're defining an anonymous function.<SUP>5</SUP> Other than the lack of a name, however, a <CODE><B>LAMBDA</B></CODE>
+indicator you're defining an anonymous function.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> Other than the lack of a name, however, a <CODE><B>LAMBDA</B></CODE>
 expression looks a lot like a <CODE><B>DEFUN</B></CODE>: the word <CODE>lambda</CODE> is
 followed by a parameter list, which is followed by the body of the
 function. </P><P>To select all the Dixie Chicks' albums in the database using
@@ -365,7 +365,7 @@ to <CODE>select</CODE> in the <I>variable</I> <CODE>selector-fn</CODE>. Though, 
 creation of the anonymous function. </P><PRE>(defun artist-selector (artist)
   #'(lambda (cd) (equal (getf cd :artist) artist)))</PRE><P>This is a function that returns a function and one that references a
 variable that--it seems--won't exist after <CODE>artist-selector</CODE>
-returns.<SUP>6</SUP> It may seem odd now, but it actually works just the way
+returns.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> It may seem odd now, but it actually works just the way
 you'd want--if you call <CODE>artist-selector</CODE> with an argument of
 <CODE>&quot;Dixie Chicks&quot;</CODE>, you get an anonymous function that matches CDs
 whose <CODE>:artist</CODE> field is <CODE>&quot;Dixie Chicks&quot;</CODE>, and if you call
@@ -431,7 +431,7 @@ checks if the appropriate argument was passed in and then either
 compares it to the value in the corresponding field in the CD record
 or returns <CODE>t</CODE>, Lisp's version of truth, if the parameter wasn't
 passed in. Thus, the selector function will return <CODE>t</CODE> only for
-CDs that match all the arguments passed to <CODE>where</CODE>.<SUP>7</SUP> Note that you need to use a three-item list to specify
+CDs that match all the arguments passed to <CODE>where</CODE>.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP> Note that you need to use a three-item list to specify
 the keyword parameter <CODE>ripped</CODE> because you need to know whether
 the caller actually passed <CODE>:ripped nil</CODE>, meaning, &quot;Select CDs
 whose ripped field is nil,&quot; or whether they left out <CODE>:ripped</CODE>
@@ -477,11 +477,11 @@ database.</P><PRE>(defun delete-rows (selector-fn)
 it returns a list with all the elements that do match the predicate
 removed. Like <CODE><B>REMOVE-IF-NOT</B></CODE>, it doesn't actually affect the list
 it's passed but by saving the result back into <CODE>*db*</CODE>,
-<CODE>delete-rows</CODE><SUP>8</SUP> actually changes the contents of the
-database.<SUP>9</SUP></P><A NAME="removing-duplication-and-winning-big"><H2>Removing Duplication and Winning Big</H2></A><P>So far <I>all</I> the database code supporting insert,
+<CODE>delete-rows</CODE><SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> actually changes the contents of the
+database.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP></P><A NAME="removing-duplication-and-winning-big"><H2>Removing Duplication and Winning Big</H2></A><P>So far <I>all</I> the database code supporting insert,
 select, update, and delete, not to mention a command-line user
 interface for adding new records and dumping out the contents, is
-just a little more than 50 lines. Total.<SUP>10</SUP></P><P>Yet there's still some annoying code duplication. And it turns out you
+just a little more than 50 lines. Total.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP></P><P>Yet there's still some annoying code duplication. And it turns out you
 can remove the duplication and make the code more flexible at the same
 time. The duplication I'm thinking of is in the where function. The
 body of the <CODE>where</CODE> function is a bunch of clauses like this, one
@@ -495,7 +495,7 @@ of code that checks the values you care about; why should it have to
 do work at runtime checking whether <CODE>title</CODE> was even passed in?</P><P>Imagine that you were trying to optimize this code and discovered
 that it was spending too much time checking whether <CODE>title</CODE> and
 the rest of the keyword parameters to <CODE>where</CODE> were even
-set?<SUP>11</SUP> If you really wanted to
+set?<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP> If you really wanted to
 remove all those runtime checks, you could go through a program and
 find all the places you call <CODE>where</CODE> and look at exactly what
 arguments you're passing. Then you could replace each call to
@@ -520,7 +520,7 @@ essentially nothing but the name with the text-based macros found in
 C and C++. Where the C pre-processor operates by textual substitution
 and understands almost nothing of the structure of C and C++, a Lisp
 macro is essentially a code generator that gets run for you
-automatically by the compiler.<SUP>12</SUP> When
+automatically by the compiler.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP> When
 a Lisp expression contains a call to a macro, instead of evaluating
 the arguments and passing them to the function, the Lisp compiler
 passes the arguments, unevaluated, to the macro code, which returns a
@@ -650,60 +650,60 @@ an MP3 database that incorporates some of those features.</P><P>The point of thi
 just a handful of Lisp's features and show how they're used to write
 code that's a bit more interesting than &quot;hello, world.&quot; In the next
 chapter we'll begin a more systematic overview of Lisp.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Before I
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Before I
 proceed, however, it's crucially important that you forget anything
 you may know about #define-style &quot;macros&quot; as implemented in the C
-pre-processor. Lisp macros are a totally different beast.</P><P><SUP>2</SUP>Using a global variable also
+pre-processor. Lisp macros are a totally different beast.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Using a global variable also
 has some drawbacks--for instance, you can have only one database at a
 time. In Chapter 27, with more of the language under your belt,
 you'll be ready to build a more flexible database. You'll also see,
 in Chapter 6, how even using a global variable is more flexible in
-Common Lisp than it may be in other languages.</P><P><SUP>3</SUP>One of the
+Common Lisp than it may be in other languages.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>One of the
 coolest <CODE><B>FORMAT</B></CODE> directives is the <CODE>~R</CODE> directive. Ever want
 to know how to say a really big number in English words? Lisp knows.
 Evaluate this:</P><PRE>(format nil &quot;~r&quot; 1606938044258990275541962092)</PRE><P>and you should get back (wrapped for legibility):</P><BLOCKQUOTE>&quot;one octillion six hundred six septillion nine hundred thirty-eight
 sextillion forty-four quintillion two hundred fifty-eight
 quadrillion nine hundred ninety trillion two hundred seventy-five
 billion five hundred forty-one million nine hundred sixty-two
-thousand ninety-two&quot;</BLOCKQUOTE><P><SUP>4</SUP>Windows
+thousand ninety-two&quot;</BLOCKQUOTE><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>Windows
 actually understands forward slashes in filenames even though it
 normally uses a backslash as the directory separator. This is
 convenient since otherwise you have to write double backslashes
-because backslash is the escape character in Lisp strings.</P><P><SUP>5</SUP>The word lambda
+because backslash is the escape character in Lisp strings.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>The word lambda
 is used in Lisp because of an early connection to the lambda
 calculus, a mathematical formalism invented for studying mathematical
-functions.</P><P><SUP>6</SUP>The technical term for a function that references a
+functions.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>The technical term for a function that references a
 variable in its enclosing scope is a closure because the function
 &quot;closes over&quot; the variable. I'll discuss closures in more detail in
-Chapter 6.</P><P><SUP>7</SUP>Note
+Chapter 6.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>Note
 that in Lisp, an IF form, like everything else, is an expression that
 returns a value. It's actually more like the ternary operator
 (<CODE>?:</CODE>) in Perl, Java, and C in that this is legal in those
 languages:</P><PRE>some_var = some_boolean ? value1 : value2;</PRE><P>while this isn't:</P><PRE>some_var = if (some_boolean) value1; else value2;</PRE><P>because in those languages, <CODE>if</CODE> is a statement, not an
-expression.</P><P><SUP>8</SUP>You need to use the name <CODE>delete-rows</CODE>
+expression.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>You need to use the name <CODE>delete-rows</CODE>
 rather than the more obvious <CODE>delete</CODE> because there's already a
 function in Common Lisp called <CODE><B>DELETE</B></CODE>. The Lisp package system
 gives you a way to deal with such naming conflicts, so you could have
 a function named delete if you wanted. But I'm not ready to explain
-packages just yet.</P><P><SUP>9</SUP>If you're worried that this code creates a memory
+packages just yet.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>If you're worried that this code creates a memory
 leak, rest assured: Lisp was the language that invented garbage
 collection (and heap allocation for that matter). The memory used by
 the old value of <CODE>*db*</CODE> will be automatically reclaimed,
 assuming no one else is holding on to a reference to it, which none
-of this code is.</P><P><SUP>10</SUP>A friend of mine was
+of this code is.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>A friend of mine was
 once interviewing an engineer for a programming job and asked him a
 typical interview question: how do you know when a function or method
 is too big? Well, said the candidate, I don't like any method to be
 bigger than my head. You mean you can't keep all the details in your
 head? No, I mean I put my head up against my monitor, and the code
-shouldn't be bigger than my head.</P><P><SUP>11</SUP>It's unlikely that the cost of checking whether keyword
+shouldn't be bigger than my head.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>It's unlikely that the cost of checking whether keyword
 parameters had been passed would be a detectible drag on performance
 since checking whether a variable is <CODE>NIL</CODE> is going to be pretty
 cheap. On the other hand, these functions returned by <CODE>where</CODE>
 are going to be right in the middle of the inner loop of any
 <CODE>select</CODE>, <CODE>update</CODE>, or <CODE>delete-rows</CODE> call, as they
 have to be called once per entry in the database. Anyway, for
-illustrative purposes, this will have to do.</P><P><SUP>12</SUP>Macros are also run by the
+illustrative purposes, this will have to do.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>Macros are also run by the
 interpreter--however, it's easier to understand the point of macros
 when you think about compiled code. As with everything else in this
 chapter, I'll cover this in greater detail in future chapters.</P></DIV></BODY></HTML>

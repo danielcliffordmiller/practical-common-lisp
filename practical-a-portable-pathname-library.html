@@ -84,7 +84,7 @@ this:</P><PRE>(defun foo ()
   (do-another-thing))</PRE><P>while in an implementation other than one of the ones specifically
 conditionalized, it will read this:</P><PRE>(defun foo ()
   (error &quot;Not implemented&quot;))</PRE><P>Because the conditionalization happens in the reader, the compiler
-doesn't even see expressions that are skipped.<SUP>1</SUP> This means you pay no runtime cost for having different
+doesn't even see expressions that are skipped.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> This means you pay no runtime cost for having different
 versions for different implementations. Also, when the reader skips
 conditionalized expressions, it doesn't bother interning symbols, so
 the skipped expressions can safely contain symbols from packages that
@@ -120,7 +120,7 @@ chapters.</P></DIV><A NAME="listing-a-directory"><H2>Listing a Directory</H2></A
 called a <I>wild pathname</I>, that has one or more components
 containing the special value <CODE>:wild</CODE> and returns a list of
 pathnames representing files in the file system that match the wild
-pathname.<SUP>2</SUP> The matching algorithm--like most
+pathname.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> The matching algorithm--like most
 things having to do with the interaction between Lisp and a
 particular file system--isn't defined by the language standard, but
 most implementations on Unix and Windows follow the same basic
@@ -152,7 +152,7 @@ nonwild pathname in either form, which it will then convert to the
 appropriate wild pathname.</P><P>To help with this, you should define a few helper functions. One,
 <CODE>component-present-p</CODE>, will test whether a given component of a
 pathname is &quot;present,&quot; meaning neither <CODE><B>NIL</B></CODE> nor the special value
-<CODE>:unspecific</CODE>.<SUP>3</SUP> Another, <CODE>directory-pathname-p</CODE>,
+<CODE>:unspecific</CODE>.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> Another, <CODE>directory-pathname-p</CODE>,
 tests whether a pathname is already in directory form, and the third,
 <CODE>pathname-as-directory</CODE>, converts any pathname to a directory
 form pathname. </P><PRE>(defun component-present-p (value)
@@ -281,7 +281,7 @@ name in file form or if passed a name in directory form that happens
 to name a file. The only difference is it returns <CODE><B>T</B></CODE> rather than
 a pathname when the named directory exists.</P><P>But even in CLISP you can implement the desired semantics by wrapping
 the calls to <CODE><B>PROBE-FILE</B></CODE> and <CODE>probe-directory</CODE> in
-<CODE><B>IGNORE-ERRORS</B></CODE>.<SUP>4</SUP></P><PRE>(defun file-exists-p (pathname)
+<CODE><B>IGNORE-ERRORS</B></CODE>.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><PRE>(defun file-exists-p (pathname)
   #+(or sbcl lispworks openmcl)
   (probe-file pathname)
 
@@ -344,19 +344,19 @@ later chapters, particularly Chapters 23 and 27, where you'll use
 spam messages and MP3 files. But before we get to that, though, I
 need to talk about object orientation, the topic of the next two
 chapters. 
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>One slightly
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>One slightly
 annoying consequence of the way read-time conditionalization works is
 that there's no easy way to write a fall-through case. For example,
 if you add support for another implementation to <CODE>foo</CODE> by adding
 another expression guarded with <CODE>#+</CODE>, you need to remember to
 also add the same feature to the <CODE>or</CODE> feature expression after
 the <CODE>#-</CODE> or the <CODE><B>ERROR</B></CODE> form will be evaluated after your new
-code runs.</P><P><SUP>2</SUP>Another special value, <CODE>:wild-inferiors</CODE>, can
+code runs.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>Another special value, <CODE>:wild-inferiors</CODE>, can
 appear as part of the directory component of a wild pathname, but you
-won't need it in this chapter.</P><P><SUP>3</SUP>Implementations are allowed to return
+won't need it in this chapter.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Implementations are allowed to return
 <CODE>:unspecific</CODE> instead of <CODE><B>NIL</B></CODE> as the value of pathname
 components in certain situations such as when the component isn't
-used by that implementation.</P><P><SUP>4</SUP>This is slightly broken in the sense that if
+used by that implementation.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>This is slightly broken in the sense that if
 <CODE><B>PROBE-FILE</B></CODE> signals an error for some other reason, this code
 will interpret it incorrectly. Unfortunately, the CLISP documentation
 doesn't specify what errors might be signaled by <CODE><B>PROBE-FILE</B></CODE> and

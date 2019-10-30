@@ -100,7 +100,7 @@ use to map from some identifier to the <CODE>playlist</CODE> object.</P><PRE>(de
 hash table like this:</P><PRE>(defparameter *playlists-lock* (make-process-lock :name &quot;playlists-lock&quot;))</PRE><P>Then define a function that looks up a playlist given an ID, creating
 a new <CODE>playlist</CODE> object if necessary and using
 <CODE>with-process-lock</CODE> to ensure that only one thread at a time
-manipulates the hash table.<SUP>1</SUP></P><PRE>(defun lookup-playlist (id)
+manipulates the hash table.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><PRE>(defun lookup-playlist (id)
   (with-process-lock (*playlists-lock*)
     (or (gethash id *playlists*)
         (setf (gethash id *playlists*) (make-instance 'playlist :id id)))))</PRE><P>Then you can implement <CODE>find-song-source</CODE> on top of that
@@ -128,7 +128,7 @@ request regardless of whether the request is from the MP3 client or a
 Web browser. You will, however, provide a way in the Web interface to
 select a different playlist from the browser, so the only real
 constraint this choice puts on the application is that there can be
-only one connected MP3 client per client IP address.<SUP>2</SUP> The implementation of <CODE>playlist-id</CODE> looks like this:</P><PRE>(defun playlist-id (request)
+only one connected MP3 client per client IP address.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> The implementation of <CODE>playlist-id</CODE> looks like this:</P><PRE>(defun playlist-id (request)
   (ipaddr-to-dotted (remote-host (request-socket request))))</PRE><P>The function <CODE>request-socket</CODE> is part of AllegroServe, while
 <CODE>remote-host</CODE> and <CODE>ipaddr-to-dotted</CODE> are part of Allegro's
 socket library.</P><P>To make a playlist usable as a song source by the Shoutcast server,
@@ -181,7 +181,7 @@ the client, you don't want to ever set <CODE>current-song</CODE> to
 <CODE>songs-table</CODE> is empty or after the last song has been played
 and <CODE>repeat</CODE> is set to <CODE>:none</CODE>--then you need to set
 <CODE>current-song</CODE> to a special song whose file is an MP3 of
-silence<SUP>3</SUP> and whose title
+silence<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> and whose title
 explains why no music is playing. Here's some code to define two
 parameters, <CODE>*empty-playlist-song*</CODE> and
 <CODE>*end-of-playlist-song*</CODE>, each set to a song with the file named
@@ -429,7 +429,7 @@ all the variables that affect the printer and reader are set to their
 standard values. However, because you're going to be reading data
 that's coming in from the network, you'll definitely want to turn off
 one feature of the reader--the ability to evaluate arbitrary Lisp
-code while reading!<SUP>4</SUP> You can define your own macro <CODE>with-safe-io-syntax</CODE>,
+code while reading!<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> You can define your own macro <CODE>with-safe-io-syntax</CODE>,
 which wraps its body forms in <CODE><B>WITH-STANDARD-IO-SYNTAX</B></CODE> wrapped
 around a <CODE><B>LET</B></CODE> that binds <CODE><B>*READ-EVAL*</B></CODE> to <CODE><B>NIL</B></CODE>.</P><PRE>(defmacro with-safe-io-syntax (&amp;body body)
   `(with-standard-io-syntax
@@ -618,7 +618,7 @@ the form.</P><PRE>(defun values-&gt;base-64 (column values-table)
 query parameter to a URL function that declares <CODE>values</CODE> to be
 of type <CODE>base-64-list</CODE>, it'll be automatically converted back to
 a list. As you'll see in a moment, that list can then be used to
-construct a query that'll return the correct list of songs.<SUP>5</SUP> When you're
+construct a query that'll return the correct list of songs.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> When you're
 browsing by <CODE>:song</CODE>, you use the values from the <CODE>:file</CODE>
 column since they uniquely identify the actual songs while the song
 names may not.</P><A NAME="the-playlist"><H2>The Playlist</H2></A><P>This brings me to the next URL function, <CODE>playlist</CODE>. This is the
@@ -809,7 +809,7 @@ fall in the realm of application design, which isn't really the topic
 of this book. Instead, the next two chapters will drop back to the
 level of software infrastructure to cover how the FOO HTML generation
 library works.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>The intricacies of concurrent
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>The intricacies of concurrent
 programming are beyond the scope of this book. The basic idea is that
 if you have multiple threads of control--as you will in this
 application with some threads running the <CODE>shoutcast</CODE> function
@@ -821,7 +821,7 @@ instance, if two new MP3 clients are connecting at the same time,
 they'd both try to add an entry to <CODE>*playlists*</CODE> and might
 interfere with each other. The <CODE>with-process-lock</CODE> ensures that
 each thread gets exclusive access to the hash table for long enough
-to do the work it needs to do.</P><P><SUP>2</SUP>This
+to do the work it needs to do.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>This
 approach also assumes that every client machine has a unique IP
 address. This assumption should hold as long as all the users are on
 the same LAN but may not hold if clients are connecting from behind a
@@ -829,7 +829,7 @@ firewall that does network address translation. Deploying this
 application outside a LAN will require some modifications, but if you
 want to deploy this application to the wider Internet, you'd better
 know enough about networking to figure out an appropriate scheme
-yourself.</P><P><SUP>3</SUP>Unfortunately, because of licensing issues around the
+yourself.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>Unfortunately, because of licensing issues around the
 MP3 format, it's not clear that it's legal for me to provide you with
 such an MP3 without paying licensing fees to Fraunhofer IIS. I got
 mine as part of the software that came with my Slimp3 from Slim
@@ -838,13 +838,13 @@ at <CODE>http://svn.slimdevices.com/*checkout*/trunk/server/
 HT</CODE><CODE><B>ML/EN/html/silentpacket.mp3?rev=2</B></CODE>. Or buy a Squeezebox, the
 new, wireless version of Slimp3, and you'll get
 <CODE>silentpacket.mp3</CODE> as part of the software that comes with it.
-Or find an MP3 of John Cage's piece <I>4'33&quot;</I>.</P><P><SUP>4</SUP>The reader supports a bit of syntax,
+Or find an MP3 of John Cage's piece <I>4'33&quot;</I>.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>The reader supports a bit of syntax,
 <CODE>#.</CODE>, that causes the following s-expression to be evaluated at
 read time. This is occasionally useful in source code but obviously
 opens a big security hole when you read untrusted data. However, you
 can turn off this syntax by setting <CODE><B>*READ-EVAL*</B></CODE> to <CODE><B>NIL</B></CODE>,
 which will cause the reader to signal an error if it encounters
-<CODE>#.</CODE>.</P><P><SUP>5</SUP>This
+<CODE>#.</CODE>.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>This
 solution has its drawbacks--if a <CODE>browse</CODE> page returns a lot of
 results, a fair bit of data is going back and forth under the covers.
 Also, the database queries aren't necessarily the most efficient. But

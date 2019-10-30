@@ -19,7 +19,7 @@ of the list are the objects referenced by the <CODE><B>CAR</B></CODE>s of the co
 cells in the list structure. If a cons cell in the list structure has
 a <CODE><B>CAR</B></CODE> that references another cons cell, the referenced cons
 cell is considered to be the head of a list that's an element of the
-outer list.<SUP>1</SUP> <I>Tree structure</I>, on the other hand, is traversed by
+outer list.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> <I>Tree structure</I>, on the other hand, is traversed by
 following both <CODE><B>CAR</B></CODE> and <CODE><B>CDR</B></CODE> references for as long as they
 point to other cons cells. The values in a tree are thus the
 atomic--non-cons-cell-values referenced by either the <CODE><B>CAR</B></CODE>s or
@@ -65,7 +65,7 @@ these functions only as drop-in replacements for their nondestructive
 counterparts in situations where you know there's no danger of
 modifying a shared structure. In particular, you must continue to
 save the return value of these functions since you have no guarantee
-that the result will be <CODE><B>EQ</B></CODE> to the original tree.<SUP>2</SUP> </P><A NAME="sets"><H2>Sets</H2></A><P>Sets can also be implemented in terms of cons cells. In fact, you can
+that the result will be <CODE><B>EQ</B></CODE> to the original tree.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> </P><A NAME="sets"><H2>Sets</H2></A><P>Sets can also be implemented in terms of cons cells. In fact, you can
 treat any list as a set--Common Lisp provides several functions for
 performing set-theoretic operations on lists. However, you should
 bear in mind that because of the way lists are structured, these
@@ -114,7 +114,7 @@ representing the set resulting from performing the appropriate
 set-theoretic operation on the two lists: <CODE><B>INTERSECTION</B></CODE> returns a
 list containing all the elements found in both arguments. <CODE><B>UNION</B></CODE>
 returns a list containing one instance of each unique element from
-the two arguments.<SUP>3</SUP> <CODE><B>SET-DIFFERENCE</B></CODE> returns a list
+the two arguments.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> <CODE><B>SET-DIFFERENCE</B></CODE> returns a list
 containing all the elements from the first argument that don't appear
 in the second argument. And <CODE><B>SET-EXCLUSIVE-OR</B></CODE> returns a list
 containing those elements appearing in only one or the other of the
@@ -259,7 +259,7 @@ takes a symbol and a key and is shorthand for a <CODE><B>GETF</B></CODE> of the 
 key in the symbols <CODE><B>SYMBOL-PLIST</B></CODE>.</P><PRE>(get 'symbol 'key) === (getf (symbol-plist 'symbol) 'key)</PRE><P>Like <CODE><B>GETF</B></CODE>, <CODE><B>GET</B></CODE> is <CODE><B>SETF</B></CODE>able, so you can attach
 arbitrary information to a symbol like this:</P><PRE>(setf (get 'some-symbol 'my-key) &quot;information&quot;)</PRE><P>To remove a property from a symbol's plist, you can use either
 <CODE><B>REMF</B></CODE> of <CODE><B>SYMBOL-PLIST</B></CODE> or the convenience function
-<CODE><B>REMPROP</B></CODE>.<SUP>4</SUP></P><PRE>(remprop 'symbol 'key) === (remf (symbol-plist 'symbol key))</PRE><P>Being able to attach arbitrary information to names is quite handy
+<CODE><B>REMPROP</B></CODE>.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><PRE>(remprop 'symbol 'key) === (remf (symbol-plist 'symbol key))</PRE><P>Being able to attach arbitrary information to names is quite handy
 when doing any kind of symbolic programming. For instance, one of the
 macros you'll write in Chapter 24 will attach information to names
 that other instances of the same macros will extract and use when
@@ -271,7 +271,7 @@ argument list. The basic skeleton of a <CODE><B>DESTRUCTURING-BIND</B></CODE> is
 follows:</P><PRE>(destructuring-bind (<I>parameter</I>*) <I>list</I>
   <I>body-form</I>*)</PRE><P>The parameter list can include any of the types of parameters
 supported in macro parameter lists such as <CODE><B>&amp;optional</B></CODE>,
-<CODE><B>&amp;rest</B></CODE>, and <CODE><B>&amp;key</B></CODE> parameters.<SUP>5</SUP> And, as in macro parameter lists, any parameter can be
+<CODE><B>&amp;rest</B></CODE>, and <CODE><B>&amp;key</B></CODE> parameters.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP> And, as in macro parameter lists, any parameter can be
 replaced with a nested destructuring parameter list, which takes
 apart the list that would otherwise have been bound to the replaced
 parameter. The <I>list</I> form is evaluated once and should return a
@@ -301,7 +301,7 @@ examples follow: </P><PRE>(destructuring-bind (x y z) (list 1 2 3)
 also in macro parameter lists, though I didn't mention it in Chapter
 8, is a <CODE><B>&amp;whole</B></CODE> parameter. If specified, it must be the first
 parameter in a parameter list, and it's bound to the whole list
-form.<SUP>6</SUP> After a <CODE><B>&amp;whole</B></CODE> parameter, other parameters
+form.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP> After a <CODE><B>&amp;whole</B></CODE> parameter, other parameters
 can appear as usual and will extract specific parts of the list just
 as they would if the <CODE><B>&amp;whole</B></CODE> parameter weren't there. An example
 of using <CODE><B>&amp;whole</B></CODE> with <CODE><B>DESTRUCTURING-BIND</B></CODE> looks like this:</P><PRE>(destructuring-bind (&amp;whole whole &amp;key x y z) (list :z 1 :y 2 :x 3)
@@ -312,24 +312,24 @@ I have a few more topics to cover before you can get to that. After
 two chapters on the rather Lispy topic of cons cells, you can now
 turn to the more prosaic matter of how to deal with files and
 filenames. 
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>It's possible to build a chain of cons cells where
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>It's possible to build a chain of cons cells where
 the <CODE><B>CDR</B></CODE> of the last cons cell isn't <CODE><B>NIL</B></CODE> but some other
 atom. This is called a <I>dotted</I> list because the last cons is a
-dotted pair.</P><P><SUP>2</SUP>It may
+dotted pair.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>It may
 seem that the <CODE><B>NSUBST</B></CODE> family of functions can and in fact does
 modify the tree in place. However, there's one edge case: when the
 &quot;tree&quot; passed is, in fact, an atom, it can't be modified in place, so
 the result of <CODE><B>NSUBST</B></CODE> will be a different object than the
-argument: <CODE>(nsubst 'x 'y 'y)  X</CODE>.</P><P><SUP>3</SUP><CODE><B>UNION</B></CODE> takes only one element from each
+argument: <CODE>(nsubst 'x 'y 'y)  X</CODE>.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP><CODE><B>UNION</B></CODE> takes only one element from each
 list, but if either list contains duplicate elements, the result may
-also contain duplicates.</P><P><SUP>4</SUP>It's also possible to directly <CODE><B>SETF
+also contain duplicates.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>It's also possible to directly <CODE><B>SETF
 SYMBOL-PLIST</B></CODE>. However, that's a bad idea, as different code may have
 added different properties to the symbol's plist for different
 reasons. If one piece of code clobbers the symbol's whole plist, it
-may break other code that added its own properties to the plist.</P><P><SUP>5</SUP>Macro parameter lists do
+may break other code that added its own properties to the plist.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Macro parameter lists do
 support one parameter type, <CODE><B>&amp;environment</B></CODE> parameters, which
 <CODE><B>DESTRUCTURING-BIND</B></CODE> doesn't. However, I didn't discuss that
 parameter type in Chapter 8, and you don't need to worry about it now
-either.</P><P><SUP>6</SUP>When a <CODE><B>&amp;whole</B></CODE> parameter is used in a macro parameter
+either.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>When a <CODE><B>&amp;whole</B></CODE> parameter is used in a macro parameter
 list, the form it's bound to is the whole macro form, including the
 name of the macro.</P></DIV></BODY></HTML>

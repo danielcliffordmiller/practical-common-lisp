@@ -1,5 +1,5 @@
 <HTML><HEAD><TITLE>Practical: A Spam Filter</TITLE><LINK REL="stylesheet" TYPE="text/css" HREF="style.css"/></HEAD><BODY><DIV CLASS="copyright">Copyright &copy; 2003-2005, Peter Seibel</DIV><H1>23. Practical: A Spam Filter</H1><P>In 2002 Paul Graham, having some time on his hands after selling
-Viaweb to Yahoo, wrote the essay &quot;A Plan for Spam&quot;<SUP>1</SUP> that
+Viaweb to Yahoo, wrote the essay &quot;A Plan for Spam&quot;<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> that
 launched a minor revolution in spam-filtering technology. Prior to
 Graham's article, most spam filters were written in terms of
 handcrafted rules: if a message has <I>XXX</I> in the subject, it's
@@ -16,7 +16,7 @@ spam and ham messages and then use the frequencies associated with
 the words in a new message to compute a probability that it was
 either spam or ham. He called his approach <I>Bayesian</I> filtering
 after the statistical technique that he used to combine the
-individual word frequencies into an overall probability.<SUP>2</SUP></P><A NAME="the-heart-of-a-spam-filter"><H2>The Heart of a Spam Filter</H2></A><P>In this chapter, you'll implement the core of a spam-filtering
+individual word frequencies into an overall probability.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP></P><A NAME="the-heart-of-a-spam-filter"><H2>The Heart of a Spam Filter</H2></A><P>In this chapter, you'll implement the core of a spam-filtering
 engine. You won't write a soup-to-nuts spam-filtering application;
 rather, you'll focus on the functions for classifying new messages
 and training the filter.</P><P>This application is going to be large enough that it's worth defining
@@ -27,7 +27,7 @@ the standard <CODE>COMMON-LISP</CODE> package and the
 <CODE>COM.GIGAMONKEYS.PATHNAMES</CODE> package from Chapter 15, like this:</P><PRE>(defpackage :com.gigamonkeys.spam
   (:use :common-lisp :com.gigamonkeys.pathnames))</PRE><P>Any file containing code for this application should start with this
 line:</P><PRE>(in-package :com.gigamonkeys.spam)</PRE><P>You can use the same package name or replace <CODE>com.gigamonkeys</CODE>
-with some domain you control.<SUP>3</SUP></P><P>You can also type this same form at the REPL to switch to this package
+with some domain you control.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP></P><P>You can also type this same form at the REPL to switch to this package
 to test the functions you write. In SLIME this will change the prompt
 from <CODE>CL-USER&gt;</CODE> to <CODE>SPAM&gt;</CODE> like this:</P><PRE>CL-USER&gt; (in-package :com.gigamonkeys.spam)
 #&lt;The COM.GIGAMONKEYS.SPAM package&gt;
@@ -95,7 +95,7 @@ necessary.</P><PRE>(defun intern-feature (word)
             (make-instance 'word-feature :word word))))</PRE><P>You can extract the individual words from the message text using a
 regular expression. For example, using the Common Lisp Portable
 Perl-Compatible Regular Expression (CL-PPCRE) library written by Edi
-Weitz, you can write <CODE>extract-words</CODE> like this:<SUP>4</SUP></P><PRE>(defun extract-words (text)
+Weitz, you can write <CODE>extract-words</CODE> like this:<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><PRE>(defun extract-words (text)
   (delete-duplicates
    (cl-ppcre:all-matches-as-strings &quot;[a-zA-Z]{3,}&quot; text)
    :test #'string=))</PRE><P>Now all that remains to implement <CODE>extract-features</CODE> is to put
@@ -116,13 +116,13 @@ all objects is implemented in terms of a generic function
 are printed, you just need to define a method on <CODE><B>PRINT-OBJECT</B></CODE>
 that specializes on <CODE>word-feature</CODE>. To make implementing such
 methods easier, Common Lisp provides the macro
-<CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE>.<SUP>5</SUP></P><P>The basic form of <CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE> is as follows:</P><PRE>(print-unreadable-object (<I>object</I> <I>stream-variable</I> &amp;key <I>type</I> <I>identity</I>)
+<CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE>.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><P>The basic form of <CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE> is as follows:</P><PRE>(print-unreadable-object (<I>object</I> <I>stream-variable</I> &amp;key <I>type</I> <I>identity</I>)
   <I>body-form</I>*)</PRE><P>The <I>object</I> argument is an expression that evaluates to the object
 to be printed. Within the body of <CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE>,
 <I>stream-variable</I> is bound to a stream to which you can print
 anything you want. Whatever you print to that stream will be output
 by <CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE> and enclosed in the standard syntax
-for unreadable objects, <CODE>#&lt;&gt;</CODE>.<SUP>6</SUP></P><P><CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE> also lets you include the type of the
+for unreadable objects, <CODE>#&lt;&gt;</CODE>.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P><CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE> also lets you include the type of the
 object and an indication of the object's identity via the keyword
 parameters <I>type</I> and <I>identity</I>. If they're non-<CODE><B>NIL</B></CODE>, the
 output will start with the name of the object's class and end with an
@@ -155,7 +155,7 @@ that don't yet exist.</P><PRE>(defun train (text type)
 message type and increments the appropriate slot of the feature.
 Since there's no reason to think that the logic of incrementing these
 counts is going to change for different kinds of objects, you can
-write this as a regular function.<SUP>7</SUP> Because you defined both <CODE>ham-count</CODE> and
+write this as a regular function.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP> Because you defined both <CODE>ham-count</CODE> and
 <CODE>spam-count</CODE> with an <CODE>:accessor</CODE> option, you can use
 <CODE><B>INCF</B></CODE> and the accessor functions created by <CODE><B>DEFCLASS</B></CODE> to
 increment the appropriate slot.</P><PRE>(defun increment-count (feature type)
@@ -180,7 +180,7 @@ that the symbols <CODE>ham</CODE> and <CODE>spam</CODE> are quoted when calling
 <CODE>increment-count</CODE> since otherwise they'd be evaluated as the
 names of variables. But they're not quoted when they appear in
 <CODE><B>ECASE</B></CODE> since <CODE><B>ECASE</B></CODE> doesn't evaluate the
-keys.<SUP>8</SUP></P><P>The <I>E</I> in <CODE><B>ECASE</B></CODE> stands for &quot;exhaustive&quot; or &quot;error,&quot; meaning
+keys.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP></P><P>The <I>E</I> in <CODE><B>ECASE</B></CODE> stands for &quot;exhaustive&quot; or &quot;error,&quot; meaning
 <CODE><B>ECASE</B></CODE> should signal an error if the key value is anything other
 than one of the keys listed. The regular <CODE><B>CASE</B></CODE> is looser,
 returning <CODE><B>NIL</B></CODE> if no matching clause is found.</P><P>To implement <CODE>increment-total-count</CODE>, you need to decide where
@@ -203,9 +203,9 @@ reset <CODE>*feature-database*</CODE>, so you should add a few lines to
    *total-spams* 0
    *total-hams* 0))</PRE><A NAME="per-word-statistics"><H2>Per-Word Statistics </H2></A><P>The heart of a statistical spam filter is, of course, the functions
 that compute statistics-based probabilities. The mathematical
-nuances<SUP>9</SUP> of why exactly these computations work are beyond the
+nuances<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP> of why exactly these computations work are beyond the
 scope of this book--interested readers may want to refer to several
-papers by Gary Robinson.<SUP>10</SUP> I'll focus rather on how they're implemented.</P><P>The starting point for the statistical computations is the set of
+papers by Gary Robinson.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP> I'll focus rather on how they're implemented.</P><P>The starting point for the statistical computations is the set of
 measured values--the frequencies stored in <CODE>*feature-database*</CODE>,
 <CODE>*total-spams*</CODE>, and <CODE>*total-hams*</CODE>. Assuming that the set
 of messages trained on is statistically representative, you can treat
@@ -280,7 +280,7 @@ individual probabilities into a single value between 0 and 1.</P><P>If the indiv
 be mathematically sound to multiply them together to get a combined
 probability. But it's unlikely they actually are independent--certain
 features are likely to appear together, while others never
-do.<SUP>11</SUP></P><P>Robinson proposed using a method for combining probabilities invented
+do.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></P><P>Robinson proposed using a method for combining probabilities invented
 by the statistician R. A. Fisher. Without going into the details of
 exactly why his technique works, it's this: First you combine the
 probabilities by multiplying them together. This gives you a number
@@ -477,7 +477,7 @@ fraction for training and then measuring how accurate the filter is
 when classifying the remainder.</P><A NAME="testing-the-filter"><H2>Testing the Filter</H2></A><P>To test the filter, you need a corpus of messages of known types. You
 can use messages lying around in your inbox, or you can grab one of
 the corpora available on the Web. For instance, the SpamAssassin
-corpus<SUP>12</SUP>
+corpus<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP>
 contains several thousand messages hand classified as spam, easy ham,
 and hard ham. To make it easy to use whatever files you have, you can
 define a test rig that's driven off an array of file/type pairs. You
@@ -512,7 +512,7 @@ analyze however you like.</P><P>The main testing function might look like this:<
          (size (length corpus))
          (train-on (floor (* size (- 1 testing-fraction)))))
     (train-from-corpus shuffled :start 0 :end train-on)
-    (test-from-corpus shuffled :start train-on)))</PRE><P>This function starts by clearing out the feature database.<SUP>13</SUP>
+    (test-from-corpus shuffled :start train-on)))</PRE><P>This function starts by clearing out the feature database.<SUP ID="fn-top-13"><A HREF="#fn-bot-13">13</A></SUP>
 Then it shuffles the corpus, using a function you'll implement in a
 moment, and figures out, based on the <CODE>testing-fraction</CODE>
 parameter, how many messages it'll train on and how many it'll
@@ -553,7 +553,7 @@ values are which.</P><PRE>(defun test-from-corpus (corpus &amp;key (start 0) end
 write the two utility functions that don't really have anything
 particularly to do with spam filtering, <CODE>shuffle-vector</CODE> and
 <CODE>start-of-file</CODE>.</P><P>An easy and efficient way to implement <CODE>shuffle-vector</CODE> is using
-the Fisher-Yates algorithm.<SUP>14</SUP> You can start by implementing a
+the Fisher-Yates algorithm.<SUP ID="fn-top-14"><A HREF="#fn-bot-14">14</A></SUP> You can start by implementing a
 function, <CODE>nshuffle-vector</CODE>, that shuffles a vector in place.
 This name follows the same naming convention of other destructive
 functions such as <CODE><B>NCONC</B></CODE> and <CODE><B>NREVERSE</B></CODE>. It looks like this:</P><PRE>(defun nshuffle-vector (vector)
@@ -717,30 +717,30 @@ headers. And you could decode various kinds of message encoding such
 as base 64 and quoted printable since spammers often try to obfuscate
 their message with those encodings.</P><P>But I'll leave those improvements to you. Now you're ready to head
 down the path of building a streaming MP3 server, starting by writing
-a general-purpose library for parsing binary files.</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Available at
+a general-purpose library for parsing binary files.</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Available at
 <CODE>http://www.paulgraham.com/spam.html</CODE> and also in <I>Hackers &amp;
-Painters: Big Ideas from the Computer Age</I> (O'Reilly, 2004)</P><P><SUP>2</SUP>There
+Painters: Big Ideas from the Computer Age</I> (O'Reilly, 2004)</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>There
 has since been some disagreement over whether the technique Graham
 described was actually &quot;Bayesian.&quot; However, the name has stuck and is
 well on its way to becoming a synonym for &quot;statistical&quot; when talking
-about spam filters.</P><P><SUP>3</SUP>It would, however, be poor form to
+about spam filters.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>It would, however, be poor form to
 distribute a version of this application using a package starting
-with <CODE>com.gigamonkeys</CODE> since you don't control that domain.</P><P><SUP>4</SUP>A version
+with <CODE>com.gigamonkeys</CODE> since you don't control that domain.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>A version
 of CL-PPCRE is included with the book's source code available from
 the book's Web site. Or you can download it from Weitz's site at
-<CODE>http://www.weitz.de/cl-ppcre/</CODE>.</P><P><SUP>5</SUP>The main reason to use
+<CODE>http://www.weitz.de/cl-ppcre/</CODE>.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>The main reason to use
 <CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE> is that it takes care of signaling the
 appropriate error if someone tries to print your object readably,
-such as with the <CODE>~S</CODE> <CODE><B>FORMAT</B></CODE> directive.</P><P><SUP>6</SUP><CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE>
+such as with the <CODE>~S</CODE> <CODE><B>FORMAT</B></CODE> directive.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP><CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE>
 also signals an error if it's used when the printer control variable
 <CODE><B>*PRINT-READABLY*</B></CODE> is true. Thus, a <CODE><B>PRINT-OBJECT</B></CODE> method
 consisting solely of a <CODE><B>PRINT-UNREADABLE-OBJECT</B></CODE> form will
 correctly implement the <CODE><B>PRINT-OBJECT</B></CODE> contract with regard to
-<CODE><B>*PRINT-READABLY*</B></CODE>.</P><P><SUP>7</SUP>If you decide later that you
+<CODE><B>*PRINT-READABLY*</B></CODE>.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>If you decide later that you
 do need to have different versions of <CODE>increment-feature</CODE> for
 different classes, you can redefine <CODE>increment-count</CODE> as a
 generic function and this function as a method specialized on
-<CODE>word-feature</CODE>.</P><P><SUP>8</SUP>Technically, the key in each clause of a <CODE><B>CASE</B></CODE> or
+<CODE>word-feature</CODE>.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>Technically, the key in each clause of a <CODE><B>CASE</B></CODE> or
 <CODE><B>ECASE</B></CODE> is interpreted as a <I>list designator</I>, an object that
 designates a list of objects. A single nonlist object, treated as a
 list designator, designates a list containing just that one object,
@@ -751,12 +751,12 @@ to make <CODE>good</CODE> a synonym for <CODE>ham</CODE> and <CODE>bad</CODE> a 
 for <CODE>spam</CODE>, you could write <CODE>increment-count</CODE> like this:</P><PRE>(defun increment-count (feature type)
   (ecase type
     ((ham good) (incf (ham-count feature)))
-    ((spam bad) (incf (spam-count feature)))))</PRE><P><SUP>9</SUP>Speaking of mathematical nuances, hard-core statisticians
+    ((spam bad) (incf (spam-count feature)))))</PRE><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>Speaking of mathematical nuances, hard-core statisticians
 may be offended by the sometimes loose use of the word <I>probability</I>
 in this chapter. However, since even the pros, who are divided between
 the Bayesians and the frequentists, can't agree on what a probability
 is, I'm not going to worry about it. This is a book about programming,
-not statistics.</P><P><SUP>10</SUP>Robinson's articles that directly
+not statistics.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>Robinson's articles that directly
 informed this chapter are &quot;A Statistical Approach to the Spam Problem&quot;
 (published in the <I>Linux Journal</I> and available at
 <CODE>http://www.linuxjournal.com/ article.php?sid=6467</CODE> and in a
@@ -770,18 +770,18 @@ Redundancy in Email Token Probabilities&quot; (available at
 archived mailing lists of the SpamBayes project
 (<CODE>http://spambayes.sourceforge.net/</CODE>) also contain a lot of
 useful information about different algorithms and approaches to
-testing spam filters.</P><P><SUP>11</SUP>Techniques that combine nonindependent probabilities as
+testing spam filters.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>Techniques that combine nonindependent probabilities as
 though they were, in fact, independent, are called <I>naive
 Bayesian</I>. Graham's original proposal was essentially a naive
 Bayesian classifier with some &quot;empirically derived&quot; constant factors
-thrown in.</P><P><SUP>12</SUP>Several spam corpora including the SpamAssassin corpus
+thrown in.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>Several spam corpora including the SpamAssassin corpus
 are linked to from
-<CODE>http://nexp.cs.pdx.edu/~psam/cgi-bin/view/PSAM/CorpusSets</CODE>.</P><P><SUP>13</SUP>If
+<CODE>http://nexp.cs.pdx.edu/~psam/cgi-bin/view/PSAM/CorpusSets</CODE>.</P><P ID="fn-bot-13"><SUP>13 <A HREF="#fn-top-13">^</A> </SUP>If
 you wanted to conduct a test without disturbing the existing
 database, you could bind <CODE>*feature-database*</CODE>,
 <CODE>*total-spams*</CODE>, and <CODE>*total-hams*</CODE> with a <CODE><B>LET</B></CODE>, but
 then you'd have no way of looking at the database after the
-fact--unless you returned the values you used within the function.</P><P><SUP>14</SUP>This algorithm is named for the same
+fact--unless you returned the values you used within the function.</P><P ID="fn-bot-14"><SUP>14 <A HREF="#fn-top-14">^</A> </SUP>This algorithm is named for the same
 Fisher who invented the method used for combining probabilities and
 for Frank Yates, his coauthor of the book <I>Statistical Tables for
 Biological, Agricultural and Medical Research</I> (Oliver &amp; Boyd, 1938)

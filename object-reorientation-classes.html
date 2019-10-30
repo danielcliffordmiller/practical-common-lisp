@@ -11,14 +11,14 @@ sub- and superclass relationships, and are manipulated by the
 functions I've been discussing for much of the book up until now. You
 can't subclass these classes, but, as you saw in the previous chapter,
 you can define methods that specialize on them, effectively extending
-the behavior of those classes.<SUP>1</SUP></P><P>But when you want to create new nouns--for instance, the classes used
+the behavior of those classes.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></P><P>But when you want to create new nouns--for instance, the classes used
 in the previous chapter for representing bank accounts--you need to
 define your own classes. That's the subject of this chapter.</P><A NAME="defclass"><H2>DEFCLASS</H2></A><P>You create user-defined classes with the <CODE><B>DEFCLASS</B></CODE> macro. Because
 behaviors are associated with a class by defining generic functions
 and methods specialized on the class, <CODE><B>DEFCLASS</B></CODE> is responsible
 only for defining the class as a data type.</P><P>The three facets of the class as a data type are its name, its
 relation to other classes, and the names of the slots that make up
-instances of the class.<SUP>2</SUP> The basic form of a <CODE><B>DEFCLASS</B></CODE> is quite simple.</P><PRE>(defclass <I>name</I> (<I>direct-superclass-name</I>*)
+instances of the class.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> The basic form of a <CODE><B>DEFCLASS</B></CODE> is quite simple.</P><PRE>(defclass <I>name</I> (<I>direct-superclass-name</I>*)
   (<I>slot-specifier</I>*))</PRE><DIV CLASS="sidebarhead">What Are &quot;User-Defined Classes&quot;?</DIV><DIV CLASS="sidebar"><P>The term <I>user-defined classes</I> isn't a term from the
 language standard--technically what I'm talking about when I say
 <I>user-defined classes</I> are classes that subclass
@@ -42,7 +42,7 @@ language. But the classes it creates are fairly limited compared to
 classes defined with <CODE><B>DEFCLASS</B></CODE> that use the default metaclass of
 <CODE><B>STANDARD-CLASS</B></CODE>, and I'll refer to them as <I>user-defined</I> for
 lack of a better term.</P></DIV><P>As with functions and variables, you can use any symbol as the name
-of a new class.<SUP>3</SUP> Class names are in a separate
+of a new class.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> Class names are in a separate
 namespace from both functions and variables, so you can have a class,
 function, and variable all with the same name. You'll use the class
 name as the argument to <CODE><B>MAKE-INSTANCE</B></CODE>, the function that creates
@@ -79,7 +79,7 @@ slot specifier can be just a name. For instance, you could define a
 name of the customer the account belongs to and another to hold the
 current balance. With this definition, you can create new
 <CODE>bank-account</CODE> objects using <CODE><B>MAKE-INSTANCE</B></CODE>.</P><PRE>(make-instance 'bank-account) ==&gt; #&lt;BANK-ACCOUNT @ #x724b93ba&gt;</PRE><P>The argument to <CODE><B>MAKE-INSTANCE</B></CODE> is the name of the class to
-instantiate, and the value returned is the new object.<SUP>4</SUP> The printed representation of an object is
+instantiate, and the value returned is the new object.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> The printed representation of an object is
 determined by the generic function <CODE><B>PRINT-OBJECT</B></CODE>. In this case,
 the applicable method will be one provided by the implementation,
 specialized on <CODE><B>STANDARD-OBJECT</B></CODE>. Since not every object can be
@@ -109,7 +109,7 @@ that will be used to compute a value for the slot if no
 <CODE>:initarg</CODE> argument is passed to <CODE><B>MAKE-INSTANCE</B></CODE>. Finally,
 for complete control over the initialization, you can define a method
 on the generic function <CODE><B>INITIALIZE-INSTANCE</B></CODE>, which is called by
-<CODE><B>MAKE-INSTANCE</B></CODE>.<SUP>5</SUP></P><P>A slot specifier that includes options such as <CODE>:initarg</CODE> or
+<CODE><B>MAKE-INSTANCE</B></CODE>.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><P>A slot specifier that includes options such as <CODE>:initarg</CODE> or
 <CODE>:initform</CODE> is written as a list starting with the name of the
 slot followed by the options. For example, if you want to modify the
 definition of <CODE>bank-account</CODE> to allow callers of
@@ -159,7 +159,7 @@ method on the generic function <CODE><B>INITIALIZE-INSTANCE</B></CODE>.</P><P>Th
 <CODE>:initarg</CODE> and <CODE>:initform</CODE> options. Since you don't want to
 disturb that, the most common way to add custom initialization code
 is to define an <CODE>:after</CODE> method specialized on your
-class.<SUP>6</SUP>
+class.<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP>
 For instance, suppose you want to add a slot <CODE>account-type</CODE> that
 needs to be set to one of the values <CODE>:gold</CODE>, <CODE>:silver</CODE>, or
 <CODE>:bronze</CODE> based on the account's initial balance. You might
@@ -176,7 +176,7 @@ slot with no options:</P><PRE>(defclass bank-account ()
    account-type))</PRE><P>Then you can define an <CODE>:after</CODE> method on
 <CODE><B>INITIALIZE-INSTANCE</B></CODE> that sets the <CODE>account-type</CODE> slot based
 on the value that has been stored in the <CODE>balance</CODE>
-slot.<SUP>7</SUP></P><PRE>(defmethod initialize-instance :after ((account bank-account) &amp;key)
+slot.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><PRE>(defmethod initialize-instance :after ((account bank-account) &amp;key)
   (let ((balance (slot-value account 'balance)))
     (setf (slot-value account 'account-type)
           (cond
@@ -227,7 +227,7 @@ that accesses the slot, you can redefine it later to preserve its
 behavior even if the internal representation changes. And code that
 uses such a function will continue to work without modification.</P><P>Another advantage to using accessor functions rather than direct
 access to slots via <CODE><B>SLOT-VALUE</B></CODE> is that they let you limit the
-ways outside code can modify a slot.<SUP>8</SUP> It may be fine for users of
+ways outside code can modify a slot.<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> It may be fine for users of
 the <CODE>bank-account</CODE> class to get the current balance, but you may
 want all modifications to the balance to go through other functions
 you'll provide, such as <CODE>deposit</CODE> and <CODE>withdraw</CODE>. If
@@ -255,7 +255,7 @@ function is a two-item list whose first element is the symbol
 of a function used to access the place the <CODE><B>SETF</B></CODE> function will
 set. A <CODE><B>SETF</B></CODE> function can take any number of arguments, but the
 first argument is always the value to be assigned to the
-place.<SUP>9</SUP> You could, for
+place.<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP> You could, for
 instance, define a <CODE><B>SETF</B></CODE> function to set the <CODE>customer-name</CODE>
 slot in a <CODE>bank-account</CODE> like this:</P><PRE>(defun (setf customer-name) (name account)
   (setf (slot-value account 'customer-name) name))</PRE><P>After evaluating that definition, an expression like the following
@@ -356,7 +356,7 @@ is a name to use as a variable and the second is the name of the
 slot. The <I>instance-form</I> is evaluated once to produce the object
 whose slots will be accessed. Within the body, each occurrence of one
 of the variable names is translated to a call to <CODE><B>SLOT-VALUE</B></CODE> with
-the object and the appropriate slot name as arguments.<SUP>10</SUP> Thus, you can write
+the object and the appropriate slot name as arguments.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP> Thus, you can write
 <CODE>assess-low-balance-penalty</CODE> like this:</P><PRE>(defmethod assess-low-balance-penalty ((account bank-account))
   (with-slots (balance) account
     (when (&lt; balance *minimum-balance*)
@@ -404,7 +404,7 @@ created. On the other hand, passing an initarg to <CODE><B>MAKE-INSTANCE</B></CO
 will set the value, affecting all instances of the class.</P><P>Because you can't get at a class-allocated slot without an instance
 of the class, class-allocated slots aren't really equivalent to
 <I>static</I> or <I>class</I> fields in languages such as Java, C++, and
-Python.<SUP>11</SUP> Rather,
+Python.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP> Rather,
 class-allocated slots are used primarily to save space; if you're
 going to create many instances of a class and all instances are going
 to have a reference to the same object--say, a pool of shared
@@ -523,7 +523,7 @@ any class in the class precedence list will be applicable to a
 <CODE>money-market-account</CODE> object. Because all slot specifiers for
 the same slot are merged, it doesn't matter that
 <CODE>money-market-account</CODE> inherits the same slot specifiers from
-<CODE>bank-account</CODE> twice. <SUP>12</SUP></P><P>Multiple inheritance is easiest to understand when the different
+<CODE>bank-account</CODE> twice. <SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP></P><P>Multiple inheritance is easiest to understand when the different
 superclasses provide completely independent slots and behaviors. For
 instance, <CODE>money-market-account</CODE> will inherit slots and
 behaviors for dealing with checks from <CODE>checking-account</CODE> and
@@ -618,35 +618,35 @@ however, you're ready to take a break from all this theory of object
 orientation and turn to the rather different topic of how to make
 good use of Common Lisp's powerful, but sometimes cryptic,
 <CODE><B>FORMAT</B></CODE> function.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Defining new methods for an
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Defining new methods for an
 existing class may seem strange to folks used to statically typed
 languages such as C++ and Java in which all the methods of a class
 must be defined as part of the class definition. But programmers with
 experience in dynamically typed object-oriented languages such as
 Smalltalk and Objective C will find nothing strange about adding new
-behaviors to existing classes.</P><P><SUP>2</SUP>In other object-oriented languages,
+behaviors to existing classes.</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP>In other object-oriented languages,
 slots might be called <I>fields</I>, <I>member variables</I>, or
-<I>attributes</I>.</P><P><SUP>3</SUP>As when naming functions and variables, it's not
+<I>attributes</I>.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>As when naming functions and variables, it's not
 quite true that you can use <I>any</I> symbol as a class name--you can't
 use names defined by the language standard. You'll see in Chapter 21
-how to avoid such name conflicts.</P><P><SUP>4</SUP>The
+how to avoid such name conflicts.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>The
 argument to <CODE><B>MAKE-INSTANCE</B></CODE> can actually be either the name of the
 class or a class object returned by the function <CODE><B>CLASS-OF</B></CODE> or
-<CODE><B>FIND-CLASS</B></CODE>.</P><P><SUP>5</SUP>Another way to affect the values of slots is
+<CODE><B>FIND-CLASS</B></CODE>.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>Another way to affect the values of slots is
 with the <CODE>:default-initargs</CODE> option to <CODE><B>DEFCLASS</B></CODE>. This
 option is used to specify forms that will be evaluated to provide
 arguments for specific initialization parameters that aren't given a
 value in a particular call to <CODE><B>MAKE-INSTANCE</B></CODE>. You don't need to
-worry about <CODE>:default-initargs</CODE> for now.</P><P><SUP>6</SUP>Adding an <CODE>:after</CODE> method to
+worry about <CODE>:default-initargs</CODE> for now.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>Adding an <CODE>:after</CODE> method to
 <CODE><B>INITIALIZE-INSTANCE</B></CODE> is the Common Lisp analog to defining a
-constructor in Java or C++ or an <CODE>__init__</CODE> method in Python.</P><P><SUP>7</SUP>One mistake you might make until you get used to using
+constructor in Java or C++ or an <CODE>__init__</CODE> method in Python.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>One mistake you might make until you get used to using
 auxiliary methods is to define a method on <CODE><B>INITIALIZE-INSTANCE</B></CODE>
 but without the <CODE>:after</CODE> qualifier. If you do that, you'll get a
 new primary method that shadows the default one. You can remove the
 unwanted primary method using the functions <CODE><B>REMOVE-METHOD</B></CODE> and
 <CODE><B>FIND-METHOD</B></CODE>. Certain development environments may provide a
 graphical user interface to do the same thing.</P><PRE>(remove-method #'initialize-instance
-  (find-method #'initialize-instance () (list (find-class 'bank-account))))</PRE><P><SUP>8</SUP>Of course, providing an
+  (find-method #'initialize-instance () (list (find-class 'bank-account))))</PRE><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>Of course, providing an
 accessor function doesn't really limit anything since other code can
 still use <CODE><B>SLOT-VALUE</B></CODE> to get at slots directly. Common Lisp
 doesn't provide strict encapsulation of slots the way some languages
@@ -655,25 +655,25 @@ accessor functions and you ignore them, using <CODE><B>SLOT-VALUE</B></CODE>
 instead, you had better know what you're doing. It's also possible to
 use the package system, which I'll discuss in Chapter 21, to make it
 even more obvious that certain slots aren't to be accessed directly,
-by not exporting the names of the slots.</P><P><SUP>9</SUP>One consequence of defining a <CODE><B>SETF</B></CODE> function--say,
+by not exporting the names of the slots.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>One consequence of defining a <CODE><B>SETF</B></CODE> function--say,
 <CODE>(setf foo)</CODE>--is that if you also define the corresponding
 accessor function, <CODE>foo</CODE> in this case, you can use all the
 modify macros built upon <CODE><B>SETF</B></CODE>, such as <CODE><B>INCF</B></CODE>, <CODE><B>DECF</B></CODE>,
-<CODE><B>PUSH</B></CODE>, and <CODE><B>POP</B></CODE>, on the new kind of place.</P><P><SUP>10</SUP>The
+<CODE><B>PUSH</B></CODE>, and <CODE><B>POP</B></CODE>, on the new kind of place.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP>The
 &quot;variable&quot; names provided by <CODE><B>WITH-SLOTS</B></CODE> and <CODE><B>WITH-ACCESSORS</B></CODE>
 aren't true variables; they're implemented using a special kind of
 macro, called a <I>symbol macro</I>, that allows a simple name to expand
 into arbitrary code. Symbol macros were introduced into the language
 to support <CODE><B>WITH-SLOTS</B></CODE> and <CODE><B>WITH-ACCESSORS</B></CODE>, but you can also
 use them for your own purposes. I'll discuss them in a bit more
-detail in Chapter 20.</P><P><SUP>11</SUP>The Meta Object Protocol (MOP), which isn't part of the
+detail in Chapter 20.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP>The Meta Object Protocol (MOP), which isn't part of the
 language standard but is supported by most Common Lisp
 implementations, provides a function, <CODE>class-prototype</CODE>, that
 returns an instance of a class that can be used to access class
 slots. If you're using an implementation that supports the MOP and
 happen to be translating some code from another language that makes
 heavy use of static or class fields, this may give you a way to ease
-the translation. But it's not all that idiomatic.</P><P><SUP>12</SUP>In other words, Common Lisp doesn't
+the translation. But it's not all that idiomatic.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>In other words, Common Lisp doesn't
 suffer from the <I>diamond inheritance</I> problem the way, say, C++
 does. In C++, when one class subclasses two classes that both inherit
 a member variable from a common superclass, the bottom class inherits

@@ -10,7 +10,7 @@ execution of the code that emits the warning while allowing code
 higher on the call stack to control whether the warning message is
 printed. For the time being, however, I'll focus on error handling.</P><P>The condition system is more flexible than exception systems because
 instead of providing a two-part division between the code that
-signals an error<SUP>1</SUP> and the code that handles it,<SUP>2</SUP> the condition system splits the
+signals an error<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP> and the code that handles it,<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> the condition system splits the
 responsibilities into three parts--<I>signaling</I> a condition,
 <I>handling</I> it, and <I>restarting</I>. In this chapter, I'll describe
 how you could use conditions in part of a hypothetical application
@@ -95,7 +95,7 @@ indicate there was a problem. In Java or Python you'd throw or raise
 an exception. In Common Lisp, you signal a condition.</P><A NAME="conditions"><H2>Conditions</H2></A><P>A <I>condition</I> is an object whose class indicates the general nature
 of the condition and whose instance data carries information about
 the details of the particular circumstances that lead to the
-condition being signaled.<SUP>3</SUP> In this
+condition being signaled.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP> In this
 hypothetical log analysis program, you might define a condition
 class, <CODE>malformed-log-entry-error</CODE>, that <CODE>parse-log-entry</CODE>
 will signal if it's given data it can't parse.</P><P>Condition classes are defined with the <CODE><B>DEFINE-CONDITION</B></CODE> macro,
@@ -115,7 +115,7 @@ use. Likewise, new condition objects are created with
 <CODE><B>MAKE-CONDITION</B></CODE> initializes the slots of the new condition based
 on the <CODE>:initarg</CODE>s it's passed, but there's no way to further
 customize a condition's initialization, equivalent to
-<CODE><B>INITIALIZE-INSTANCE</B></CODE>.<SUP>4</SUP></P><P>When using the condition system for error handling, you should define
+<CODE><B>INITIALIZE-INSTANCE</B></CODE>.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP></P><P>When using the condition system for error handling, you should define
 your conditions as subclasses of <CODE><B>ERROR</B></CODE>, a subclass of
 <CODE><B>CONDITION</B></CODE>. Thus, you might define
 <CODE>malformed-log-entry-error</CODE>, with a slot to hold the argument
@@ -286,7 +286,7 @@ unwinding the stack--the flow of control will still be in the call to
 <CODE><B>INVOKE-RESTART</B></CODE> will find and invoke the most recently bound
 restart with the given name. So you can add a handler to
 <CODE>log-analyzer</CODE> that will invoke the <CODE>skip-log-entry</CODE>
-restart established in <CODE>parse-log-file</CODE> like this:<SUP>5</SUP></P><PRE>(defun log-analyzer ()
+restart established in <CODE>parse-log-file</CODE> like this:<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><PRE>(defun log-analyzer ()
   (handler-bind ((malformed-log-entry-error
                   #'(lambda (c)
                       (invoke-restart 'skip-log-entry))))
@@ -446,15 +446,15 @@ Processing: Concepts and Techniques</I>  (Morgan Kaufmann, 1993) by Jim
 Gray and Andreas Reuter.</P></DIV><P>In the next chapter I'll give a quick overview of some of the 25
 special operators you haven't had a chance to use yet, at least not
 directly.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP><I>Throws</I> or <I>raises</I> an exception in
-Java/Python terms</P><P><SUP>2</SUP><I>Catches</I> the
-exception in Java/Python terms</P><P><SUP>3</SUP>In this respect, a condition is a lot
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP><I>Throws</I> or <I>raises</I> an exception in
+Java/Python terms</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP><I>Catches</I> the
+exception in Java/Python terms</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>In this respect, a condition is a lot
 like an exception in Java or Python except not all conditions
-represent an error or <I>exceptional</I> situation.</P><P><SUP>4</SUP>In some Common Lisp implementations,
+represent an error or <I>exceptional</I> situation.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>In some Common Lisp implementations,
 conditions are defined as subclasses of <CODE><B>STANDARD-OBJECT</B></CODE>, in
 which case <CODE><B>SLOT-VALUE</B></CODE>, <CODE><B>MAKE-INSTANCE</B></CODE>, and
 <CODE><B>INITIALIZE-INSTANCE</B></CODE> will work, but it's not portable to rely on
-it.</P><P><SUP>5</SUP>The
+it.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>The
 compiler may complain if the parameter is never used. You can silence
 that warning by adding a declaration <CODE>(declare (ignore c))</CODE> as
 the first expression in the <CODE><B>LAMBDA</B></CODE> body.</P></DIV></BODY></HTML>

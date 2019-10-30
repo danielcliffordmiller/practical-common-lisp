@@ -15,11 +15,11 @@ another important part of Lisp's heritage.</P><P>Thus, you need to understand li
 better understanding of how lists work, you'll be in a better
 position to appreciate when you should and shouldn't use them. </P><A NAME="there-is-no-list"><H2>&quot;There Is No List&quot;</H2></A><BLOCKQUOTE><B>Spoon Boy</B>: Do not try and bend the list. That's impossible.
 Instead . . . only try to realize the truth.</BLOCKQUOTE><BLOCKQUOTE><B>Neo</B>: What truth?</BLOCKQUOTE><BLOCKQUOTE><B>Spoon Boy</B>: There is no list.</BLOCKQUOTE><BLOCKQUOTE><B>Neo</B>: There is no list?</BLOCKQUOTE><BLOCKQUOTE><B>Spoon Boy</B>: Then you'll see that it is not the list that bends;
-it is only yourself.<SUP>1</SUP></BLOCKQUOTE><P>The key to understanding lists is to understand that they're largely
+it is only yourself.<SUP ID="fn-top-1"><A HREF="#fn-bot-1">1</A></SUP></BLOCKQUOTE><P>The key to understanding lists is to understand that they're largely
 an illusion built on top of objects that are instances of a more
 primitive data type. Those simpler objects are pairs of values called
 <I>cons cells</I>, after the function <CODE><B>CONS</B></CODE> used to create them.</P><P><CODE><B>CONS</B></CODE> takes two arguments and returns a new cons cell containing
-the two values.<SUP>2</SUP> These values can be references to any kind of object.
+the two values.<SUP ID="fn-top-2"><A HREF="#fn-bot-2">2</A></SUP> These values can be references to any kind of object.
 Unless the second value is <CODE><B>NIL</B></CODE> or another cons cell, a cons is
 printed as the two values in parentheses separated by a dot, a
 so-called dotted pair.</P><PRE>(cons 1 2) ==&gt; (1 . 2)</PRE><P>The two values in a cons cell are called the <CODE><B>CAR</B></CODE> and the
@@ -33,7 +33,7 @@ think of them simply as an arbitrary pair of values without any
 particular semantics. Thus:</P><PRE>(car (cons 1 2)) ==&gt; 1
 (cdr (cons 1 2)) ==&gt; 2</PRE><P>Both <CODE><B>CAR</B></CODE> and <CODE><B>CDR</B></CODE> are also <CODE><B>SETF</B></CODE>able places--given an
 existing cons cell, it's possible to assign a new value to either of
-its values.<SUP>3</SUP></P><PRE>(defparameter *cons* (cons 1 2))
+its values.<SUP ID="fn-top-3"><A HREF="#fn-bot-3">3</A></SUP></P><PRE>(defparameter *cons* (cons 1 2))
 *cons*                 ==&gt; (1 . 2)
 (setf (car *cons*) 10) ==&gt; 10
 *cons*                 ==&gt; (10 . 2)
@@ -60,7 +60,7 @@ can be a big help. Box-and-arrow diagrams represent cons cells as a
 pair of boxes like this:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/one-cons-cell.png"/></P><P>The box on the left represents the <CODE><B>CAR</B></CODE>, and the box on the right
 is the <CODE><B>CDR</B></CODE>. The values stored in a particular cons cell are
 either drawn in the appropriate box or represented by an arrow from
-the box to a representation of the referenced value.<SUP>4</SUP> For instance, the
+the box to a representation of the referenced value.<SUP ID="fn-top-4"><A HREF="#fn-bot-4">4</A></SUP> For instance, the
 list <CODE>(1 2 3)</CODE>, which consists of three cons cells linked
 together by their <CODE><B>CDR</B></CODE>s, would be diagrammed like this:</P><P><IMG CLASS="figure" SRC="http://www.gigamonkeys.com/book/figures/list-1-2-3.png"/></P><P>However, most of the time you work with lists you won't have to deal
 with individual cons cells--the functions that create and manipulate
@@ -154,7 +154,7 @@ longer represents the same value. However, using the same term to
 describe all state-modifying operations leads to a certain amount of
 confusion since there are two very different kinds of destructive
 operations, <I>for-side-effect</I> operations and <I>recycling</I>
-operations.<SUP>5</SUP></P><P>For-side-effect operations are those used specifically for their side
+operations.<SUP ID="fn-top-5"><A HREF="#fn-bot-5">5</A></SUP></P><P>For-side-effect operations are those used specifically for their side
 effects. All uses of <CODE><B>SETF</B></CODE> are destructive in this sense, as are
 functions that use <CODE><B>SETF</B></CODE> under the covers to change the state of
 an existing object such as <CODE><B>VECTOR-PUSH</B></CODE> or <CODE><B>VECTOR-POP</B></CODE>. But
@@ -235,7 +235,7 @@ structure of the list argument and to <CODE><B>SETF</B></CODE> the <CODE><B>CAR<
 cons cells holding the old value to the new value and to otherwise
 leave the list intact. It then returns the original list, which now
 has the same value as would've been computed by <CODE><B>SUBSTITUTE</B></CODE>.
-<SUP>6</SUP></P><P>The key thing to remember about <CODE><B>NCONC</B></CODE> and <CODE><B>NSUBSTITUTE</B></CODE> is
+<SUP ID="fn-top-6"><A HREF="#fn-bot-6">6</A></SUP></P><P>The key thing to remember about <CODE><B>NCONC</B></CODE> and <CODE><B>NSUBSTITUTE</B></CODE> is
 that they're the exceptions to the rule that you can't rely on the
 side effects of recycling functions. It's perfectly acceptable--and
 arguably good style--to ignore the reliability of their side effects
@@ -256,19 +256,19 @@ ways. By far the most common recycling idiom is to build up a list to
 be returned from a function by &quot;consing&quot; onto the front of a list,
 usually by <CODE><B>PUSH</B></CODE>ing elements onto a list stored in a local
 variable and then returning the result of <CODE><B>NREVERSE</B></CODE>ing
-it.<SUP>7</SUP></P><P>This is an efficient way to build a list because each <CODE><B>PUSH</B></CODE> has
+it.<SUP ID="fn-top-7"><A HREF="#fn-bot-7">7</A></SUP></P><P>This is an efficient way to build a list because each <CODE><B>PUSH</B></CODE> has
 to create only one cons cell and modify a local variable and the
 <CODE><B>NREVERSE</B></CODE> just has to zip down the list reassigning the
 <CODE><B>CDR</B></CODE>s. Because the list is created entirely within the function,
 there's no danger any code outside the function has a reference to
 any of its cons cells. Here's a function that uses this idiom to
-build a list of the first <I>n</I> numbers, starting at zero:<SUP>8</SUP> </P><PRE>(defun upto (max)
+build a list of the first <I>n</I> numbers, starting at zero:<SUP ID="fn-top-8"><A HREF="#fn-bot-8">8</A></SUP> </P><PRE>(defun upto (max)
   (let ((result nil))
     (dotimes (i max)
       (push i result))
     (nreverse result)))
 
-(upto 10) ==&gt; (0 1 2 3 4 5 6 7 8 9)</PRE><P>The next most common recycling idiom<SUP>9</SUP> is to
+(upto 10) ==&gt; (0 1 2 3 4 5 6 7 8 9)</PRE><P>The next most common recycling idiom<SUP ID="fn-top-9"><A HREF="#fn-bot-9">9</A></SUP> is to
 immediately reassign the value returned by the recycling function
 back to the place containing the potentially recycled value. For
 instance, you'll often see expressions like the following, using
@@ -300,7 +300,7 @@ shows you need to optimize, you can replace nondestructive list
 operations with their recycling counterparts but only if you're
 certain the argument lists aren't referenced from anywhere else.</P><P>One last gotcha to watch out for is that the sorting functions
 <CODE><B>SORT</B></CODE>, <CODE><B>STABLE-SORT</B></CODE>, and <CODE><B>MERGE</B></CODE> mentioned in Chapter 11
-are also recycling functions when applied to lists.<SUP>10</SUP> However, these functions don't have nondestructive
+are also recycling functions when applied to lists.<SUP ID="fn-top-10"><A HREF="#fn-bot-10">10</A></SUP> However, these functions don't have nondestructive
 counterparts, so if you need to sort a list without destroying it,
 you need to pass the sorting function a copy made with
 <CODE><B>COPY-LIST</B></CODE>. In either case you need to be sure to save the result
@@ -326,7 +326,7 @@ and returns the result of calling <CODE><B>CDR</B></CODE> <I>n</I> times. (Thus,
 that none of these functions is any more efficient, in terms of work
 done by the computer, than the equivalent combinations of <CODE><B>FIRST</B></CODE>s
 and <CODE><B>REST</B></CODE>s--there's no way to get to the <I>n</I>th element of a
-list without following <I>n</I> <CODE><B>CDR</B></CODE> references.<SUP>11</SUP></P><P>The 28 composite <CODE><B>CAR</B></CODE>/<CODE><B>CDR</B></CODE> functions are another family of
+list without following <I>n</I> <CODE><B>CDR</B></CODE> references.<SUP ID="fn-top-11"><A HREF="#fn-bot-11">11</A></SUP></P><P>The 28 composite <CODE><B>CAR</B></CODE>/<CODE><B>CDR</B></CODE> functions are another family of
 functions you may see used from time to time. Each function is named
 by placing a sequence of up to four <CODE>A</CODE>s and <CODE>D</CODE>s between a
 <CODE>C</CODE> and <CODE>R</CODE>, with each <CODE>A</CODE> representing a call to
@@ -343,7 +343,7 @@ lists:</P><PRE>(caar (list 1 2 3))                  ==&gt; <I>error</I>
 (caadr (list (list 1 2) (list 3 4))) ==&gt; 3</PRE><P>These functions aren't used as often now as in the old days. And even
 the most die-hard old-school Lisp hackers tend to avoid the longer
 combinations. However, they're used quite a bit in older Lisp code,
-so it's worth at least understanding how they work.<SUP>12</SUP></P><P>The <CODE><B>FIRST</B></CODE>-<CODE><B>TENTH</B></CODE> and <CODE><B>CAR</B></CODE>, <CODE><B>CADR</B></CODE>, and so on,
+so it's worth at least understanding how they work.<SUP ID="fn-top-12"><A HREF="#fn-bot-12">12</A></SUP></P><P>The <CODE><B>FIRST</B></CODE>-<CODE><B>TENTH</B></CODE> and <CODE><B>CAR</B></CODE>, <CODE><B>CADR</B></CODE>, and so on,
 functions can also be used as <CODE><B>SETF</B></CODE>able places if you're using
 lists nonfunctionally.</P><P>Table 12-1 summarizes some other list functions that I won't cover in
 detail. </P><P><DIV CLASS="table-caption">Table 12-1. Other List Functions</DIV></P><TABLE CLASS="book-table"><TR><TD>Function</TD><TD>Description</TD></TR><TR><TD><CODE><B>LAST</B></CODE></TD><TD>Returns the last cons cell in a list. With an integer, argument
@@ -380,7 +380,7 @@ The results of each function call are collected into a new list. For
 example:</P><PRE>(mapcar #'(lambda (x) (* 2 x)) (list 1 2 3)) ==&gt; (2 4 6)
 (mapcar #'+ (list 1 2 3) (list 10 20 30)) ==&gt; (11 22 33)</PRE><P><CODE><B>MAPLIST</B></CODE> is just like <CODE><B>MAPCAR</B></CODE> except instead of passing the
 elements of the list to the function, it passes the actual cons
-cells.<SUP>13</SUP> Thus, the function has access not only to the value of
+cells.<SUP ID="fn-top-13"><A HREF="#fn-bot-13">13</A></SUP> Thus, the function has access not only to the value of
 each element of the list (via the <CODE><B>CAR</B></CODE> of the cons cell) but also
 to the rest of the list (via the <CODE><B>CDR</B></CODE>).</P><P><CODE><B>MAPCAN</B></CODE> and <CODE><B>MAPCON</B></CODE> work like <CODE><B>MAPCAR</B></CODE> and <CODE><B>MAPLIST</B></CODE>
 except for the way they build up their result. While <CODE><B>MAPCAR</B></CODE> and
@@ -388,7 +388,7 @@ except for the way they build up their result. While <CODE><B>MAPCAR</B></CODE> 
 function calls, <CODE><B>MAPCAN</B></CODE> and <CODE><B>MAPCON</B></CODE> build their result by
 splicing together the results--which must be lists--as if by
 <CODE><B>NCONC</B></CODE>. Thus, each function invocation can provide any number of
-elements to be included in the result.<SUP>14</SUP> <CODE><B>MAPCAN</B></CODE>, like <CODE><B>MAPCAR</B></CODE>, passes the elements of the list to
+elements to be included in the result.<SUP ID="fn-top-14"><A HREF="#fn-bot-14">14</A></SUP> <CODE><B>MAPCAN</B></CODE>, like <CODE><B>MAPCAR</B></CODE>, passes the elements of the list to
 the mapped function while <CODE><B>MAPCON</B></CODE>, like <CODE><B>MAPLIST</B></CODE>, passes the
 cons cells.</P><P>Finally, the functions <CODE><B>MAPC</B></CODE> and <CODE><B>MAPL</B></CODE> are control constructs
 disguised as functions--they simply return their first list argument,
@@ -402,52 +402,52 @@ chapter allow you to treat structures built out of cons cells as
 lists, other functions allow you to use cons cells to represent
 trees, sets, and two kinds of key/value maps. I'll discuss some of
 those functions in the next chapter.
-</P><HR/><DIV CLASS="notes"><P><SUP>1</SUP>Adapted from <I>The Matrix</I>
-  (<CODE>http://us.imdb.com/Quotes?0133093</CODE>)</P><P><SUP>2</SUP><CODE><B>CONS</B></CODE> was originally short for the verb
-<I>construct</I>.</P><P><SUP>3</SUP>When the place given to <CODE><B>SETF</B></CODE> is a <CODE><B>CAR</B></CODE> or
+</P><HR/><DIV CLASS="notes"><P ID="fn-bot-1"><SUP>1 <A HREF="#fn-top-1">^</A> </SUP>Adapted from <I>The Matrix</I>
+  (<CODE>http://us.imdb.com/Quotes?0133093</CODE>)</P><P ID="fn-bot-2"><SUP>2 <A HREF="#fn-top-2">^</A> </SUP><CODE><B>CONS</B></CODE> was originally short for the verb
+<I>construct</I>.</P><P ID="fn-bot-3"><SUP>3 <A HREF="#fn-top-3">^</A> </SUP>When the place given to <CODE><B>SETF</B></CODE> is a <CODE><B>CAR</B></CODE> or
 <CODE><B>CDR</B></CODE>, it expands into a call to the function <CODE><B>RPLACA</B></CODE> or
 <CODE><B>RPLACD</B></CODE>; some old-school Lispers--the same ones who still use
 <CODE><B>SETQ</B></CODE>--will still use <CODE><B>RPLACA</B></CODE> and <CODE><B>RPLACD</B></CODE> directly, but
-modern style is to use <CODE><B>SETF</B></CODE> of <CODE><B>CAR</B></CODE> or <CODE><B>CDR</B></CODE>.</P><P><SUP>4</SUP>Typically,
+modern style is to use <CODE><B>SETF</B></CODE> of <CODE><B>CAR</B></CODE> or <CODE><B>CDR</B></CODE>.</P><P ID="fn-bot-4"><SUP>4 <A HREF="#fn-top-4">^</A> </SUP>Typically,
 simple objects such as numbers are drawn within the appropriate box,
 and more complex objects will be drawn outside the box with an arrow
 from the box indicating the reference. This actually corresponds well
 with how many Common Lisp implementations work--although all objects
 are conceptually stored by reference, certain simple immutable
-objects can be stored directly in a cons cell.</P><P><SUP>5</SUP>The phrase <I>for-side-effect</I> is used in the
+objects can be stored directly in a cons cell.</P><P ID="fn-bot-5"><SUP>5 <A HREF="#fn-top-5">^</A> </SUP>The phrase <I>for-side-effect</I> is used in the
 language standard, but <I>recycling</I> is my own invention; most Lisp
 literature simply uses the term <I>destructive</I> for both kinds of
-operations, leading to the confusion I'm trying to dispel.</P><P><SUP>6</SUP>The string functions <CODE><B>NSTRING-CAPITALIZE</B></CODE>,
+operations, leading to the confusion I'm trying to dispel.</P><P ID="fn-bot-6"><SUP>6 <A HREF="#fn-top-6">^</A> </SUP>The string functions <CODE><B>NSTRING-CAPITALIZE</B></CODE>,
 <CODE><B>NSTRING-DOWNCASE</B></CODE>, and <CODE><B>NSTRING-UPCASE</B></CODE> are similar--they
 return the same results as their N-less counterparts but are
-specified to modify their string argument in place.</P><P><SUP>7</SUP>For example, in an examination of all uses of recycling
+specified to modify their string argument in place.</P><P ID="fn-bot-7"><SUP>7 <A HREF="#fn-top-7">^</A> </SUP>For example, in an examination of all uses of recycling
 functions in the Common Lisp Open Code Collection (CLOCC), a diverse
 set of libraries written by various authors, instances of the
 <CODE><B>PUSH</B></CODE>/<CODE><B>NREVERSE</B></CODE> idiom accounted for nearly half of all uses
-of recycling functions.</P><P><SUP>8</SUP>There
+of recycling functions.</P><P ID="fn-bot-8"><SUP>8 <A HREF="#fn-top-8">^</A> </SUP>There
 are, of course, other ways to do this same thing. The extended
 <CODE><B>LOOP</B></CODE> macro, for instance, makes it particularly easy and likely
 generates code that's even more efficient than the <CODE><B>PUSH</B></CODE>/
-<CODE><B>NREVERSE</B></CODE> version.</P><P><SUP>9</SUP>This idiom accounts for 30
-percent of uses of recycling in the CLOCC code base.</P><P><SUP>10</SUP><CODE><B>SORT</B></CODE>
+<CODE><B>NREVERSE</B></CODE> version.</P><P ID="fn-bot-9"><SUP>9 <A HREF="#fn-top-9">^</A> </SUP>This idiom accounts for 30
+percent of uses of recycling in the CLOCC code base.</P><P ID="fn-bot-10"><SUP>10 <A HREF="#fn-top-10">^</A> </SUP><CODE><B>SORT</B></CODE>
 and <CODE><B>STABLE-SORT</B></CODE> can be used as for-side-effect operations on
 vectors, but since they still return the sorted vector, you should
 ignore that fact and use them for return values for the sake of
-consistency.</P><P><SUP>11</SUP><CODE><B>NTH</B></CODE> is
+consistency.</P><P ID="fn-bot-11"><SUP>11 <A HREF="#fn-top-11">^</A> </SUP><CODE><B>NTH</B></CODE> is
 roughly equivalent to the sequence function <CODE><B>ELT</B></CODE> but works only
 with lists. Also, confusingly, <CODE><B>NTH</B></CODE> takes the index as the first
 argument, the opposite of <CODE><B>ELT</B></CODE>. Another difference is that
 <CODE><B>ELT</B></CODE> will signal an error if you try to access an element at an
 index greater than or equal to the length of the list, but <CODE><B>NTH</B></CODE>
-will return <CODE><B>NIL</B></CODE>.</P><P><SUP>12</SUP>In
+will return <CODE><B>NIL</B></CODE>.</P><P ID="fn-bot-12"><SUP>12 <A HREF="#fn-top-12">^</A> </SUP>In
 particular, they used to be used to extract the various parts of
 expressions passed to macros before the invention of destructuring
 parameter lists. For example, you could take apart the following
 expression:</P><PRE>(when (&gt; x 10) (print x))</PRE><P>Like this:</P><PRE>;; the condition
 (cadr '(when (&gt; x 10) (print x))) ==&gt; (&gt; X 10)</PRE><PRE>;; the body, as a list
-(cddr '(when (&gt; x 10) (print x))) ==&gt; ((PRINT X))</PRE><P><SUP>13</SUP>Thus, <CODE><B>MAPLIST</B></CODE> is the more primitive of the two
+(cddr '(when (&gt; x 10) (print x))) ==&gt; ((PRINT X))</PRE><P ID="fn-bot-13"><SUP>13 <A HREF="#fn-top-13">^</A> </SUP>Thus, <CODE><B>MAPLIST</B></CODE> is the more primitive of the two
 functions--if you had only <CODE><B>MAPLIST</B></CODE>, you could build <CODE><B>MAPCAR</B></CODE>
 on top of it, but you couldn't build <CODE><B>MAPLIST</B></CODE> on top of
-<CODE><B>MAPCAR</B></CODE>.</P><P><SUP>14</SUP>In Lisp dialects that
+<CODE><B>MAPCAR</B></CODE>.</P><P ID="fn-bot-14"><SUP>14 <A HREF="#fn-top-14">^</A> </SUP>In Lisp dialects that
 didn't have filtering functions like <CODE><B>REMOVE</B></CODE>, the idiomatic way
 to filter a list was with <CODE><B>MAPCAN</B></CODE>.</P><PRE>(mapcan #'(lambda (x) (if (= x 10) nil (list x)))  list) === (remove 10 list)</PRE></DIV></BODY></HTML>
